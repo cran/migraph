@@ -7,7 +7,7 @@
 \method{plot}{igraph}(x, ...)
 }
 \arguments{
-\item{x}{A migraph-compatible object, especially an igraph graph object}
+\item{x}{A migraph-compatible object, especially an igraph graph object.}
 
 \item{...}{Additional arguments passed on to igraph.}
 }

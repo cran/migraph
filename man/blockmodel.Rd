@@ -4,7 +4,6 @@
 \alias{blockmodel}
 \alias{blockmodel_concor}
 \alias{print.blockmodel}
-\alias{plot.blockmodel}
 \title{Blockmodelling}
 \source{
 \url{https://github.com/aslez/concoR}
@@ -19,8 +18,6 @@ blockmodel_concor(
 )
 
 \method{print}{blockmodel}(x, ...)
-
-\method{plot}{blockmodel}(x, ...)
 }
 \arguments{
 \item{object}{A migraph-consistent object (matrix, igraph, tidygraph).}

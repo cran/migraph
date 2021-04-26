@@ -13,10 +13,12 @@ A matrix with 264 rows and columns. Node IDs are prefaced with a type identifier
 }
 }
 \source{
-Knoke, Diani, Hollway, and Christopoulos. 2021. \emph{Multimodal Political Networks}. Cambridge University Press: Cambridge.
+Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+\href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
+Cambridge University Press. Cambridge University Press.
 }
 \usage{
-mpn_bristol
+data(mpn_bristol)
 }
 \description{
 A multimodal (3) matrix containing individuals affiliations to civic organizations
