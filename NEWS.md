@@ -1,6 +1,33 @@
-# migraph 0.6.3
+# migraph 0.6.5
 
-2021-04-26
+## Package
+
+* Removed unused package dependencies (R6, ggraph)
+* Avoided M1mac check issue by dropping sensitive `netlm()` test
+* Added some tests
+
+## Classes
+
+* Renamed `binarise()` to `to_unweighted()`
+* Added `to_unnamed()` for unlabelling networks
+
+# migraph 0.6.4
+
+## Package
+
+* Extended R version dependence back to 3.6.*
+
+## Classes
+
+* Added `binarise()` for unweighting networks
+* Fixed bug in `as_tidygraph()` when passed a tbl_graph directly
+
+## Plotting
+
+* Added `plot_releases()` for more general use
+* Fixed bug in `plot.igraph()` with layouts and one-mode graphs
+
+# migraph 0.6.3
 
 ## Package
 
