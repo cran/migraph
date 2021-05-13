@@ -6,7 +6,7 @@
 \alias{as_igraph}
 \alias{as_tidygraph}
 \alias{as_network}
-\title{migraph-consistent object classes}
+\title{Coercion between migraph-consistent object classes}
 \usage{
 as_matrix(object)
 
@@ -17,7 +17,7 @@ as_tidygraph(object, twomode = FALSE)
 as_network(object)
 }
 \arguments{
-\item{object}{A data frame edgelist, matrix, igraph, or tidygraph object.}
+\item{object}{A data frame edgelist, matrix, igraph, tidygraph, or network object.}
 
 \item{twomode}{An option to override the heuristics for distinguishing incidence
 from adjacency matrices. By default FALSE.}
@@ -32,10 +32,16 @@ A tidygraph tbl_graph class object
 A sna/network network class object
 }
 \description{
-The \code{as_} functions in \code{{migraph}}
-typically accept edgelists (as data frames), matrices,
-igraph graph objects, or tidygraph tbl_graph objects,
-coercing them into the class designated in the function name.
+The \code{as_} functions in \code{{migraph}} coerce objects
+between several common classes of social network objects.
+These include:
+\itemize{
+\item adjacency and incidence matrices
+\item edgelists (as data frames)
+\item \code{{igraph}} \code{graph} objects
+\item \code{{tidygraph}} \code{tbl_graph} objects
+\item \code{{network}} \code{network} objects
+}
 }
 \details{
 Behaviour is a little different depending on the data format.
@@ -46,17 +52,13 @@ and the second column will become the columns.
 If the data frame is a 3 column edgelist,
 then the third column will be used as
 the cell values or tie weights.
-If the data frame is more than 3 columns,
-the first column is full of character strings (i.e. is named)
-and the second column is numeric (e.g. 0 and 1)
-then it will be assumed that this is a matrix
-embedded in a data frame.
 
 Incidence matrices are typically inferred from unequal dimensions,
 but since in rare cases a matrix with equal dimensions may still
 be an incidence matrix, an additional argument \code{twomode} can be
 specified to override this heuristic.
-This information is usually already embedded in igraph and tidygraph objects.
+This information is usually already embedded in \code{{igraph}},
+\code{{tidygraph}}, and \code{{network}} objects.
 }
 \examples{
 test <- data.frame(id1 = c("A","B","B","C","C"),
