@@ -6,11 +6,11 @@
 \alias{as_igraph}
 \alias{as_tidygraph}
 \alias{as_network}
-\title{Coercion between migraph-consistent object classes}
+\title{Coercion between graph/network object classes}
 \usage{
-as_matrix(object)
+as_matrix(object, weight = FALSE)
 
-as_igraph(object, twomode = FALSE)
+as_igraph(object, weight = FALSE, twomode = FALSE)
 
 as_tidygraph(object, twomode = FALSE)
 
@@ -19,17 +19,21 @@ as_network(object)
 \arguments{
 \item{object}{A data frame edgelist, matrix, igraph, tidygraph, or network object.}
 
+\item{weight}{An option to override the heuristics for distinguishing weighted
+networks. By default FALSE.}
+
 \item{twomode}{An option to override the heuristics for distinguishing incidence
 from adjacency matrices. By default FALSE.}
 }
 \value{
-An adjacency or incidence matrix, named if possible.
-
-An igraph graph object.
-
-A tidygraph tbl_graph class object
-
-A sna/network network class object
+The currently implemented coercions or translations are:\tabular{lccccc}{
+   to/from \tab edgelists \tab matrices \tab igraph \tab tidygraph \tab network \cr
+   edgelists (data frames) \tab  \tab  \tab  \tab  \tab  \cr
+   matrices \tab X \tab X \tab X \tab X \tab X \cr
+   igraph \tab X \tab X \tab X \tab X \tab X \cr
+   tidygraph \tab X \tab X \tab X \tab X \tab X \cr
+   network \tab X \tab X \tab X \tab X \tab X \cr
+}
 }
 \description{
 The \code{as_} functions in \code{{migraph}} coerce objects
@@ -64,13 +68,7 @@ This information is usually already embedded in \code{{igraph}},
 test <- data.frame(id1 = c("A","B","B","C","C"),
                    id2 = c("I","G","I","G","H"))
 as_matrix(test)
-test <- data.frame(id1 = c("A","B","B","C","C"),
-                   id2 = c("I","G","I","G","H"))
 as_igraph(test)
-test <- data.frame(id1 = c("A","B","B","C","C"),
-                   id2 = c("I","G","I","G","H"))
 as_tidygraph(test)
-test <- data.frame(id1 = c("A","B","B","C","C"),
-                   id2 = c("I","G","I","G","H"))
 as_network(test)
 }
