@@ -11,20 +11,26 @@
 #' If `length(n)==1`, then a two-mode network will be returned.
 #' The first number is the number of nodes in the first nodeset (rows),
 #' and the second number becomes the number of nodes in the second nodeset (columns).
-#' @importFrom igraph sample_bipartite
+#' @importFrom igraph sample_bipartite erdos.renyi.game
 #' @examples
-#' plot(generate_random(c(10, 12), 0.25))
+#' autographr(generate_random(c(10, 12), 0.25))
 #' @export
 generate_random <- function(n, p, m) {
-  
-  if(length(n)==1){
+  if (length(n) == 1) {
     type <- ifelse(is.null(p), "gnm", "gnp")
-    if(is.null(p)) p <- m
+    if (is.null(p)) p <- m
     g <- igraph::erdos.renyi.game(n, p, type = type)
-  } else if (length(n)==2){
+  } else if (length(n) == 2) {
     type <- ifelse(is.null(p), "gnm", "gnp")
-    g <- igraph::sample_bipartite(n[1], n[2], p = p, m = m, directed = FALSE, mode = "out")
-  } else stop("`n` must be of length=1 for a one-mode network or length=2 for a two-mode network.")
+    g <- igraph::sample_bipartite(n[1],
+                                  n[2],
+                                  p = p,
+                                  m = m,
+                                  directed = FALSE,
+                                  mode = "out")
+  } else {
+    stop("`n` must be of length=1 for a one-mode network or length=2 for a two-mode network.")
+  }
   g
 }
 

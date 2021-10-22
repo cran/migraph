@@ -6,7 +6,7 @@
 ![CRAN/METACRAN](https://img.shields.io/cran/v/migraph)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/snlab-ch/migraph)
 ![GitHub Release Date](https://img.shields.io/github/release-date/snlab-ch/migraph)
-[![Codecov test coverage](https://codecov.io/gh/snlab-ch/migraph/branch/main/graph/badge.svg)](https://codecov.io/gh/snlab-ch/migraph?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/snlab-ch/migraph/branch/main/graph/badge.svg)](https://app.codecov.io/gh/snlab-ch/migraph?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/snlab-ch/migraph/badge)](https://www.codefactor.io/repository/github/snlab-ch/migraph)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4559/badge)](https://bestpractices.coreinfrastructure.org/projects/4559)
 <!-- ![GitHub All Releases](https://img.shields.io/github/downloads/snlab-ch/migraph/total) -->
@@ -48,21 +48,22 @@ Functions are given intuitive and succinct names that avoid conflicts with exist
 
 #### Manipulation
 
-- `project_rows()`
-- `project_cols()`
+- `project_rows()` and `project_cols()`
+- `to_undirected()`, `to_unnamed()`, `to_unweighted()`, `to_onemode()`, and `to_main_component()`
 
 #### Measures
 
 - Centrality: `node_degree()`, `node_closeness()`, `node_betweenness()`, and `node_eigenvector()`
-- Centralization: `graph_degree()`, `graph_closeness()`, and `graph_betweenness()`
-- Cohesion: `graph_clustering()`, `node_constraint()`, `node_smallworld()`
+- Centralization: `graph_degree()`, `graph_closeness()`, `graph_betweenness()`, and `graph_eigenvector()`
+- Cohesion: `graph_density()`, `graph_reciprocity()`, `graph_transitivity()`, `graph_equivalency()`, 
+`node_constraint()`, `node_smallworld()`, `node_triad_census()` and `graph_triad_census()`
 
 #### Models
 
-- Blockmodelling: `blockmodel_concor()`
+- Blockmodelling: `blockmodel_concor()`, `cluster_structural_equivalence()`, `cluster_regular_equivalence()`
 - Linear regression: `netlm()`
 
-Please explore [the website](https://snlab-ch.github.io/migraph/) to find out more.
+Please explore [the list of functions](https://snlab-ch.github.io/migraph/reference/index.html) to find out more.
 
 ## Installation
 
@@ -99,8 +100,8 @@ and install using an adapted version of the following commands:
 To install from source the latest main version of `{migraph}` from Github, 
 please install the `{remotes}` package from CRAN and then enter into the console:
 
-- For latest stable version: `remotes::install_github("jhollway/migraph")`
-- For latest development version: `remotes::install_github("jhollway/migraph@develop")`
+- For latest stable version: `remotes::install_github("snlab-ch/migraph")`
+- For latest development version: `remotes::install_github("snlab-ch/migraph@develop")`
 
 ## Relationship to other packages
 
