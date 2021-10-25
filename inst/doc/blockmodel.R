@@ -29,7 +29,7 @@ ggidentify(m182_task, node_constraint, min)
 
 ## ----construct-cor------------------------------------------------------------
 dim(node_tie_census(ison_m182))
-structural_combo <- node_tie_census(ison_m182)
+head(structural_combo <- node_tie_census(ison_m182))
 
 ## ----cluster-str--------------------------------------------------------------
 (str_res <- cluster_structural_equivalence(structural_combo))
@@ -56,17 +56,18 @@ autographr(m182_friend, node_color = "clu") + ggtitle("Friend")
 ## ----structblock--------------------------------------------------------------
 (task_blockmodel <- blockmodel(m182_task, str_clu))
 plot(task_blockmodel)
-(friend_blockmodel <- blockmodel(m182_friend, str_clu))
-plot(friend_blockmodel)
 (social_blockmodel <- blockmodel(m182_social, str_clu))
 plot(social_blockmodel)
+(friend_blockmodel <- blockmodel(m182_friend, str_clu))
+plot(friend_blockmodel)
 
 ## ----strredgraph--------------------------------------------------------------
-(social_reduced <- reduce_graph(social_blockmodel, c("Freaks","Squares","Nerds","Geek")))
+group_labels <- c("Freaks","Squares","Nerds","Geek")
+(social_reduced <- reduce_graph(social_blockmodel, group_labels))
 autographr(social_reduced)
-(task_reduced <- reduce_graph(task_blockmodel, c("Freaks","Squares","Nerds","Geek")))
+(task_reduced <- reduce_graph(task_blockmodel, group_labels))
 autographr(task_reduced)
-(friend_reduced <- reduce_graph(friend_blockmodel, c("Freaks","Squares","Nerds","Geek")))
+(friend_reduced <- reduce_graph(friend_blockmodel, group_labels))
 autographr(friend_reduced)
 
 ## ----graphtriads--------------------------------------------------------------
