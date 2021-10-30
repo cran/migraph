@@ -29,44 +29,34 @@
 NULL
 
 #' @rdname blockmodel
-#' @param mat a (long) matrix of ties
-#' @importFrom stats as.dist hclust
-#' @examples
-#' res <- cluster_structural_equivalence(node_tie_census(mpn_elite_mex))
-#' @export
-cluster_structural_equivalence <- function(mat){
-  correlations <- cor(mat)
-  dissimilarity <- 1 - correlations
-  distances <- stats::as.dist(dissimilarity)
-  clusters <- stats::hclust(distances)
-  clusters
-}
-
-#' @rdname blockmodel
-#' @param object a migraph-consistent object
-#' @importFrom stats as.dist hclust
-#' @examples
-#' res <- cluster_regular_equivalence(node_triad_census(mpn_elite_mex))
-#' @export
-cluster_regular_equivalence <- function(object){
-  triads <- node_triad_census(object)
-  triads <- triads[,-which(colSums(triads) == 0)]
-  correlations <- cor(t(triads))
-  dissimilarity <- 1 - correlations
-  distances <- stats::as.dist(dissimilarity)
-  clusters <- stats::hclust(distances)
-  clusters
-}
-
-#' @rdname blockmodel
 #' @importFrom sna blockmodel
 #' @export
 blockmodel <- function(object, clusters){
-  mat <- as_matrix(object, weight = TRUE)
+  # if(is_twomode(object)) object <- to_onemode(object)
+  mat <- as_matrix(to_onemode(object), weight = TRUE)
   out <- sna::blockmodel(mat, clusters)
-  out$modes <- 1
-  rownames(out$blocked.data) <- out$plabels <- rownames(mat)
-  colnames(out$blocked.data) <- out$glabels <- colnames(mat)
+  if(is_twomode(object)){
+    out$modes <- 2
+    dims <- dim(as_matrix(object))
+    nodes1 <- 1:dims[1]
+    nodes2 <- (dims[1]+1):ncol(out$blocked.data)
+    out$blocked.data <- out$blocked.data[nodes1,nodes2]
+    memb <- out$block.membership
+    out$block.membership <- NULL
+    out$block.membership$nodes1 <- memb[nodes1]
+    out$block.membership$nodes2 <- memb[nodes2]-max(memb[nodes1])
+    out$plabels <- NULL
+    rownames(out$blocked.data) <- out$plabels$nodes1 <- rownames(as_matrix(object))
+    colnames(out$blocked.data) <- out$plabels$nodes2 <- colnames(as_matrix(object))
+    orders <- out$order.vector
+    out$order.vector <- NULL
+    out$order.vector$nodes1 <- orders[nodes1]
+    out$order.vector$nodes2 <- orders[nodes2]-max(orders[nodes1])
+  } else {
+    out$modes <- 1
+    rownames(out$blocked.data) <- out$plabels <- rownames(mat)
+    colnames(out$blocked.data) <- out$glabels <- colnames(mat)
+  }
   out
 }
 
@@ -76,7 +66,7 @@ blockmodel_concor <- function(object, p = 1,
                            cutoff = 0.999, max.iter = 25, 
                            block.content = "density"){
   
-  if (is.list(object) & !is.tbl_graph(object)) {
+  if (is.list(object) & !is.igraph(object)) {
     mat <- lapply(object, function(x) as_matrix(x))
     mat <- do.call(rbind, mat)
   } else mat <- as_matrix(object)

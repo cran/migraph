@@ -1,3 +1,82 @@
+# migraph 0.8.5
+
+## Package
+
+- Updated various URLs in the vignettes to pass CRAN tests
+- Reduce number of layout examples to avoid examples taking too long to run
+
+# migraph 0.8.4
+
+## Classes
+
+- Closed #128 by adding `as_edgelist()` methods for converting other objects into edgelists
+  - Note that this currently returns a tibble
+- Using `to_unnamed()` on 'network' objects now operates on them directly
+- Elaborated `to_` documentation significantly
+- Fixed bug in `to_onemode()` that was tripping `blockmodel()` on networks that are already one-mode
+- Added `is_connected()` to test whether network is connected, `method = ` argument can be specified as `weak` or `strong`
+
+## Data
+
+- Added `create_tree()` and `create_lattice()`, and made `create_star()` a bit faster for one-mode networks
+- Added `generate_smallworld()` and `generate_scalefree()`, though only for one-mode networks currently
+
+## Measures
+
+- Added rounding to centralization measures, by default `=2`
+- Closed #109 by adding centrality vignette
+
+## Modelling
+
+- Added `graph_dyad_census()` for more graph profile options
+- Fixed bug with `blockmodel_concor()` when an object was of class 'igraph' but not 'tbl_graph'
+- Fixed bug in how `blockmodel()` was treating two-mode networks
+- Closed #116 by offering both `"elbow"` and `"strict"` methods for _k_-identification
+  - Fixed bug in elbow method that biased heavily bipartitioned data
+- Closed #131 by refactoring `ggidentify_clusters()` for speed 
+  - Takes now roughly half the time (see issue for details)
+
+## Visualization
+
+- Added `ggdistrib()` for easy plotting of degree and other node score distributions
+- Reexported `ggsave()`, `xlab()` and `ylab()` from `{ggplot2}` for easier plot annotation
+
+# migraph 0.8.3
+
+## Package
+
+- Closed #108 by adding cohesion and community vignette
+
+## Classes
+
+- Fixed #122 by retaining edge weights from igraph in `as_matrix()` where available
+
+## Measures
+
+- Split `graph_equivalency()` into the same for two-mode networks and `graph_congruency() `for three-mode (two two-mode) networks
+- Added option for `graph_reciprocity()` method
+- Added `graph_components()` and `node_components()`
+
+## Modelling
+
+- Fixed #113 by retaining node labels through census functions
+- Closed #114 by transposing `node_tie_census()` output so that it's consistent with `node_triad_census()` and future node_census functions
+- Closed #121 by renaming `cluster_triad_census()` to `group_triad_census()`
+- Added `group_tie_census()`
+
+## Visualization
+
+- Added option to `autographr()` for plotting convex/concave hulls
+- Closed #124 by making `ggraphgrid()` a set of layout functions:
+  - `layout_tbl_graph_frgrid()` or `autographr(object, "frgrid")` for snapping Fruchterman-Reingold to a grid
+  - `layout_tbl_graph_kkgrid()` or `autographr(object, "kkgrid")` for snapping Kamada-Kawai to a grid
+  - `layout_tbl_graph_gogrid()` or `autographr(object, "gogrid")` for snapping graph optimisation to a grid
+  - `ggraphgrid()` has been deprecated
+
+## Data
+
+- Fixed some `ison_m182` documentation
+
 # migraph 0.8.2
 
 ## Package

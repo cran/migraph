@@ -29,10 +29,10 @@ ggidentify(m182_task, node_constraint, min)
 
 ## ----construct-cor------------------------------------------------------------
 dim(node_tie_census(ison_m182))
-head(structural_combo <- node_tie_census(ison_m182))
+head(structural_combo <- node_tie_census(ison_m182))[,c(1,17,33,49,65,81)]
 
 ## ----cluster-str--------------------------------------------------------------
-(str_res <- cluster_structural_equivalence(structural_combo))
+(str_res <- cluster_structural_equivalence(ison_m182))
 
 ## -----------------------------------------------------------------------------
 ggtree(str_res)
@@ -70,6 +70,9 @@ autographr(task_reduced)
 (friend_reduced <- reduce_graph(friend_blockmodel, group_labels))
 autographr(friend_reduced)
 
+## ----str-group----------------------------------------------------------------
+group_tie_census(m182_task, str_clu)
+
 ## ----graphtriads--------------------------------------------------------------
 (graph_triad_census(m182_task))
 
@@ -82,7 +85,7 @@ reg_res <- cluster_regular_equivalence(m182_task)
 ggtree(reg_res,4)
 
 ## ----regid--------------------------------------------------------------------
-ggidentify_clusters(reg_res, t(task_triads))
+ggidentify_clusters(reg_res, task_triads)
 
 ## ----cutreereg----------------------------------------------------------------
 ggtree(reg_res, 2)
@@ -99,5 +102,5 @@ plot(task_blockmodel)
 autographr(task_reduced)
 
 ## ----clustercensus------------------------------------------------------------
-cluster_triad_census(m182_task, reg_clu)
+group_triad_census(m182_task, reg_clu)
 
