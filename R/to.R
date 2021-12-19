@@ -13,12 +13,12 @@
 #' | undirected  |  | X | X | X | X |
 #' | unsigned  |  |  | X | X |   |
 #' | uniplex  |  |   | X | X |   |
-#' | unnamed  |  | X | X | X | X |
+#' | unnamed  | X | X | X | X | X |
 #' | named  |  | X | X | X | X |
-#' | simplex  |  |   | X | X |   |
-#' | main_component  |  |   | X | X |   |
+#' | simplex  |  | X | X | X |   |
+#' | main_component  |  |   | X | X | X |
 #' | onemode  |  |   | X | X |   |
-#' | multilevel  |  |   | X | X |   |
+#' | multilevel  |  | X | X | X |   |
 #' @name to
 #' @family manipulation
 #' @param object A matrix, `{igraph}` graph, `{tidygraph}` tbl_graph, or
@@ -52,8 +52,9 @@ to_unweighted <- function(object, threshold = 1) UseMethod("to_unweighted")
 
 #' @export
 to_unweighted.tbl_graph <- function(object, threshold = 1) {
-    out <- igraph::delete_edge_attr(object, "weight")
-    tidygraph::as_tbl_graph(out)
+  if ("weight" %in% igraph::edge_attr_names(object)) 
+    object <- igraph::delete_edge_attr(object, "weight")
+  tidygraph::as_tbl_graph(object)
 }
 
 #' @export
@@ -65,9 +66,9 @@ to_unweighted.igraph <- function(object, threshold = 1) {
 
 #' @export
 to_unweighted.network <- function(object, threshold = 1) {
-    out <- as_igraph(object)
-    out <- igraph::delete_edge_attr(out, "weight")
-    as_network(out)
+    out <- network::delete.edge.attribute(object,
+                                          attrname = "weight")
+    out
 }
 
 #' @export
@@ -109,6 +110,15 @@ to_unnamed.matrix <- function(object) {
   out
 }
 
+#' @export
+to_unnamed.data.frame <- function(object) {
+  out <- object
+  names <- unique(unlist(c(out[,1],out[,2])))
+  out[,1] <- match(unlist(object[,1]), names)
+  out[,2] <- match(unlist(object[,2]), names)
+  tibble::as_tibble(out)
+}
+
 #' @rdname to
 #' @examples
 #' to_undirected(ison_coleman)
@@ -127,10 +137,10 @@ to_undirected.tbl_graph <- function(object) {
   as_tidygraph(igraph::as.undirected(object))
 }
 
-#' @importFrom sna symmetrize
 #' @export
 to_undirected.network <- function(object) {
-  sna::symmetrize(object)
+  object$gal$directed <- FALSE
+  object
 }
 
 #' @export
@@ -154,7 +164,7 @@ to_onemode.tbl_graph <- function(object) {
 
 #' @export
 to_onemode.igraph <- function(object) {
-  if("type" %in% igraph::vertex_attr_names(object)) object <- igraph::delete_vertex_attr(object, "type")
+  if ("type" %in% igraph::vertex_attr_names(object)) object <- igraph::delete_vertex_attr(object, "type")
   object
 }
 
@@ -172,6 +182,12 @@ to_main_component.igraph <- function(object) {
   comps <- igraph::components(object)
   max.comp <- which.max(comps$csize)
   igraph::delete.vertices(object, comps$membership != max.comp)
+}
+
+#' @export
+to_main_component.network <- function(object) {
+  network::delete.vertices(object, 
+                           which(!sna::component.largest(object, result = "membership")))
 }
 
 #' @rdname to
@@ -245,6 +261,13 @@ to_simplex.igraph <- function(object) {
   igraph::simplify(object)
 }
 
+#' @export
+to_simplex.matrix <- function(object) {
+  out <- object
+  diag(out) <- 0
+  out
+}
+
 #' @rdname to
 #' @examples
 #' to_named(ison_m182)
@@ -280,5 +303,14 @@ to_multilevel.igraph <- function(object) {
   igraph::V(object)$lvl <- ifelse(igraph::V(object)$type, 2, 1)
   object <- igraph::delete_vertex_attr(object, "type")
   object
+}
+
+#' @export
+to_multilevel.matrix <- function(object) {
+  top <- cbind(matrix(0, nrow(object), nrow(object)), object)
+  bottom <- cbind(t(object), matrix(0, ncol(object), ncol(object)))
+  out <- rbind(top, bottom)
+  colnames(out) <- rownames(out)
+  out
 }
 

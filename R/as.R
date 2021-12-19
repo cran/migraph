@@ -1,13 +1,19 @@
-#' Coercion between graph/network object classes 
+#' Coercion between graph/network/edgelist/matrix object classes 
 #' 
 #' The `as_` functions in `{migraph}` coerce objects
 #' between several common classes of social network objects.
 #' These include:
+#' - edgelists, as data frames or tibbles
 #' - adjacency and incidence matrices
-#' - edgelists (as data frames)
 #' - `{igraph}` `graph` objects
 #' - `{tidygraph}` `tbl_graph` objects
 #' - `{network}` `network` objects
+#' 
+#' An effort is made for all of these coercion routines to be as lossless
+#' as possible, though some object classes are better at retaining certain
+#' kinds of information than others.
+#' Note also that there are some reserved column names in one or more
+#' object classes, which could otherwise lead to some unexpected results.
 #' @name coercion
 #' @family manipulation
 #' @param object A data frame edgelist, matrix, igraph, tidygraph, or
@@ -60,15 +66,13 @@ as_edgelist <- function(object, weight = FALSE) UseMethod("as_edgelist")
 
 #' @export
 as_edgelist.igraph <- function(object, weight = FALSE){
-  out <- igraph::as_edgelist(object)
-  colnames(out) <- c("from", "to")
+  out <- igraph::get.data.frame(object)
   tibble::as_tibble(out)
 }
 
 #' @export
 as_edgelist.tbl_graph <- function(object, weight = FALSE){
-  out <- igraph::as_edgelist(object)
-  colnames(out) <- c("from", "to")
+  out <- igraph::get.data.frame(object)
   tibble::as_tibble(out)
 }
 
@@ -76,11 +80,11 @@ as_edgelist.tbl_graph <- function(object, weight = FALSE){
 as_edgelist.network <- function(object, weight = FALSE){
   out <- sna::as.edgelist.sna(object)
   edges <- as.data.frame(out)
-  if(is_twomode(object)){
-    edges <- edges[((nrow(edges)/2)+1):nrow(edges),]
+  if (is_twomode(object)) {
+    edges <- edges[((nrow(edges)/2) + 1):nrow(edges),]
   }
   names(edges) <- c("from", "to", "weight")
-  if(is_labelled(object)){
+  if (is_labelled(object)) {
     names <- attr(out, "vnames")
     edges[,1] <- names[edges[,1]]
     edges[,2] <- names[edges[,2]]
@@ -99,6 +103,8 @@ as_matrix <- function(object, weight = FALSE) UseMethod("as_matrix")
 
 #' @export
 as_matrix.data.frame <- function(object, weight = FALSE){
+  if ("tbl_df" %in% class(object)) object <- as.data.frame(object)
+  
       if (ncol(object) == 2 | !weight) {
         object <- data.frame(object) # in case it's a tibble
         object <- as.data.frame(table(c(object[,1]),
@@ -134,7 +140,7 @@ as_matrix.matrix <- function(object, weight = FALSE) {
 #' @export
 as_matrix.igraph <- function(object, weight = FALSE) {
   if (is_twomode(object)) {
-    if (is_weighted(object)){
+    if (is_weighted(object)) {
       mat <- igraph::as_incidence_matrix(object, sparse = FALSE,
                                          attr = igraph::edge_attr_names(object)[[1]])
     } else {
@@ -142,7 +148,7 @@ as_matrix.igraph <- function(object, weight = FALSE) {
                                          attr = NULL)
     }
   } else {
-    if (is_weighted(object)){
+    if (is_weighted(object)) {
       mat <- igraph::as_adjacency_matrix(object, sparse = FALSE,
                                          attr = igraph::edge_attr_names(object)[[1]])
     } else {
@@ -154,13 +160,33 @@ as_matrix.igraph <- function(object, weight = FALSE) {
 }
 
 #' @export
-as_matrix.tbl_graph <- function(object, weight = FALSE) {
+as_matrix.tbl_graph <- function(object, 
+                                weight = FALSE) {
   as_matrix(as_igraph(object))
 }
 
 #' @export
-as_matrix.network <- function(object, weight = FALSE) {
-  network::as.matrix.network(object)
+as_matrix.network <- function(object,
+                              weight = FALSE) {
+  if (network::is.bipartite(object)) {
+    if ("weight" %in% network::list.edge.attributes(object)) {
+      network::as.matrix.network(object,
+                                 attrname = "weight",
+                                 expand.bipartite = FALSE)
+      # Note: if expand.bipartite is true it returns the adjacency matrix. If
+      # false it returns the incidence matrix that we want. Use
+      # to_multilevel(mat) on the resulting matrix to do the conversion if needed.
+    } else {
+      network::as.matrix.network(object,
+                                 expand.bipartite = FALSE)
+    }
+  } else {
+    if ("weight" %in% network::list.edge.attributes(object)) {
+      network::as.matrix.network(object, attrname = "weight")
+    } else {
+      network::as.matrix.network(object)
+    }
+  }
 }
 
 #' @rdname coercion
@@ -175,8 +201,14 @@ as_igraph <- function(object,
 as_igraph.data.frame <- function(object,
                                  weight = FALSE,
                                  twomode = FALSE) {
+  if ("tbl_df" %in% class(object)) object <- as.data.frame(object)
+  
+  # Warn if no column named weight and weight set to true
+  if (weight & !("weight" %in% names(object))) {
+    stop("Please rename the weight column of your dataframe to 'weight'")
+  }
   graph <- igraph::graph_from_data_frame(object)
-  if(length(intersect(c(object[,1]), c(object[,2]))) == 0){
+  if (length(intersect(c(object[,1]), c(object[,2]))) == 0) {
     igraph::V(graph)$type <- igraph::V(graph)$name %in% object[,2]
   }
   graph
@@ -187,9 +219,25 @@ as_igraph.matrix <- function(object,
                              weight = FALSE,
                              twomode = FALSE) {
   if (nrow(object) != ncol(object) | twomode) {
-    graph <- igraph::graph_from_incidence_matrix(object)
+    if (!(all(object %in% c(0, 1)))) {
+      graph <- igraph::graph_from_incidence_matrix(object, 
+                                                   weighted = TRUE, 
+                                                   directed = FALSE)
+    } else {
+      graph <- igraph::graph_from_incidence_matrix(object, 
+                                                   directed = FALSE)
+    }
   } else {
-    graph <- igraph::graph_from_adjacency_matrix(object)
+    if (!(all(object %in% c(0, 1)))) {
+      graph <- igraph::graph_from_adjacency_matrix(object, 
+                                                   mode = ifelse(all(object == t(object)),
+                                                                 "undirected", "directed"),
+                                                   weighted = TRUE)
+    } else {
+      graph <- igraph::graph_from_adjacency_matrix(object, 
+                                                   mode = ifelse(all(object == t(object)),
+                                                                 "undirected", "directed"))
+    }
   }
   graph
 }
@@ -211,14 +259,51 @@ as_igraph.tbl_graph <- function(object,
 }
 
 #' @export
-as_igraph.network <- function(object, weight = FALSE, 
-                                twomode = FALSE) {
+as_igraph.network <- function(object, 
+                              weight = FALSE, 
+                              twomode = FALSE) {
+  # Extract node attributes
+  attr <- names(object[[3]][[1]])
+  # Convert to igraph
   if (network::is.bipartite(object)) {
-    graph <- sna::as.sociomatrix.sna(object)
-    graph <- igraph::graph_from_incidence_matrix(graph)
+    if ("weight" %in% network::list.edge.attributes(object)) {
+      graph <- sna::as.sociomatrix.sna(object, attrname = "weight")
+      graph <- igraph::graph_from_incidence_matrix(graph, weighted = TRUE)
+    } else {
+      graph <- sna::as.sociomatrix.sna(object)
+      graph <- igraph::graph_from_incidence_matrix(graph) 
+    }
   } else {
-    graph <- sna::as.sociomatrix.sna(object)
-    graph <- igraph::graph_from_adjacency_matrix(graph)
+    if ("weight" %in% network::list.edge.attributes(object)) {
+      graph <- sna::as.sociomatrix.sna(object, attrname = "weight")
+      graph <- igraph::graph_from_adjacency_matrix(graph,
+                                                   weighted = TRUE,
+                                                   mode = ifelse(object$gal$directed,
+                                                                 "directed",
+                                                                 "undirected"))
+    } else if (length(network::list.edge.attributes(object)) > 1) {
+      object$gal$multiple <- FALSE
+      graph <- sna::as.sociomatrix.sna(object, attrname = network::list.edge.attributes(object)[1])
+      graph <- igraph::graph_from_adjacency_matrix(graph,
+                                                   weighted = TRUE,
+                                                   mode = ifelse(object$gal$directed,
+                                                                 "directed",
+                                                                 "undirected"))
+    } else {
+      graph <- sna::as.sociomatrix.sna(object)
+      graph <- igraph::graph_from_adjacency_matrix(graph,
+                                                 mode = ifelse(object$gal$directed,
+                                                               "directed",
+                                                               "undirected"))
+    }
+  }
+  # Add remaining node level attributes
+  if (length(attr) > 2) {
+    for (a in attr[2:length(attr)]) {
+      graph <- add_node_attributes(graph, 
+                                   attr_name = a, 
+                                   vector = sapply(object[[3]], "[[", a))
+    }
   }
   graph
 }
@@ -263,24 +348,52 @@ as_network.network <- function(object) {
 
 #' @export
 as_network.matrix <- function(object) {
-  if (is_twomode(object)) {
-    network::as.network(object, bipartite = TRUE)
-  } else {
-    network::as.network(object, bipartite = FALSE)
-  }
+  # Convert to adjacency matrix if not square already
+  if (nrow(object) != ncol(object)) {
+    out <- to_multilevel(object)
+  } else out <- object
+  network::as.network(out, 
+                      directed = is_directed(object),
+                      bipartite   = ifelse(is_twomode(object),
+                                           nrow(object),
+                                           FALSE),
+                      loops = ifelse(sum(diag(out)) > 0, TRUE, FALSE),
+                      ignore.eval = ifelse(is_weighted(object),
+                                           FALSE, TRUE),
+                      names.eval  = ifelse(is_weighted(object),
+                                           "weight", NULL))
 }
 
 #' @export
 as_network.igraph <- function(object) {
-  as_network(as_matrix(object))
+  name <- type <- NULL
+  attr <- as.data.frame(igraph::get.vertex.attribute(object))
+  if ("name" %in% colnames(attr)) attr <- subset(attr, select = c(-name))
+  if ("type" %in% colnames(attr)) attr <- subset(attr, select = c(-type))
+  out <- as_network(as_matrix(object, weight = is_weighted(object)))
+  if (length(attr) > 0) {
+    out <- network::set.vertex.attribute(out, names(attr), attr)
+  }
+  out
 }
 
 #' @export
 as_network.tbl_graph <- function(object) {
-  as_network(as_matrix(object))
+  nodes <- NULL
+  attr <- as.data.frame(activate(object, nodes))[-1]
+  out <- as_network(as_matrix(object, weight = is_weighted(object)))
+  if (length(attr) > 0) {
+    out <- network::set.vertex.attribute(out, names(attr), attr)
+  }
+  out
 }
 
 #' @export
 as_network.data.frame <- function(object) {
-  as_network(as_matrix(object))
+  if ("tbl_df" %in% class(object)) object <- as.data.frame(object)
+  if (is_weighted(object)) {
+    as_network(as_matrix(object, weight = TRUE))
+  } else {
+    as_network(as_matrix(object))
+  }
 }

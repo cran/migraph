@@ -1,3 +1,196 @@
+# migraph 0.8.13
+
+## Modelling
+
+* Closed #149 by adding extra column to node_tie_census in `cluster_structural_equivalence()` for isolates
+  - Note that this renders all isolates structurally equivalent
+
+# migraph 0.8.12
+
+## Package
+* Closed #168 by adding `{patchwork}` to suggested packages in DESCRIPTION
+* Updated function reference page on website
+
+## Manipulation
+* Updated `add_` functions
+  * Closed #178 by adding name to existing edges when further edges added in 
+  `mutate_edges()`
+  * Closed #179 by inferring an attribute vector is for one of the two modes 
+  where possible in `add_node_attributes()`
+* Added `is_` methods: `is_multiplex()`, `is_uniplex()`, `is_acyclic()`
+* Added `edge_` functions to identify edges by properties: `edge_mutual()`, 
+`edge_multiple()`, `edge_loop()`
+
+# migraph 0.8.11
+
+## Import and export
+- Fixed #172 by removing redundant header argument in `read_nodelist()` and
+  `read_edgelist()`
+
+## Package
+- Fixed #173 by extending `as_network()` method to convert correctly form
+  an `{igraph}` to a `{network}` object.
+- Removed `ggraphgrid()` documentation
+
+# migraph 0.8.10
+
+## Import and export
+* Replaced xlsx dependency in `read_edgelist()` and `read_nodelist()` to readxl 
+to avoid Java dependency
+* Replaced xlsx dependency in `write_edgelist()` and `write_nodelist()` to avoid
+Java dependency
+  * Note that these functions will now export to .csv rather than .xlsx
+  
+## Manipulation
+* Fixed direction recognition bug in `as_network()`, `as_igraph()`, and 
+`is_directed()`
+
+# migraph 0.8.9
+
+## Package
+* Closed #139 by adding vignette on importing and connecting data
+
+## Import and export
+* Added `read_` and `write_` functions and updated documentation
+  * Closed #137 by adding `read_edgelist()` for importing edgelists from
+  Excel and csv files
+  * Closed #170 by adding `read_pajek()` for importing .net and .paj files
+  * Added `write_edgelist()`, `write_nodelist`, `write_pajek()`, and 
+  `write_ucinet()` for exporting into various file formats (Excel, csv, 
+  Pajek, and UCINET)
+  * Closed #140 by adding links to further data resources
+
+## Manipulation
+* Added `is_graph()` to check if an object is a graph or not
+* Extended `as_network()` to retain attributes
+* Fixed bugs in `as_` and `to_` functions
+  * Fixed bug in `as_` functions to convert from dataframes instead of 
+  tibbles
+  * Fixed bug in conversion from network to igraph object in `as_igraph()` 
+  function
+  * Fixed bug in `to_undirected()` function to work with network objects
+  * Fixed bug in `to_main_component()` function so that it retains vertex 
+  attributes in network objects
+* Added `edge_attribute()` to grab a named edge attribute from a graph/network
+* Updated `to_unweighted()` to prevent conversion of network object into igraph 
+object when deleting weights
+
+## Measures
+* Closed #143 by adding nodal summary by cluster function `summarise_statistics()`
+
+## Modelling
+* Fixed `network_reg()` example
+
+## Visualisation
+* Closed #117 by updating the node/edge/arrow size limits in `autographr()`
+
+# migraph 0.8.8
+
+## Package
+
+- Added start to network linear model part of practical 7 vignette
+- Thanks to @BBieri for adding many tests and working on igraph<->network interchange 
+
+## Data
+
+- Added `ison_eies` dataset for use in practical 7 vignette
+
+## Manipulation
+
+- The `as_matrix()` method for networks now works with two-mode and weighted networks
+- The `as_igraph()` method for matrices now checks for weights independently of coercion
+- The `as_igraph()` method for networks now works with two-mode and weighted networks
+- The `as_network()` method for matrices now works with two-mode and weighted networks
+- The `as_network()` method for edgelists, igraph, and tidygraphs now works with weighted networks
+- Added `to_unnamed()` method for edge lists
+- Added `to_simplex()` method for matrices
+- Added `to_main_component()` method for networks
+- Added `to_multilevel()` method for matrices
+- `mutate_edges()` now coalesces rows of edges 
+
+## Measures
+
+- Fixed bug where clusters were not being reported in the correct order in `graph_blau_index()`
+
+## Modelling
+
+- Fixed one-mode bug with `generate_permutation()` and thus `test_permutation()`
+- Renamed `netlm()` to `network_reg()` to avoid frustrating conflicts
+  - `network_reg()` now accepts migraph-consistent objects
+  - `network_reg()` now accepts formula terms such as `ego()`, `alter()`, and `same()`
+
+# migraph 0.8.7
+
+## Package
+
+- Added new issue templates and refined the wording in existing templates
+- Improved documentation across many help pages
+- Closed #146 by adding vignette on homophily
+
+## Data
+
+- Added `generate_permutation()` which takes an object and returns an object
+  with the edges permuted, but retaining all nodal attributes
+- Made `generate_random()` also work with an existing object as input,
+  in which it will return a random graph with the same dimensions and density
+- Consolidated data scripts
+
+## Manipulation
+
+- Added `mutate_edges()` for adding new edges as attributes to existing edges
+  in an object
+
+## Measures
+
+- Closed #159 by fixing bug in `graph_blau_index()`
+- Closed #157 by fixing bug in `graph_ei_index()`
+- Closed #156 and #158 by fixing bugs with `test_random()` (defunct `test_cug()`)
+
+## Visualisation
+
+- Closed #148 and #153 by making all `autographr()` arguments take variable names in
+  quotation marks
+
+# migraph 0.8.6
+
+## Package
+
+- Closed #75 by updating the README
+
+## Manipulation
+
+- Added some functions for grabbing key information from objects
+  - `node_names()` for quickly accessing node labels
+  - `node_attribute()` for quickly accessing a certain nodal attribute
+  - `edge_weights()` for quickly accessing edge weights
+  - `graph_nodes()` for quickly accessing a count of nodes in the graph, note that for two-mode networks this will be a vector of length 2
+  - `graph_edges()` for quickly accessing a count of edges in the graph
+  - `graph_dimensions()` is currently a copy of `graph_nodes()`
+- Added some functions for adding key information to objects
+  - `add_node_attributes()` for adding particular nodal attributes
+  - `add_edge_attributes()` for adding edges from another graph
+  - `copy_edge_attributes()` for copying all nodal attributes from another graph
+- Improved twomode and weighted handling of several functions
+
+## Measures
+
+- Added diversity functions
+  - `graph_blau_index()` for summarising diversity of an attribute in a network or group
+  - `graph_ei_index()` for summarising diversity of an attribute over a network's ties
+
+## Modelling
+
+- Closed #119 by adding `node_quad_census()`, especially useful for two-mode blockmodelling
+- Closed #95 and #120 by adding `graph_mixed_census()`
+- Closed #97 by adding test functions
+  - `test_random()` carries out a conditional uniform graph (CUG) test
+  - `test_permutation()` carries out a quadratic assignment procedure (QAP) test
+
+## Visualization
+
+- Closed #135 by reexporting `aes()` from `{ggplot2}`
+- Added `node_shape` option to `autographr()`
+
 # migraph 0.8.5
 
 ## Package

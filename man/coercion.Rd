@@ -7,7 +7,7 @@
 \alias{as_igraph}
 \alias{as_tidygraph}
 \alias{as_network}
-\title{Coercion between graph/network object classes}
+\title{Coercion between graph/network/edgelist/matrix object classes}
 \usage{
 as_edgelist(object, weight = FALSE)
 
@@ -44,14 +44,20 @@ The \code{as_} functions in \code{{migraph}} coerce objects
 between several common classes of social network objects.
 These include:
 \itemize{
+\item edgelists, as data frames or tibbles
 \item adjacency and incidence matrices
-\item edgelists (as data frames)
 \item \code{{igraph}} \code{graph} objects
 \item \code{{tidygraph}} \code{tbl_graph} objects
 \item \code{{network}} \code{network} objects
 }
 }
 \details{
+An effort is made for all of these coercion routines to be as lossless
+as possible, though some object classes are better at retaining certain
+kinds of information than others.
+Note also that there are some reserved column names in one or more
+object classes, which could otherwise lead to some unexpected results.
+
 Behaviour is a little different depending on the data format.
 
 If the data frame is a 2 column edgelist,

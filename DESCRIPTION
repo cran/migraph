@@ -1,7 +1,7 @@
 Package: migraph
 Title: Multimodal and Multilevel Network Analysis
-Version: 0.8.5
-Date: 2021-10-29
+Version: 0.8.13
+Date: 2021-12-19
 Description: A set of tools that extend common social network analysis packages
    for analysing multimodal and multilevel networks.
    It includes functions for one- and two-mode (and sometimes three-mode) 
@@ -21,20 +21,27 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 Imports: dplyr, ggdendro, ggraph, ggplot2, gridExtra, igraph, magrittr,
-        network, purrr, RColorBrewer, readxl, rlang, sna, stringr,
-        tibble, tidygraph, tidyr, concaveman, ggforce
-Suggests: knitr, testthat, rmarkdown, roxygen2, covr
+        network, oaqc, purrr, RColorBrewer, rlang, sna, stringr,
+        tibble, tidygraph, tidyr, concaveman, ggforce, readxl
+Suggests: covr, knitr, patchwork, rmarkdown, roxygen2, testthat
 Authors@R: 
     c(person(given = "James",
              family = "Hollway",
              role = c("cph", "cre", "aut", "ctb"),
              email = "james.hollway@graduateinstitute.ch",
-             comment = c("IHEID", ORCID = "0000-0002-8361-9647")))
+             comment = c("IHEID", ORCID = "0000-0002-8361-9647")),
+      person(given = "Bernhard",
+           family = "Bieri",
+           role = c("ctb"),
+           email = "bernhard.bieri@graduateinstitute.ch",
+           comment = c(ORCID = "0000-0001-5943-9059"))
+    )
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-10-29 16:33:02 UTC; hollway
+Packaged: 2021-12-18 20:38:08 UTC; hollway
 Author: James Hollway [cph, cre, aut, ctb] (IHEID,
-    <https://orcid.org/0000-0002-8361-9647>)
+    <https://orcid.org/0000-0002-8361-9647>),
+  Bernhard Bieri [ctb] (<https://orcid.org/0000-0001-5943-9059>)
 Maintainer: James Hollway <james.hollway@graduateinstitute.ch>
 Repository: CRAN
-Date/Publication: 2021-10-30 09:50:06 UTC
+Date/Publication: 2021-12-19 02:10:02 UTC

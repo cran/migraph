@@ -11,7 +11,7 @@ cluster_structural_equivalence(object)
 cluster_regular_equivalence(object)
 }
 \arguments{
-\item{object}{a migraph-consistent object}
+\item{object}{A migraph-consistent object.}
 }
 \description{
 These functions combine an appropriate \verb{_census()} function
@@ -21,4 +21,5 @@ provided by a certain distance calculation.
 \examples{
 ggtree(cluster_structural_equivalence(mpn_elite_mex))
 ggtree(cluster_regular_equivalence(mpn_elite_mex))
+ggtree(cluster_regular_equivalence(mpn_elite_usa_advice))
 }

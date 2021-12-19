@@ -4,6 +4,7 @@
 \alias{census}
 \alias{node_tie_census}
 \alias{node_triad_census}
+\alias{node_quad_census}
 \alias{group_tie_census}
 \alias{group_triad_census}
 \title{Census by nodes or clusters}
@@ -12,16 +13,18 @@ node_tie_census(object)
 
 node_triad_census(object)
 
+node_quad_census(object)
+
 group_tie_census(object, clusters, decimals = 2)
 
 group_triad_census(object, clusters, decimals = 2)
 }
 \arguments{
-\item{object}{a migraph-consistent object}
+\item{object}{A migraph-consistent object.}
 
-\item{clusters}{a vector of cluster assignment}
+\item{clusters}{a vector of cluster assignment.}
 
-\item{decimals}{number of decimal points to round to}
+\item{decimals}{Number of decimal points to round to.}
 }
 \description{
 These functions include ways to take a census of the positions of nodes
@@ -34,6 +37,7 @@ the profiles of clusters of nodes in a network.
 task_eg <- to_named(to_uniplex(ison_m182, "task_tie"))
 (tie_cen <- node_tie_census(task_eg))
 (triad_cen <- node_triad_census(task_eg))
+(quad_cen <- node_quad_census(southern_women))
 group_tie_census(task_eg, cutree(cluster_structural_equivalence(task_eg), 4))
 group_triad_census(task_eg, cutree(cluster_regular_equivalence(task_eg), 4))
 }
