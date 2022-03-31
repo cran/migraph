@@ -41,12 +41,18 @@ autographr(marvel_friends,
 (obs.attract <- graph_ei_index(marvel_friends, "Attractive")) 
 
 ## ----rando--------------------------------------------------------------------
-(rand.gender <- test_random(marvel_friends, graph_ei_index, attribute = "Gender"))
-(rand.power <- test_random(marvel_friends, graph_ei_index, attribute = "PowerOrigin"))
-(rand.attract <- test_random(marvel_friends, graph_ei_index, attribute = "Attractive"))
-par(mfrow=c(1,3))
-plot(rand.gender)
-plot(rand.power)
+rand.gender <- test_random(marvel_friends, 
+                            graph_ei_index, attribute = "Gender", 
+                           times = 200)
+rand.power <- test_random(marvel_friends, 
+                           graph_ei_index, attribute = "PowerOrigin", 
+                           times = 200)
+rand.attract <- test_random(marvel_friends, 
+                             graph_ei_index, attribute = "Attractive", 
+                           times = 200)
+library(patchwork)
+plot(rand.gender) / 
+plot(rand.power) /
 plot(rand.attract)
 
 ## ----perm---------------------------------------------------------------------
@@ -54,30 +60,37 @@ old <- autographr(marvel_friends,
                   labels = FALSE, node_size = 6, 
                   node_color = "PowerOrigin", 
                   node_shape = "Gender")
-new <- autographr(generate_permutation(marvel_friends),
+new <- autographr(generate_permutation(marvel_friends, with_attr = TRUE),
                    labels = FALSE, node_size = 6,
                   node_color = "PowerOrigin",
                   node_shape = "Gender")
-grid.arrange(old, new)
+library(patchwork)
+old + new
 
 ## ----test_permute-------------------------------------------------------------
-par(mfrow=c(1,2))
-perm.gender <- test_permutation(marvel_friends, graph_ei_index, attribute = "Gender")
-plot(perm.gender) # Sorry the labelling on this is not right yet, will fix this next...
-perm.power <- test_permutation(marvel_friends, graph_ei_index, attribute = "PowerOrigin")
-plot(perm.power)
+perm.gender <- test_permutation(marvel_friends, 
+                                graph_ei_index, attribute = "Gender",
+                                times = 200)
+perm.power <- test_permutation(marvel_friends, 
+                               graph_ei_index, attribute = "PowerOrigin",
+                                times = 200)
 
 ## ----cugqap-------------------------------------------------------------------
-plot(rand.gender)
-plot(rand.power)
-plot(perm.gender)
-plot(perm.power)
+library(patchwork)
+(plot(rand.gender) | plot(rand.power)) /
+(plot(perm.gender) | plot(perm.power))
 
 ## ----intro-eies---------------------------------------------------------------
-autographr(ison_eies,
+ison_networkers
+autographr(ison_networkers,
            node_color = "Discipline")
 
-## ----qap-attr-----------------------------------------------------------------
-model1 <- network_reg(weight ~ ego(Citations) + alter(Citations) + same(Discipline), ison_eies)
-summary(model1)
+## ----qap-max------------------------------------------------------------------
+model1 <- network_reg(weight ~ alter(Citations) + same(Discipline), 
+                      ison_networkers, times = 200)
+
+## ----qap-interp---------------------------------------------------------------
+tidy(model1)
+glance(model1)
+plot(model1)
 

@@ -7,21 +7,22 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 suppressPackageStartupMessages(library(igraph))
 suppressPackageStartupMessages(library(migraph))
-data("ison_m182", package = "migraph")
-# ?migraph::ison_m182
+data("ison_algebra", package = "migraph")
+# ?migraph::ison_algebra
 
 ## ----addingnames--------------------------------------------------------------
-ison_m182 <- to_named(ison_m182)
-autographr(ison_m182)
+ison_algebra <- to_named(ison_algebra)
+autographr(ison_algebra)
 
 ## ----separatingnets-----------------------------------------------------------
-(m182_friend <- to_uniplex(ison_m182, "friend_tie"))
+(m182_friend <- to_uniplex(ison_algebra, "friend_tie"))
 gfriend <- autographr(m182_friend) + ggtitle("Friendship")
-(m182_social <- to_uniplex(ison_m182, "social_tie"))
+(m182_social <- to_uniplex(ison_algebra, "social_tie"))
 gsocial <- autographr(m182_social) + ggtitle("Social")
-(m182_task <- to_uniplex(ison_m182, "task_tie"))
+(m182_task <- to_uniplex(ison_algebra, "task_tie"))
 gtask <- autographr(m182_task) + ggtitle("Task")
-grid.arrange(gfriend, gsocial, gtask, ncol = 3)
+library(patchwork)
+gfriend + gsocial + gtask
 
 ## ----dens-explicit------------------------------------------------------------
 length(E(m182_task))/(length(V(m182_task))*(length(V(m182_task))-1))
@@ -100,23 +101,23 @@ autographr(m182_friend,
            node_group = "fg_comm")
 
 ## ----setup-women--------------------------------------------------------------
-data("southern_women")
-southern_women
-autographr(southern_women, node_color = "type")
+data("ison_southern_women")
+ison_southern_women
+autographr(ison_southern_women, node_color = "type")
 
 ## ----hardway------------------------------------------------------------------
-twomode_matrix <- as_matrix(southern_women)
+twomode_matrix <- as_matrix(ison_southern_women)
 women_matrix <- twomode_matrix %*% t(twomode_matrix)
 event_matrix <- t(twomode_matrix) %*% twomode_matrix
 
 ## ----easyway------------------------------------------------------------------
-women_graph <- project_rows(southern_women)
+women_graph <- project_rows(ison_southern_women)
 autographr(women_graph)
-event_graph <- project_cols(southern_women)
+event_graph <- project_cols(ison_southern_women)
 autographr(event_graph)
 
 ## ----twomode-cohesion---------------------------------------------------------
-graph_equivalency(southern_women)
+graph_equivalency(ison_southern_women)
 graph_transitivity(women_graph)
 graph_transitivity(event_graph)
 

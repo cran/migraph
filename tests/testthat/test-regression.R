@@ -1,26 +1,36 @@
-test <- network_reg(weight ~ ego(Citations) + alter(Citations) + same(Discipline), ison_eies)
+set.seed(123)
+networkers <- ison_networkers %>% dplyr::filter(Discipline == "Sociology") %>% 
+  activate(edges) %>% mutate(messaged = 1)
+
+test <- network_reg(weight ~ alter(Citations) + sim(Citations), 
+                     networkers, times = 60)
+test_logit <- network_reg(messaged ~ alter(Citations) + sim(Citations), 
+                          networkers, times = 60)
 
 test_that("network_reg estimates correctly",{
-  set.seed(123)
   expect_s3_class(test, "netlm")
-  expect_equal(round(unname(test$coefficients),3), c(19.506, -0.150, -0.127, 4.194))
+  expect_equal(round(unname(test$coefficients),3), 
+               c(-11.526, -0.077, 49.250))
+  expect_s3_class(test_logit, "netlogit")
+  expect_equal(round(unname(test_logit$coefficients),3), 
+               c(-2.458, 0.007, 2.741))
 })
 
-test <- summary(test, reps = 100)
-
-test_that("summary and print work correctly for network_reg",{
-  set.seed(123)
-  expect_s3_class(test, "summary.netlm")
-  expect_equal(test$r.squared, 0.0223, tolerance = 0.01)
-  expect_equal(test$adj.r.squared, 0.0194, tolerance = 0.01)
-  # expect_equal(test$pvals, c(0.38, 0.84, 0.79), tolerance = 0.05)
+test_that("network_reg tests correctly",{
+  expect_equal(test$pgreqabs, 
+               c(0.57, 0.83, 0.05), tolerance = 0.1)
+  expect_equal(test_logit$pgreqabs, 
+               c(0.00, 0.74, 0.02), tolerance = 0.1)
 })
 
-test_that("print method work correctly for netlm",{
-  set.seed(123)
-  test <- capture.output(print(test))
-  expect_equal(test[[2]], "Call:")
-  expect_equal(test[[3]], "network_reg(formula = weight ~ ego(Citations) + alter(Citations) + ")
-  expect_equal(test[[7]], "Coefficients:")
-  expect_equal(test[[13]], "---")
+tidys <- tidy(test)
+test_that("tidy works correctly for network_reg",{
+  expect_s3_class(tidys, "tbl_df")
+  expect_equal(round(unname(tidys$estimate[1]), 3), -11.526)
+})
+
+glances <- glance(test)
+test_that("glance works correctly for network_reg",{
+  expect_s3_class(glances, "tbl_df")
+  expect_equal(round(glances$r.squared, 4), 0.051)
 })
