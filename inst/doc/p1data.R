@@ -43,8 +43,8 @@ to_undirected(ison_algebra)
 to_unsigned(ison_marvel_relationships, keep = "positive")
 
 ## ----project------------------------------------------------------------------
-project_rows(ison_southern_women)
-project_cols(ison_southern_women)
+to_mode1(ison_southern_women)
+to_mode2(ison_southern_women)
 
 ## ----mutate-------------------------------------------------------------------
 as_tidygraph(mpn_elite_mex) %>% 
@@ -61,4 +61,9 @@ node_names(mpn_elite_mex) # gets the names of the nodes
 node_attribute(ison_marvel_relationships, "Gender") # gets any named nodal attribute
 edge_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
 edge_weights(mpn_elite_mex)
+
+## ----dims---------------------------------------------------------------------
+graph_nodes(mpn_elite_mex)
+graph_edges(mpn_elite_mex)
+graph_dims(mpn_elite_mex)
 

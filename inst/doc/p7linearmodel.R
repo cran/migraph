@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 library(migraph)
 marvel_friends <- to_unsigned(ison_marvel_relationships, keep = "positive")
 marvel_friends <- to_main_component(marvel_friends)
-marvel_friends <- marvel_friends %>% filter(Appearances >= mean(Appearances))
+marvel_friends <- marvel_friends %>% to_subgraph(Appearances >= mean(Appearances))
 marvel_friends
 
 ## ----vis----------------------------------------------------------------------

@@ -6,10 +6,10 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(migraph)
-ison_brandes
 autographr(ison_brandes)
 
 ## ----coercion-----------------------------------------------------------------
+ison_brandes
 as_igraph(ison_brandes)
 as_network(ison_brandes)
 mat <- as_matrix(ison_brandes)
@@ -22,7 +22,8 @@ rowSums(mat) == colSums(mat)
 node_degree(ison_brandes)
 
 ## ----distrib------------------------------------------------------------------
-ggdistrib(ison_brandes, node_degree)
+plot(node_degree(ison_brandes), "h") +
+  plot(node_degree(ison_brandes), "d")
 
 ## ----micent-------------------------------------------------------------------
 node_betweenness(ison_brandes)
@@ -31,28 +32,30 @@ node_eigenvector(ison_brandes)
 # TASK: Can you create degree distributions for each of these?
 
 ## ----ggid---------------------------------------------------------------------
-ggidentify(ison_brandes, node_degree)
-ggidentify(ison_brandes, node_betweenness)
-ggidentify(ison_brandes, node_closeness)
-ggidentify(ison_brandes, node_eigenvector)
+autographr(ison_brandes, node_measure = node_degree) +
+autographr(ison_brandes, node_measure = node_betweenness)
+autographr(ison_brandes, node_measure = node_closeness) +
+autographr(ison_brandes, node_measure = node_eigenvector)
 
 ## ----centzn-------------------------------------------------------------------
 graph_degree(ison_brandes)
 graph_betweenness(ison_brandes)
 graph_closeness(ison_brandes)
-graph_eigenvector(ison_brandes) # note that graph_eigenvector() is not yet implemented for two-mode networks
-graph_eigenvector(ison_brandes, digits = 4)
-graph_eigenvector(ison_brandes, digits = FALSE)
+graph_eigenvector(ison_brandes)
+graph_degree(ison_southern_women)
+graph_betweenness(ison_southern_women)
+graph_closeness(ison_southern_women)
+graph_eigenvector(ison_southern_women)
 
 ## ----multiplot----------------------------------------------------------------
-gd <- ggidentify(ison_brandes, node_degree) + 
-  ggtitle("Degree", subtitle = graph_degree(ison_brandes))
-gc <- ggidentify(ison_brandes, node_closeness) + 
+gd <- autographr(ison_brandes, node_measure = node_degree) + 
+  ggtitle("Degree", subtitle = round(graph_degree(ison_brandes), 2))
+gc <- autographr(ison_brandes, node_measure = node_closeness) + 
   ggtitle("Closeness", subtitle = round(graph_closeness(ison_brandes), 2))
-gb <- ggidentify(ison_brandes, node_betweenness) + 
+gb <- autographr(ison_brandes, node_measure = node_betweenness) + 
   ggtitle("Betweenness", subtitle = round(graph_betweenness(ison_brandes), 2))
-ge <- ggidentify(ison_brandes, node_eigenvector) + 
-  ggtitle("Eigenvector")
+ge <- autographr(ison_brandes, node_measure = node_eigenvector) + 
+  ggtitle("Eigenvector", subtitle = round(graph_eigenvector(ison_brandes), 2))
 library(patchwork)
 (gd | gb) / (gc | ge)
 # ggsave("brandes-centralities.pdf")
