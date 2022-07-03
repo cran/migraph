@@ -13,9 +13,21 @@
 <meta name="author" content="James Hollway" />
 
 
-<title>Practical 1</title>
+<title>1. Data</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -127,7 +139,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -139,27 +331,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">Practical 1</h1>
+<h1 class="title toc-ignore">1. Data</h1>
 <h4 class="author">James Hollway</h4>
 
 
 
-<div id="working-with-network-data" class="section level1">
-<h1>Working with network data</h1>
-<p>While <code>{migraph}</code> includes a number of datasets (see <a href="https://snlab-ch.github.io/migraph/reference/index.html#section-data">here</a>), and there are several packages in R that already include a range of social network data, there often comes a time when it is necessary to import and analyse data from other sources. Fortunately, <code>{migraph}</code> has a range of tools you can employ to import your data and manipulate it.</p>
+<div id="obtaining-data" class="section level1">
+<h1>Obtaining data</h1>
+<p>While <code>{migraph}</code> includes a number of datasets (see <a href="https://snlab-ch.github.io/migraph/reference/index.html#data">here</a>),
+and there are several packages in R that already include a range of
+social network data, there often comes a time when it is necessary to
+import and analyse data from other sources. Fortunately,
+<code>{migraph}</code> has a range of tools you can employ to import
+your data and manipulate it.</p>
+<div id="finding-data" class="section level2">
+<h2>Finding data</h2>
+<p>There are a great number of networks datasets and data resources.
+Here we keep just a necessarily partial list, but we are happy to update
+it whenever additional datasets are suggested. See for example:</p>
+<ul>
+<li><a href="https://sites.google.com/site/ucinetsoftware/datasets?authuser=0">UCINET
+data</a></li>
+<li><a href="http://vlado.fmf.uni-lj.si/pub/networks/data/">Pajek
+data</a></li>
+</ul>
+<p>See also:</p>
+<ul>
+<li><a href="http://networkdata.schochastics.net/">networkdata</a></li>
+<li><a href="http://www-personal.umich.edu/~mejn/netdata/">GML
+datasets</a></li>
+<li><a href="http://networkdata.ics.uci.edu/">UCIrvine Network Data
+Repository</a></li>
+<li><a href="http://konect.cc/">KONECT project</a></li>
+<li><a href="http://snap.stanford.edu/data/">SNAP Stanford Large Network
+Dataset Collection</a></li>
+<li><a href="https://www.congressindata.com/data-download/">Congress in
+Data</a></li>
+</ul>
+<p>Please let us know if you identify any further repositories of social
+or political networks and we would be happy to add them here.</p>
 </div>
-<div id="import-data" class="section level1">
-<h1>Import data</h1>
-<p><code>{migraph}</code> includes several functions that help read from (import) and write to (export) network data in a growing number of formats.</p>
-<p>One format most users are long familiar with is Excel. In Excel, users are typically collecting network data as edgelists, nodelists, or both. Edgelists are typically the main object to be imported, and we can import them from an Excel file or a <code>.csv</code> file.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div id="import-data" class="section level2">
+<h2>Import data</h2>
+<p><code>{migraph}</code> includes several functions that help read from
+(import) and write to (export) network data in a growing number of
+formats.</p>
+<p>One format most users are long familiar with is Excel. In Excel,
+users are typically collecting network data as edgelists, nodelists, or
+both. Edgelists are typically the main object to be imported, and we can
+import them from an Excel file or a <code>.csv</code> file.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(migraph)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">read_edgelist</span>(<span class="st">&quot;~Downloads/mynetworkdata.xlsx&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">read_edgelist</span>(<span class="st">&quot;~Downloads/mynetworkdata.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">read_edgelist</span>(<span class="st">&quot;~Downloads/mynetworkdata.csv&quot;</span>, <span class="at">sv =</span> <span class="st">&quot;semi-colon&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">read_edgelist</span>()</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">read_nodelist</span>()</span></code></pre></div>
-<p>If you do not specify a particular file name, a helpful popup will open that assists you with locating and importing a file from your operating system. Importing a nodelist of nodal attributes operates very similarly.</p>
-<p>In some cases, users will be faced with having to collect data themselves, or wish to first manipulate the data in Excel before importing it, but may be uncertain about the expected format of an edgelist. Here it may be useful to try exporting one of the built-in datasets in <code>{migraph}</code> to see how complete network data looks. If this is potentially complex, calling <code>write_edgelist()</code> without any arguments will export a test file with a barebones structure that you can overwrite with your own data.</p>
-<p>There are other functions here too that help import from or export to common external network data formats. Here are some examples:</p>
+<p>If you do not specify a particular file name, a helpful popup will
+open that assists you with locating and importing a file from your
+operating system. Importing a nodelist of nodal attributes operates very
+similarly.</p>
+<p>In some cases, users will be faced with having to collect data
+themselves, or wish to first manipulate the data in Excel before
+importing it, but may be uncertain about the expected format of an
+edgelist. Here it may be useful to try exporting one of the built-in
+datasets in <code>{migraph}</code> to see how complete network data
+looks. If this is potentially complex, calling
+<code>write_edgelist()</code> without any arguments will export a test
+file with a barebones structure that you can overwrite with your own
+data.</p>
+<p>There are other functions here too that help import from or export to
+common external network data formats. Here are some examples:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for importing .net or .paj files</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_pajek</span>()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_pajek</span>()</span>
@@ -168,12 +408,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">read_ucinet</span>()</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write_ucinet</span>()</span></code></pre></div>
 </div>
-<div id="converting-between-formats" class="section level1">
-<h1>Converting between formats</h1>
-<p>By default, <code>read_</code> and <code>write_</code> <code>edgelist</code> and <code>nodelist</code> will import objects into a data frame or tibble format or ‘class’ object, and <code>read_</code> and <code>write_</code> <code>pajek</code> or <code>ucinet</code> will import objects into a tidygraph class format.</p>
-<p>These can be already useful, as <code>{migraph}</code> functions recognise and work with most main classes of network/graph objects in R: edgelists, matrices, igraph, tidygraph, and network objects.</p>
-<p>However it is sometimes necessary to convert a given object from one class to another. Here we can use any of a collection of coercion functions, all prefixed by <code>as_</code>, to move from any of those objects that <code>{migraph}</code> recognises to any other.</p>
-<p>Let’s use one of the built in datasets in <code>{migraph}</code> to demonstrate this. Davis, Gardner and Gardner’s (1941) <code>ison_southern_women</code> dataset is a classic two-mode network, so let’s use this to start with. <code>{migraph}</code> stores this dataset as an ‘igraph’ object, though other included datasets are in ‘tidygraph’ or sometimes ‘network’ formats.</p>
+<div id="converting-between-formats" class="section level2">
+<h2>Converting between formats</h2>
+<p>By default, <code>read_</code> and <code>write_</code>
+<code>edgelist</code> and <code>nodelist</code> will import objects into
+a data frame or tibble format or ‘class’ object, and <code>read_</code>
+and <code>write_</code> <code>pajek</code> or <code>ucinet</code> will
+import objects into a tidygraph class format.</p>
+<p>These can be already useful, as <code>{migraph}</code> functions
+recognise and work with most main classes of network/graph objects in R:
+edgelists, matrices, igraph, tidygraph, and network objects.</p>
+<p>However it is sometimes necessary to convert a given object from one
+class to another. Here we can use any of a collection of coercion
+functions, all prefixed by <code>as_</code>, to move from any of those
+objects that <code>{migraph}</code> recognises to any other.</p>
+<p>Let’s use one of the built in datasets in <code>{migraph}</code> to
+demonstrate this. Davis, Gardner and Gardner’s (1941)
+<code>ison_southern_women</code> dataset is a classic two-mode network,
+so let’s use this to start with. <code>{migraph}</code> stores this
+dataset as an ‘igraph’ object, though other included datasets are in
+‘tidygraph’ or sometimes ‘network’ formats.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(migraph)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ison_southern_women <span class="co"># this is in igraph format</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; IGRAPH f8d9f5f UN-B 32 93 -- </span></span>
@@ -268,23 +522,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- For converting into igraph and tidygraph objects, there is the option of retaining the network as a two-mode network (keeping different types of nodes) or simplifying it into a one-mode network.  -->
 <!-- Just specify it using the argument `twomode = TRUE` or `twomode = FALSE` respectively. -->
 </div>
-<div id="transforming-network-data" class="section level1">
-<h1>Transforming network data</h1>
-<p>Generally, <code>{migraph}</code> attempts to retain as much information as possible when converting objects between different classes. The presumption is that users should explicitly decide to reduce or simplify their data. <code>{migraph}</code> includes <a href="https://snlab-ch.github.io/migraph/reference/to.html">a number of functions</a> for transforming (or removing) certain properties of network objects. For example:</p>
+</div>
+<div id="working-with-network-data" class="section level1">
+<h1>Working with network data</h1>
+<div id="transforming-network-data" class="section level2">
+<h2>Transforming network data</h2>
+<p>Generally, <code>{migraph}</code> attempts to retain as much
+information as possible when converting objects between different
+classes. The presumption is that users should explicitly decide to
+reduce or simplify their data. <code>{migraph}</code> includes <a href="https://snlab-ch.github.io/migraph/reference/reformat.html">a
+number of functions</a> for transforming (or removing) certain
+properties of network objects. For example:</p>
 <ul>
-<li><code>to_unnamed()</code> removes/anonymises all vertex/node labels</li>
-<li><code>to_undirected()</code> replaces directed ties with an undirected tie (if an arc in either direction is present)</li>
-<li><code>to_unweighted()</code> binarises or dichotomises a network around a particular threshold (by default <code>1</code>)</li>
-<li><code>to_unsigned()</code> returns just the “positive” or “negative” ties from a signed network, respectively</li>
-<li><code>to_uniplex()</code> reduces a multigraph or multiplex network to one with a single set of edges or ties</li>
-<li><code>to_simplex()</code> removes all loops or self-ties from a complex network</li>
+<li><code>to_unnamed()</code> removes/anonymises all vertex/node
+labels</li>
+<li><code>to_undirected()</code> replaces directed ties with an
+undirected tie (if an arc in either direction is present)</li>
+<li><code>to_unweighted()</code> binarises or dichotomises a network
+around a particular threshold (by default <code>1</code>)</li>
+<li><code>to_unsigned()</code> returns just the “positive” or “negative”
+ties from a signed network, respectively</li>
+<li><code>to_uniplex()</code> reduces a multigraph or multiplex network
+to one with a single set of edges or ties</li>
+<li><code>to_simplex()</code> removes all loops or self-ties from a
+complex network</li>
 </ul>
 <p>Then there are a few more special functions included here too:</p>
 <ul>
-<li><code>to_multilevel()</code> extends objects to more than two modes and sets of interlocking ties</li>
-<li><code>to_onemode()</code> converts multimodal networks into networks with only one type of node</li>
-<li><code>to_main_component()</code> identifies and returns only the main component of a network</li>
-<li><code>to_named()</code> adds random names to an anonymous network, which can be useful for pedagogical purposes</li>
+<li><code>to_multilevel()</code> converts objects with two or more modes
+into a multimodal network structure with attribute ‘lvl’ (1, 2, etc)
+instead of ‘type’ (FALSE or TRUE)</li>
+<li><code>to_onemode()</code> converts multimodal networks into networks
+with only one type of node, retaining the same nodes and ties</li>
+<li><code>to_main_component()</code> identifies and returns only the
+main component of a network</li>
+<li><code>to_named()</code> adds random names to an anonymous network,
+which can be useful for pedagogical purposes</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">to_unnamed</span>(ison_marvel_relationships)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 53 nodes and 558 edges</span></span>
@@ -316,67 +589,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A directed simple graph with 1 component</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 16 × 1 (active)</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   name   </span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;  </span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Joyce  </span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Iva    </span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Andrea </span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Lillian</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Alana  </span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Preston</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   name    </span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   </span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Jermaine</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Willie  </span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Erma    </span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Rita    </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Michele </span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Stacy   </span></span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 10 more rows</span></span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 144 × 5</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to friend_tie social_tie task_tie</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     5          0       1.2       0.3</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1     8          0       0.15      0  </span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     9          0       2.85      0.3</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to friends social tasks</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     5       0   1.2    0.3</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1     8       0   0.15   0  </span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     9       0   2.85   0.3</span></span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 141 more rows</span></span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="fu">to_undirected</span>(ison_algebra)</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 16 nodes and 76 edges</span></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
 <span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # An undirected simple graph with 1 component</span></span>
 <span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 16 × 0 (active)</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 10 more rows</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 76 × 5</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to friend_tie social_tie task_tie</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     2          1       0         0  </span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     3          0       0.15      0  </span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     5          0       1.2       0.3</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 73 more rows</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="fu">to_unsigned</span>(ison_marvel_relationships, <span class="at">keep =</span> <span class="st">&quot;positive&quot;</span>)</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 53 nodes and 277 edges</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # An undirected simple graph with 6 components</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 53 × 10 (active)</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   name  Gender Appearances Attractive  Rich Intellect Omnilingual PowerOrigin</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;       &lt;int&gt; &lt;chr&gt;      </span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Abom… Male           427          0     0         1           1 Radiation  </span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Ant-… Male           589          1     0         1           0 Human      </span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Apoc… Male          1207          0     0         1           1 Mutant     </span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Beast Male          7609          1     0         1           0 Mutant     </span></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Blac… Male          2189          1     1         1           0 Human      </span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Blac… Female        2907          1     0         1           0 Human      </span></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 47 more rows, and 2 more variables: UnarmedCombat &lt;int&gt;,</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ArmedCombat &lt;int&gt;</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 277 × 2</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     2    25</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2    29</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     2    44</span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 274 more rows</span></span></code></pre></div>
-<p>Note that for two-mode networks, there are also functions for converting or ‘projecting’ two-mode networks into one-mode networks.</p>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 16 × 1 (active)</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   name    </span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   </span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Melinda </span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Abby    </span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Darryl  </span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Veronica</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Rylan   </span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Lindsey </span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 10 more rows</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 76 × 5</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to friends social tasks</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     2       1   0      0  </span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     3       0   0.15   0  </span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     5       0   1.2    0.3</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 73 more rows</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="fu">to_unsigned</span>(ison_marvel_relationships, <span class="at">keep =</span> <span class="st">&quot;positive&quot;</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 53 nodes and 277 edges</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # An undirected simple graph with 6 components</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 53 × 10 (active)</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   name  Gender Appearances Attractive  Rich Intellect Omnilingual PowerOrigin</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;       &lt;int&gt; &lt;chr&gt;      </span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Abom… Male           427          0     0         1           1 Radiation  </span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Ant-… Male           589          1     0         1           0 Human      </span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Apoc… Male          1207          0     0         1           1 Mutant     </span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Beast Male          7609          1     0         1           0 Mutant     </span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Blac… Male          2189          1     1         1           0 Human      </span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Blac… Female        2907          1     0         1           0 Human      </span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 47 more rows, and 2 more variables: UnarmedCombat &lt;int&gt;,</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ArmedCombat &lt;int&gt;</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 277 × 2</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     2    25</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2    29</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     2    44</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 274 more rows</span></span></code></pre></div>
+<p>Note that for two-mode networks, there are also functions for
+converting or ‘projecting’ two-mode networks into one-mode networks.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">to_mode1</span>(ison_southern_women)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; IGRAPH 40c7852 UNW- 18 139 -- </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; IGRAPH 1960c78 UNW- 18 139 -- </span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + attr: name (v/c), weight (e/n)</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + edges from 40c7852 (vertex names):</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + edges from 1960c78 (vertex names):</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] EVELYN --LAURA     EVELYN --BRENDA    EVELYN --THERESA   EVELYN --CHARLOTTE</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] EVELYN --FRANCES   EVELYN --ELEANOR   EVELYN --RUTH      EVELYN --PEARL    </span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] EVELYN --NORA      EVELYN --VERNE     EVELYN --MYRA      EVELYN --KATHERINE</span></span>
@@ -387,9 +669,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] LAURA  --MYRA      LAURA  --KATHERINE LAURA  --DOROTHY   THERESA--BRENDA   </span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + ... omitted several edges</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">to_mode2</span>(ison_southern_women)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; IGRAPH da220a6 UNW- 14 66 -- </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; IGRAPH 517e95e UNW- 14 66 -- </span></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + attr: name (v/c), weight (e/n)</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + edges from da220a6 (vertex names):</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + edges from 517e95e (vertex names):</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] E1 --E2  E1 --E3  E1 --E4  E1 --E5  E1 --E6  E1 --E8  E1 --E9  E1 --E7 </span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] E2 --E3  E2 --E4  E2 --E5  E2 --E6  E2 --E8  E2 --E9  E2 --E7  E3 --E4 </span></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] E3 --E5  E3 --E6  E3 --E8  E3 --E9  E3 --E7  E4 --E5  E4 --E6  E4 --E8 </span></span>
@@ -400,10 +682,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [57] E10--E12 E10--E13 E10--E14 E10--E11 E11--E12 E11--E13 E11--E14 E12--E13</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; + ... omitted several edges</span></span></code></pre></div>
 </div>
-<div id="adding-data" class="section level1">
-<h1>Adding data</h1>
-<p>If you import one or more edgelists and nodelists, it can be useful to bind these together in an igraph, tidygraph, or network class object.</p>
-<p>Adding nodal attributes to a given network is relatively straightforward. One can bind a single new attribute to the nodes with <code>add_node_attribute()</code> or copy a set of attributes from one network/graph to another with <code>copy_node_attributes()</code>. But often the easiest way to do this is to take a network/graph, make sure it is first coerced into a tidygraph object, and then add any additional nodal attributes (including measures from <code>{migraph}</code>) as follows:</p>
+<div id="adding-data" class="section level2">
+<h2>Adding data</h2>
+<p>If you import one or more edgelists and nodelists, it can be useful
+to bind these together in an igraph, tidygraph, or network class
+object.</p>
+<p>Adding nodal attributes to a given network is relatively
+straightforward. One can bind a single new attribute to the nodes with
+<code>add_node_attribute()</code> or copy a set of attributes from one
+network/graph to another with <code>copy_node_attributes()</code>. But
+often the easiest way to do this is to take a network/graph, make sure
+it is first coerced into a tidygraph object, and then add any additional
+nodal attributes (including measures from <code>{migraph}</code>) as
+follows:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tidygraph</span>(mpn_elite_mex) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
@@ -430,39 +721,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2     5</span></span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     2     6</span></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 114 more rows</span></span></code></pre></div>
-<p>Adding edge attributes or new edges is not quite so straightforward, in part because you will need to decide which it is that you want to do. If you would like to just add a new edge attribute to an existing set of edges, without adding any new edges, then <code>add_edge_attributes()</code> operates similarly to <code>add_node_attributes()</code> above. But if the result should be a multiplex network in the ties in the different component networks only partially overlap, then you will need to use <code>join_edges()</code>:</p>
+<p>Adding edge attributes or new edges is not quite so straightforward,
+in part because you will need to decide which it is that you want to do.
+If you would like to just add a new tie attribute to an existing set of
+ties, without adding any new edges, then
+<code>add_tie_attributes()</code> operates similarly to
+<code>add_node_attribute()</code> above. But if the result should be a
+multiplex network and the ties in the different component networks only
+partially overlap, then you will need to use
+<code>join_ties()</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">generate_random</span>(<span class="dv">10</span>, .<span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">join_edges</span>(<span class="fu">generate_random</span>(<span class="dv">10</span>, .<span class="dv">3</span>), <span class="st">&quot;next&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 10 nodes and 30 edges</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">join_ties</span>(<span class="fu">generate_random</span>(<span class="dv">10</span>, .<span class="dv">3</span>), <span class="st">&quot;next&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tbl_graph: 10 nodes and 24 edges</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # An undirected simple graph with 1 component</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Node Data: 10 × 0 (active)</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 4 more rows</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 30 × 4</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Edge Data: 24 × 4</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    from    to  orig `next`</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     4     0      1</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1     5     0      1</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     6     0      1</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 27 more rows</span></span></code></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1     7     1      0</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     8     0      1</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 21 more rows</span></span></code></pre></div>
 </div>
-<div id="retrieving-data" class="section level1">
-<h1>Retrieving data</h1>
-<p>Lastly, sometimes we want to extract certain information from a network or graph object. Here too <code>{migraph}</code> has you covered.</p>
+<div id="retrieving-data" class="section level2">
+<h2>Retrieving data</h2>
+<p>Lastly, sometimes we want to extract certain information from a
+network or graph object. Here too <code>{migraph}</code> has you
+covered.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">node_names</span>(mpn_elite_mex) <span class="co"># gets the names of the nodes</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;Trevino&quot;            &quot;Madero&quot;             &quot;Carranza&quot;          </span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;Aguilar&quot;            &quot;Obregon&quot;            &quot;Calles&quot;            </span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;Aleman Gonzalez&quot;    &quot;Portes Gil&quot;         &quot;Cardenas&quot;          </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;Avila Camacho&quot;      &quot;Beteta&quot;             &quot;Jara&quot;              </span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Beteta&quot;             &quot;Aleman Valdes&quot;      &quot;Sanchez Taboada&quot;   </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;Aleman Gonzalez&quot;    &quot;Portes Gil&quot;         &quot;L. Cardenas&quot;       </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;Avila Camacho&quot;      &quot;I. Beteta&quot;          &quot;Jara&quot;              </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;R. Beteta&quot;          &quot;Aleman Valdes&quot;      &quot;Sanchez Taboada&quot;   </span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] &quot;Serra Rojas&quot;        &quot;Ruiz Galindo&quot;       &quot;Bustamante&quot;        </span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [19] &quot;Loyo&quot;               &quot;Carvajal&quot;           &quot;Ruiz Cortines&quot;     </span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [22] &quot;Carrillo Flores&quot;    &quot;Ortiz Mena&quot;         &quot;Gonzalez Blanco&quot;   </span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] &quot;Salinas Lozano&quot;     &quot;Lopez Mateos&quot;       &quot;Margain&quot;           </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [28] &quot;Diaz Ordaz&quot;         &quot;Beteta&quot;             &quot;Echeverria Alvarez&quot;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] &quot;Lopez Portillo&quot;     &quot;Cardenas&quot;           &quot;De la Madrid&quot;      </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [28] &quot;Diaz Ordaz&quot;         &quot;M.R. Beteta&quot;        &quot;Echeverria Alvarez&quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] &quot;Lopez Portillo&quot;     &quot;C. Cardenas&quot;        &quot;De la Madrid&quot;      </span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [34] &quot;Salinas de Gortari&quot; &quot;Aleman Velasco&quot;</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">node_attribute</span>(ison_marvel_relationships, <span class="st">&quot;Gender&quot;</span>) <span class="co"># gets any named nodal attribute</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;  </span></span>
@@ -472,7 +773,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  </span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;  </span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_attribute</span>(ison_marvel_relationships, <span class="st">&quot;sign&quot;</span>) <span class="co"># gets any named edge attribute</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">tie_attribute</span>(ison_marvel_relationships, <span class="st">&quot;sign&quot;</span>) <span class="co"># gets any named edge attribute</span></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [1] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [26] -1 -1 -1 -1 -1 -1 -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [51]  1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1  1  1  1  1  1  1  1  1  1</span></span>
@@ -496,23 +797,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [501]  1  1 -1  1  1  1  1 -1  1  1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1</span></span>
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [526] -1 -1 -1 -1  1  1  1  1 -1 -1  1  1  1  1  1 -1 -1 -1  1  1  1 -1 -1 -1 -1</span></span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [551]  1  1 -1 -1  1 -1  1 -1</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_weights</span>(mpn_elite_mex)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">tie_weights</span>(mpn_elite_mex)</span>
 <span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
 <span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
 <span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
 <span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [112] 1 1 1 1 1 1</span></span></code></pre></div>
-<p>We can describe the data using similar functions. How many nodes in the network, or how many edges?</p>
+<p>We can describe the network using similar functions. How many nodes
+in the network, or how many edges?</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_nodes</span>(mpn_elite_mex)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 35</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_edges</span>(mpn_elite_mex)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_ties</span>(mpn_elite_mex)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 117</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_dims</span>(mpn_elite_mex)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 35</span></span></code></pre></div>
 </div>
-<div class="footnotes">
+</div>
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>Note that if you import from a .csv file, please specify whether the separation value should be commas (<code>sv = &quot;comma&quot;</code>) or semi-colons (<code>sv = &quot;semi-colon&quot;</code>).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Note that if you import from a .csv file, please specify
+whether the separation value should be commas
+(<code>sv = &quot;comma&quot;</code>) or semi-colons
+(<code>sv = &quot;semi-colon&quot;</code>).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

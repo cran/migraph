@@ -9,8 +9,8 @@
 #' or a common interest (political power)” (Mendieta et al. 1997: 37).
 #' Additional nodal attributes include their full name, place of birth, state,
 #' and region (1=North, 2=Centre, 3=South, original coding added by 
-#' \href{https://jameshollway.com/courses/ison/heber_post}{Frank Heber}), 
-#' as well as their year of entry into politics 
+#' \href{https://jameshollway.com/courses/ison/heber_post}{Frank Heber}),
+#' as well as their year of entry into politics
 #' and whether they are civilian (0) or affiliated with the military (1).
 #' An additional variable "in_mpn" can be used to subset this network
 #' to a network of 11 core members of the 1990s Mexican power elite (Knoke 2017),
@@ -22,15 +22,15 @@
 #' @keywords datasets
 #' @name mpn_elite_mex
 #' @usage data(mpn_elite_mex)
-#' @format `tbl_graph` network object. 
-#'   The network is simple, undirected, and named. 
-#'   The full network contains 35 nodes and 117 edges,
-#'   and the subsetted network contains 11 nodes and 44 edges.
 #' @source Knoke, David. 1990. \emph{Political Networks}.
 #' 
 #' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
 #' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
 #' Cambridge University Press. Cambridge University Press.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_elite_mex
+#'   ```
 "mpn_elite_mex"
 
 # US elite ####
@@ -45,23 +45,25 @@
 #' The Power Elite Database (Domhoff 2016) includes information on the directors of 33 prominent think tanks in 2012.
 #' Here we include only 14 directors who held three or more seats among 20 think tanks.
 #'
-#' `mpn_elite_usa_money` is based on 26 elites who sat on the boards of directors 
+#' `mpn_elite_usa_money` is based on 26 elites who sat on the boards of directors
 #' for at least two of six economic policy making organizations (Domhoff 2016),
-#' and also made campaign contributions to one or more of six candidates 
-#' running in the primary election contests for the 2008 Presidential nominations 
-#' of the Republican Party (Rudy Giuliani, John McCain, Mitt Romney) 
+#' and also made campaign contributions to one or more of six candidates
+#' running in the primary election contests for the 2008 Presidential nominations
+#' of the Republican Party (Rudy Giuliani, John McCain, Mitt Romney)
 #' or the Democratic Party (Hillary Clinton, Christopher Dodd, Barack Obama).
 #'
 #' @docType data
 #' @keywords datasets
 #' @name mpn_elite_usa
 #' @usage data(mpn_elite_usa_advice)
-#' @format `mpn_elite_usa_advice` is a two-mode, named, and unweighted `tbl_graph` 
-#'   with 32 nodes and 46 edges.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_elite_usa_advice
+#'   ```
 #' @references
 #' Domhoff, G William. 2016. \href{https://whorulesamerica.ucsc.edu/power_elite/}{“Who Rules America? Power Elite Database.”}
 #' 
-#' The Center for Responsive Politics. 2019. \href{http://www.opensecrets.org}{“OpenSecrets.”}
+#' The Center for Responsive Politics. 2019. \href{https://www.opensecrets.org}{“OpenSecrets.”}
 #' 
 #' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
 #' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
@@ -72,8 +74,10 @@
 #' @keywords datasets
 #' @rdname mpn_elite_usa
 #' @usage data(mpn_elite_usa_money)
-#' @format `mpn_elite_usa_advice` is a two-mode, named, and unweighted `tbl_graph` 
-#'   with 38 nodes and 103 edges.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_elite_usa_money
+#'   ```
 "mpn_elite_usa_money"
 
 
@@ -81,29 +85,42 @@
 
 #' Multimodal (3) Bristol protest events, 1990-2002 (Diani and Bison 2004)
 #'
-#' A multimodal (3) network containing individuals affiliations to civic organizations
-#' in Bristol and their participation in major protest and civic events between 1990-2002,
-#' and the involvement of the organizations in these events.
+#' A multimodal network with three levels representing ties between individuals,
+#' civic organisations in Bristol, and major protest and civic events that occurred 
+#' between 1990 and 2000. The data contains individuals' affiliations to civic organizations
+#' in Bristol, the participation of these individuals in major protest and civic events between 1990-2002,
+#' and the involvement of the civic organizations in these events.
 #'
 #' @docType data
 #' @keywords datasets
 #' @name mpn_bristol
 #' @usage data(mpn_bristol)
-#' @format A `tbl_graph` object with 264 rows and columns. Node IDs are 
-#' prefaced with a type identifier:
+#' @details The data is presented as a `tbl_graph` object with 264 nodes and 1496 edges.
+#'   While represented as a two-mode network, it contains three levels:
 #' \describe{
-#'   \item{1_}{150 Individuals, anonymised}
-#'   \item{2_}{97 Bristol Civic Organizations}
-#'   \item{3_}{17 Major Protest and Civic Events in Bristol, 1990-2002}
+#'   \item{1.}{150 Individuals, anonymised with numeric ID}
+#'   \item{2.}{97 Bristol civic organizations}
+#'   \item{3.}{17 Major protest and civic events in Bristol, 1990-2002}
 #' }
-#' The network is weighted, named, and directed.
+#' The network represents ties between level 1 (individuals) and level 2 (organisations), 
+#' level 1 (individuals) and level 3 (events), as well as level 2 (organisations)
+#' and level 3 (events). The network is simple, undirected, and named. For a complete list of 
+#' civic organisations and protest/civic events included in the data, please see Appendix 6.1
+#' in \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}
+#' (Knoke et al., 2021).
 #' @references 
-#' Diani, Mario, and Ivano Bison. 2004. 
-#' “Organizations, Coalitions, and Movements.” 
-#' Theory and Society 33(3–4):281–309.
-#' @source Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+#' Diani, Mario, and Ivano Bison. 2004.
+#' “Organizations, Coalitions, and Movements.”
+#' _Theory and Society_ 33(3–4):281–309.
+#' \doi{10.1023/B:RYSO.0000038610.00045.07}.
+#' @source
+#' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
 #' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
 #' Cambridge University Press. Cambridge University Press.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_bristol
+#'   ```
 "mpn_bristol"
 
 # Ryanair ####
@@ -126,14 +143,18 @@
 #' @keywords datasets
 #' @name mpn_ryanair
 #' @usage data(mpn_ryanair)
-#' @format `tbl_graph` network object. The network is simple, directed, named
-#' and weighted. It contains 20 nodes and 177 edges.
 #' @source Christopoulos, Dimitrios C. 2006.
 #' “Relational Attributes of Political Entrepreneurs: a Network Perspective.”
-#' \emph{Journal of European Public Policy} 13 (5): 757–78.
+#' \emph{Journal of European Public Policy} 13(5): 757–78.
+#' \doi{10.1080/13501760600808964}.
 #' 
-#' Knoke, Diani, Hollway, and Christopoulos. 2021. 
-#' \emph{Multimodal Political Networks}. Cambridge University Press: Cambridge.
+#' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+#' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
+#' Cambridge University Press. Cambridge University Press.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_ryanair
+#'   ```
 "mpn_ryanair"
 
 # Senate voting ####
@@ -141,8 +162,8 @@
 #' Two-mode 112th Congress Senate Voting (Knoke et al. 2021)
 #'
 #' @description
-#' These datasets list the U.S. Senators who served in the 112th Congress, 
-#' which met from January 3, 2011 to January 3, 2013. 
+#' These datasets list the U.S. Senators who served in the 112th Congress,
+#' which met from January 3, 2011 to January 3, 2013.
 #' Although the Senate has 100 seats, 103 persons served during this period due
 #' to two resignations and a death. However, the third replacement occurred
 #' only two days before the end and cast no votes on the bills investigated
@@ -165,25 +186,30 @@
 #' @keywords datasets
 #' @name mpn_senate112
 #' @usage data(mpn_DemSxP)
-#' @format `tbl_graph` network object. It is a bimodal, directed, named,
-#' weighted graph of 51 Senators (`type = FALSE`) and 63 PACS (`type = TRUE`)
-#' and 2791 edges.
-#' @source Knoke, Diani, Hollway, and Christopoulos. 2021. 
-#' \emph{Multimodal Political Networks}. Cambridge University Press: Cambridge.
+#' @references  
+#' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+#' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
+#' Cambridge University Press. Cambridge University Press.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_DemSxP
+#'   ```
 "mpn_DemSxP"
 
 #' @rdname mpn_senate112
 #' @usage data(mpn_RepSxP)
-#' @format `tbl_graph` network object. It is a bimodal, directed, named,
-#' weighted graph of 62 Senators (`type = FALSE`) and 72 PACS (`type = TRUE`)
-#' and 3675 edges.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_RepSxP
+#'   ```
 "mpn_RepSxP"
 
 #' @rdname mpn_senate112
 #' @usage data(mpn_OverSxP)
-#' @format `tbl_graph` network object. It is a bimodal, directed, named,
-#' weighted graph of 20 Senators (`type = FALSE`) and 32 PACS (`type = TRUE`)
-#' and 614 edges.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_OverSxP
+#'   ```
 "mpn_OverSxP"
 
 # EVS ####
@@ -217,12 +243,17 @@
 #'   \item{Peace}{1 if individual associated}
 #'   \item{Health}{1 if individual associated}
 #' }
-#' @source Knoke, Diani, Hollway, and Christopoulos. 2021. 
+#' @source Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+#'   \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
+#'   Cambridge University Press. Cambridge University Press.
 #' @references 
-#'   EVS (2020). European Values Study Longitudinal Data File 1981-2008 (EVS 1981-2008). 
-#'   GESIS Data Archive, Cologne. ZA4804 Data file Version 3.1.0, 
-#'   https://doi.org/10.4232/1.13486.
-#' \emph{Multimodal Political Networks}. Cambridge University Press: Cambridge.
+#'   EVS (2020). European Values Study Longitudinal Data File 1981-2008 (EVS 1981-2008).
+#'   GESIS Data Archive, Cologne. ZA4804 Data file Version 3.1.0,
+#'   \doi{10.4232/1.13486}.
+NULL
+
+#' @rdname mpn_evs
+#' @usage data(mpn_IT_1990)
 "mpn_IT_1990"
 
 #' @rdname mpn_evs
@@ -245,3 +276,64 @@
 #' @usage data(mpn_UK_2008)
 "mpn_UK_2008"
 
+# COW ####
+
+#' One-mode interstate trade relations and two-mode state membership in IGOs (COW)
+#'
+#' @details 
+#' `mpn_cow_trade` is a one-mode matrix representing the trade relations between 116 states. 
+#' The data is derived from the Correlates of War Project (COW) Trade Dataset (v3.0),
+#' which contains the annual dyadic and national trade figures for states (listed in COW)
+#' between 1870 to 2009. This network is based only on the dyadic trade figures in 2009 for the
+#' 116 states listed in Appendix 7.1 in 
+#' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}
+#' (Knoke et al., 2021). The value in each cell of the matrix represents the value of
+#' exports from the 116 row states to the 116 column states.
+#' 
+#' @name mpn_cow
+#' @docType data
+#' @keywords datasets
+#' @usage data(mpn_cow_trade)
+#' @references 
+#' Barbieri, Katherine, Omar M. G. Keshk, and Brian Pollins. 2009.
+#' “TRADING DATA: Evaluating our Assumptions and Coding Rules.” 
+#' _Conflict Management and Peace Science_ 26(5): 471-491.
+#' \doi{10.1177/0738894209343887}.
+#' 
+#' Knoke, David, Mario Diani, James Hollway, and Dimitris C Christopoulos. 2021.
+#' \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}.
+#' Cambridge University Press. Cambridge University Press.
+#' @source 
+#' The Correlates of War Project. 2012.
+#' \href{https://correlatesofwar.org/data-sets/bilateral-trade}{\emph{Trade}}.
+#' 
+#' Barbieri, Katherine and Omar Keshk. 2012. 
+#' Correlates of War Project Trade Data Set Codebook, Version 3.0.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_cow_trade
+#'   ```
+"mpn_cow_trade"
+
+#' @rdname mpn_cow
+#' @details 
+#' Two-mode matrix representing the membership of 116 states to 40 intergovernmental organizations (IGOs).
+#' The data is derived from the Correlates of War Project (COW) Intergovernmental Organizations Dataset (v3.0),
+#' which contains information about intergovernmental organizations from 1815-2014, such as founding year and membership.
+#' This network contains only a subset of the states and IGOs listed in COW, with 116 states listed in Appendix 7.1 in \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}
+#' and 40 IGOs from Table 7.1 in \href{https://www.cambridge.org/core/books/multimodal-political-networks/43EE8C192A1B0DCD65B4D9B9A7842128}{\emph{Multimodal Political Networks}}
+#' that also overlap with the COW dataset (Knoke et al., 2021).
+#' @usage data(mpn_cow_igo)
+#' @source 
+#' The Correlates of War Project. 2019.
+#' \href{https://correlatesofwar.org/data-sets/IGOs}{\emph{Intergovernmental Organization v3}}.
+#' @references 
+#' Pevehouse, Jon C.W., Timothy Nordstron, Roseanne W McManus, Anne Spencer Jamison. 2020.
+#' “Tracking Organizations in the World: The Correlates of War IGO Version 3.0 datasets”.
+#' _Journal of Peace Research_ 57(3): 492-503.
+#' \doi{10.1177/0022343319881175}.
+#' @format 
+#'   ```{r, echo = FALSE}
+#'   mpn_cow_igo
+#'   ```
+"mpn_cow_igo"

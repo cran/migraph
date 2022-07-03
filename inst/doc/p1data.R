@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
 ## ----importedges, include = TRUE, eval = FALSE--------------------------------
 #  library(migraph)
 #  g1 <- read_edgelist("~Downloads/mynetworkdata.xlsx")
-#  g1 <- read_edgelist("~Downloads/mynetworkdata.csv")
+#  g1 <- read_edgelist("~Downloads/mynetworkdata.csv", sv = "semi-colon")
 #  g1 <- read_edgelist()
 #  n1 <- read_nodelist()
 
@@ -54,16 +54,16 @@ as_tidygraph(mpn_elite_mex) %>%
 
 ## ----mutateedges--------------------------------------------------------------
 generate_random(10, .3) %>% 
-  join_edges(generate_random(10, .3), "next")
+  join_ties(generate_random(10, .3), "next")
 
 ## ----grab---------------------------------------------------------------------
 node_names(mpn_elite_mex) # gets the names of the nodes
 node_attribute(ison_marvel_relationships, "Gender") # gets any named nodal attribute
-edge_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
-edge_weights(mpn_elite_mex)
+tie_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
+tie_weights(mpn_elite_mex)
 
 ## ----dims---------------------------------------------------------------------
 graph_nodes(mpn_elite_mex)
-graph_edges(mpn_elite_mex)
+graph_ties(mpn_elite_mex)
 graph_dims(mpn_elite_mex)
 

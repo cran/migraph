@@ -1,9 +1,9 @@
 ---
-title: "Practical 1"
+title: "1. Data"
 author: "James Hollway"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Practical 1}
+  %\VignetteIndexEntry{1. Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,16 +15,38 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Working with network data
+# Obtaining data
 
-While `{migraph}` includes a number of datasets (see [here](https://snlab-ch.github.io/migraph/reference/index.html#section-data)),
+While `{migraph}` includes a number of datasets (see [here](https://snlab-ch.github.io/migraph/reference/index.html#data)),
 and there are several packages in R that already include
 a range of social network data,
 there often comes a time when it is necessary to import and analyse data
 from other sources.
 Fortunately, `{migraph}` has a range of tools you can employ to import your data and manipulate it.
 
-# Import data
+## Finding data
+
+There are a great number of networks datasets and data resources.
+Here we keep just a necessarily partial list,
+but we are happy to update it whenever additional datasets are suggested.
+See for example:
+
+- [UCINET data](https://sites.google.com/site/ucinetsoftware/datasets?authuser=0)
+- [Pajek data](http://vlado.fmf.uni-lj.si/pub/networks/data/)
+
+See also:
+
+- [networkdata](http://networkdata.schochastics.net/)
+- [GML datasets](http://www-personal.umich.edu/~mejn/netdata/)
+- [UCIrvine Network Data Repository](http://networkdata.ics.uci.edu/)
+- [KONECT project](http://konect.cc/)
+- [SNAP Stanford Large Network Dataset Collection](http://snap.stanford.edu/data/)
+- [Congress in Data](https://www.congressindata.com/data-download/)
+
+Please let us know if you identify any further repositories
+of social or political networks and we would be happy to add them here.
+
+## Import data
 
 `{migraph}` includes several functions that help 
 read from (import) and write to (export) network data 
@@ -38,7 +60,7 @@ and we can import them from an Excel file or a `.csv` file.^[Note that if you im
 ```{r importedges, include = TRUE, eval = FALSE}
 library(migraph)
 g1 <- read_edgelist("~Downloads/mynetworkdata.xlsx")
-g1 <- read_edgelist("~Downloads/mynetworkdata.csv")
+g1 <- read_edgelist("~Downloads/mynetworkdata.csv", sv = "semi-colon")
 g1 <- read_edgelist()
 n1 <- read_nodelist()
 ```
@@ -78,7 +100,7 @@ read_ucinet()
 write_ucinet()
 ```
 
-# Converting between formats
+## Converting between formats
 
 By default, `read_` and `write_` `edgelist` and `nodelist` will import objects
 into a data frame or tibble format or 'class' object,
@@ -116,12 +138,14 @@ as_edgelist(ison_southern_women) # an edgelist data frame/tibble
 <!-- For converting into igraph and tidygraph objects, there is the option of retaining the network as a two-mode network (keeping different types of nodes) or simplifying it into a one-mode network.  -->
 <!-- Just specify it using the argument `twomode = TRUE` or `twomode = FALSE` respectively. -->
 
-# Transforming network data
+# Working with network data
+
+## Transforming network data
   
 Generally, `{migraph}` attempts to retain as much information as possible when converting objects between different classes.
 The presumption is that users should explicitly decide to reduce or simplify
 their data.
-`{migraph}` includes [a number of functions](https://snlab-ch.github.io/migraph/reference/to.html) 
+`{migraph}` includes [a number of functions](https://snlab-ch.github.io/migraph/reference/reformat.html) 
 for transforming (or removing) certain properties of network objects.
 For example: 
 
@@ -134,8 +158,8 @@ For example:
 
 Then there are a few more special functions included here too:
 
-- `to_multilevel()` extends objects to more than two modes and sets of interlocking ties
-- `to_onemode()` converts multimodal networks into networks with only one type of node 
+- `to_multilevel()` converts objects with two or more modes into a multimodal network structure with attribute 'lvl' (1, 2, etc) instead of 'type' (FALSE or TRUE)
+- `to_onemode()` converts multimodal networks into networks with only one type of node, retaining the same nodes and ties
 - `to_main_component()` identifies and returns only the main component of a network
 - `to_named()` adds random names to an anonymous network, which can be useful for pedagogical purposes
 
@@ -153,7 +177,7 @@ to_mode1(ison_southern_women)
 to_mode2(ison_southern_women)
 ```
 
-# Adding data
+## Adding data
 
 If you import one or more edgelists and nodelists, 
 it can be useful to bind these together in an igraph, tidygraph, or network class object.
@@ -175,19 +199,19 @@ as_tidygraph(mpn_elite_mex) %>%
 
 Adding edge attributes or new edges is not quite so straightforward,
 in part because you will need to decide which it is that you want to do.
-If you would like to just add a new edge attribute to an existing set of edges,
-without adding any new edges, then `add_edge_attributes()` operates similarly
-to `add_node_attributes()` above.
-But if the result should be a multiplex network in the ties in the different
+If you would like to just add a new tie attribute to an existing set of ties,
+without adding any new edges, then `add_tie_attributes()` operates similarly
+to `add_node_attribute()` above.
+But if the result should be a multiplex network and the ties in the different
 component networks only partially overlap,
-then you will need to use `join_edges()`:
+then you will need to use `join_ties()`:
 
 ```{r mutateedges}
 generate_random(10, .3) %>% 
-  join_edges(generate_random(10, .3), "next")
+  join_ties(generate_random(10, .3), "next")
 ```
 
-# Retrieving data
+## Retrieving data
 
 Lastly, sometimes we want to extract certain information from a network or graph object.
 Here too `{migraph}` has you covered.
@@ -195,15 +219,15 @@ Here too `{migraph}` has you covered.
 ```{r grab}
 node_names(mpn_elite_mex) # gets the names of the nodes
 node_attribute(ison_marvel_relationships, "Gender") # gets any named nodal attribute
-edge_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
-edge_weights(mpn_elite_mex)
+tie_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
+tie_weights(mpn_elite_mex)
 ```
 
-We can describe the data using similar functions.
+We can describe the network using similar functions.
 How many nodes in the network, or how many edges?
 
 ```{r dims}
 graph_nodes(mpn_elite_mex)
-graph_edges(mpn_elite_mex)
+graph_ties(mpn_elite_mex)
 graph_dims(mpn_elite_mex)
 ```

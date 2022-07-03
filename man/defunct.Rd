@@ -2,48 +2,169 @@
 % Please edit documentation in R/migraph-defunct.R
 \name{defunct}
 \alias{defunct}
-\alias{ggidentify}
-\alias{ggdistrib}
-\alias{project_rows}
-\alias{project_cols}
-\alias{mutate_edges}
-\alias{edge_mutual}
+\alias{ggtree}
+\alias{ggidentify_clusters}
+\alias{cluster_structural_equivalence}
+\alias{cluster_regular_equivalence}
+\alias{blockmodel_concor}
+\alias{summarise_statistics}
+\alias{blockmodel}
+\alias{print.block_model}
+\alias{reduce_graph}
+\alias{ggatyear}
+\alias{group_tie_census}
+\alias{group_triad_census}
+\alias{add_edge_attribute}
+\alias{edge_attribute}
+\alias{edge_signs}
+\alias{edge_weights}
+\alias{edge_betweenness}
+\alias{edge_closeness}
+\alias{edge_degree}
+\alias{edge_eigenvector}
+\alias{edge_loop}
+\alias{edge_multiple}
+\alias{edge_bridges}
+\alias{edge_reciprocal}
+\alias{graph_edge_attributes}
+\alias{graph_edges}
+\alias{node_cuts}
+\alias{to_edges}
+\alias{join_edges}
 \title{Functions that have been renamed, superseded, or are no longer working}
 \usage{
-ggidentify(object, node_measure, identify_function = max)
+ggtree(hc, k = NULL)
 
-ggdistrib(object, node_measure)
+ggidentify_clusters(hc, census, method = c("elbow", "strict"))
 
-project_rows(object)
+cluster_structural_equivalence(object)
 
-project_cols(object)
+cluster_regular_equivalence(object)
 
-mutate_edges(object, object2, attr_name)
+blockmodel_concor(
+  object,
+  p = 1,
+  cutoff = 0.999,
+  max.iter = 25,
+  block.content = "density"
+)
 
-edge_mutual(object)
+summarise_statistics(node_measure, clusters = NULL, sumFUN = mean)
+
+blockmodel(object, clusters)
+
+\method{print}{block_model}(x, ...)
+
+reduce_graph(blockmodel, block_labels = NULL)
+
+ggatyear(edgelist, year, ...)
+
+group_tie_census(object, clusters, decimals = 2)
+
+group_triad_census(object, clusters, decimals = 2)
+
+add_edge_attribute(object, attr_name, vector)
+
+edge_attribute(object, attribute)
+
+edge_signs(object)
+
+edge_weights(object)
+
+edge_betweenness(object, normalized = TRUE)
+
+edge_closeness(object, normalized = TRUE)
+
+edge_degree(object, normalized = TRUE)
+
+edge_eigenvector(object, normalized = TRUE)
+
+edge_loop(object)
+
+edge_multiple(object)
+
+edge_bridges(object)
+
+edge_reciprocal(object)
+
+graph_edge_attributes(object)
+
+graph_edges(object)
+
+node_cuts(object)
+
+to_edges(object)
+
+join_edges(object, object2, attr_name)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+Generally these functions have been superseded or renamed.
+Upon using them, a message is provided directing the user to the new function.
+However, at this stage of package development,
+we generally clear older defunct functions at each minor release,
+and so you are strongly encouraged to use the new functions/names/syntax
+wherever possible and update your scripts accordingly.
 }
 \section{Functions}{
 \itemize{
-\item \code{ggidentify}: Deprecated on 2022-01-24.
-This function is deprecated and its functionality is included in the more
-general purpose \code{autographr()} function. Please refer to its documentation
-for more details about the new implementation.
+\item \code{ggtree}: Deprecated on 2022-05-27.
 
-\item \code{ggdistrib}: Deprecated on 2022-03-23.
-This function is deprecated and its functionality is included in the more
-general purpose \code{autographr()} function. Please refer to its documentation
-for more details about the new implementation.
+\item \code{ggidentify_clusters}: Defunct on 2022-05-27.
 
-\item \code{project_rows}: Deprecated on 2022-03-23.
+\item \code{cluster_structural_equivalence}: Deprecated on 2022-05-27.
 
-\item \code{project_cols}: Deprecated on 2022-03-23.
+\item \code{cluster_regular_equivalence}: Deprecated on 2022-05-27.
 
-\item \code{mutate_edges}: Deprecated on 2022-03-29.
+\item \code{blockmodel_concor}: Deprecated on 2022-05-30.
 
-\item \code{edge_mutual}: Deprecated on 2022-04-05.
+\item \code{summarise_statistics}: Deprecated on 2022-06-03.
+
+\item \code{blockmodel}: Deprecated on 2022-06-03.
+
+\item \code{print.block_model}: Deprecated on 2022-06-03.
+
+\item \code{reduce_graph}: Deprecated on 2022-06-03.
+
+\item \code{ggatyear}: Deprecated on 2022-06-08.
+
+\item \code{group_tie_census}: Deprecated on 2022-06-09.
+
+\item \code{group_triad_census}: Deprecated on 2022-06-09.
+
+\item \code{add_edge_attribute}: Deprecated on 2022-06-28.
+
+\item \code{edge_attribute}: Deprecated on 2022-06-28.
+
+\item \code{edge_signs}: Deprecated on 2022-06-28.
+
+\item \code{edge_weights}: Deprecated on 2022-06-28.
+
+\item \code{edge_betweenness}: Deprecated on 2022-06-28.
+
+\item \code{edge_closeness}: Deprecated on 2022-06-28.
+
+\item \code{edge_degree}: Deprecated on 2022-06-28.
+
+\item \code{edge_eigenvector}: Deprecated on 2022-06-28.
+
+\item \code{edge_loop}: Deprecated on 2022-06-28.
+
+\item \code{edge_multiple}: Deprecated on 2022-06-28.
+
+\item \code{edge_bridges}: Deprecated on 2022-06-28.
+
+\item \code{edge_reciprocal}: Deprecated on 2022-06-28.
+
+\item \code{graph_edge_attributes}: Deprecated on 2022-06-28.
+
+\item \code{graph_edges}: Deprecated on 2022-06-28.
+
+\item \code{node_cuts}: Deprecated on 2022-06-30.
+
+\item \code{to_edges}: Deprecated on 2022-06-28.
+
+\item \code{join_edges}: Deprecated on 2022-07-03.
 }}
 
 \keyword{internal}
