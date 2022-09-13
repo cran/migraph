@@ -8,12 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 # Obtaining data
 
@@ -57,7 +52,8 @@ In Excel, users are typically collecting network data as edgelists, nodelists, o
 Edgelists are typically the main object to be imported,
 and we can import them from an Excel file or a `.csv` file.^[Note that if you import from a .csv file, please specify whether the separation value should be commas (`sv = "comma"`) or semi-colons (`sv = "semi-colon"`).]
 
-```{r importedges, include = TRUE, eval = FALSE}
+
+```r
 library(migraph)
 g1 <- read_edgelist("~Downloads/mynetworkdata.xlsx")
 g1 <- read_edgelist("~Downloads/mynetworkdata.csv", sv = "semi-colon")
@@ -79,18 +75,14 @@ If this is potentially complex,
 calling `write_edgelist()` without any arguments will export a test
 file with a barebones structure that you can overwrite with your own data.
 
-```{r exportdata, include = FALSE, eval = FALSE}
-write_edgelist(ison_southern_women)
-write_edgelist()
-write_nodelist(ison_southern_women)
-write_nodelist()
-```
+
 
 There are other functions here too that help import from or export to
 common external network data formats.
 Here are some examples:
 
-```{r otherimports, include = TRUE, eval = FALSE}
+
+```r
 # for importing .net or .paj files
 read_pajek()
 write_pajek()
@@ -123,15 +115,117 @@ two-mode network, so let's use this to start with.
 `{migraph}` stores this dataset as an 'igraph' object,
 though other included datasets are in 'tidygraph' or sometimes 'network' formats.
   
-```{r as}
+
+```r
 library(migraph)
 ison_southern_women # this is in igraph format
+#> IGRAPH f8d9f5f UN-B 32 93 -- 
+#> + attr: type (v/l), name (v/c)
+#> + edges from f8d9f5f (vertex names):
+#>  [1] EVELYN --E1 EVELYN --E2 EVELYN --E3
+#>  [4] EVELYN --E4 EVELYN --E5 EVELYN --E6
+#>  [7] EVELYN --E8 EVELYN --E9 LAURA  --E1
+#> [10] LAURA  --E2 LAURA  --E3 LAURA  --E5
+#> [13] LAURA  --E6 LAURA  --E7 LAURA  --E8
+#> [16] THERESA--E2 THERESA--E3 THERESA--E4
+#> [19] THERESA--E5 THERESA--E6 THERESA--E7
+#> [22] THERESA--E8 THERESA--E9 BRENDA --E1
+#> + ... omitted several edges
 as_tidygraph(ison_southern_women) # now let's make it a tidygraph tbl_graph object
+#> # A tbl_graph: 32 nodes and 93 edges
+#> #
+#> # A bipartite simple graph with 1 component
+#> #
+#> # Node Data: 32 × 2 (active)
+#>   type  name     
+#>   <lgl> <chr>    
+#> 1 FALSE EVELYN   
+#> 2 FALSE LAURA    
+#> 3 FALSE THERESA  
+#> 4 FALSE BRENDA   
+#> 5 FALSE CHARLOTTE
+#> 6 FALSE FRANCES  
+#> # … with 26 more rows
+#> #
+#> # Edge Data: 93 × 2
+#>    from    to
+#>   <int> <int>
+#> 1     1    19
+#> 2     1    20
+#> 3     1    21
+#> # … with 90 more rows
 as_network(ison_southern_women) # a network object
+#>  Network attributes:
+#>   vertices = 32 
+#>   directed = FALSE 
+#>   hyper = FALSE 
+#>   loops = FALSE 
+#>   multiple = FALSE 
+#>   bipartite = 18 
+#>   total edges= 93 
+#>     missing edges= 0 
+#>     non-missing edges= 93 
+#> 
+#>  Vertex attribute names: 
+#>     vertex.names 
+#> 
+#> No edge attributes
 as_matrix(ison_southern_women) # a matrix object
+#>           E1 E2 E3 E4 E5 E6 E7 E8 E9 E10
+#> EVELYN     1  1  1  1  1  1  0  1  1   0
+#> LAURA      1  1  1  0  1  1  1  1  0   0
+#> THERESA    0  1  1  1  1  1  1  1  1   0
+#> BRENDA     1  0  1  1  1  1  1  1  0   0
+#> CHARLOTTE  0  0  1  1  1  0  1  0  0   0
+#> FRANCES    0  0  1  0  1  1  0  1  0   0
+#> ELEANOR    0  0  0  0  1  1  1  1  0   0
+#> PEARL      0  0  0  0  0  1  0  1  1   0
+#> RUTH       0  0  0  0  1  0  1  1  1   0
+#> VERNE      0  0  0  0  0  0  1  1  1   0
+#> MYRA       0  0  0  0  0  0  0  1  1   1
+#> KATHERINE  0  0  0  0  0  0  0  1  1   1
+#> SYLVIA     0  0  0  0  0  0  1  1  1   1
+#> NORA       0  0  0  0  0  1  1  0  1   1
+#> HELEN      0  0  0  0  0  0  1  1  0   1
+#> DOROTHY    0  0  0  0  0  0  0  1  1   1
+#> OLIVIA     0  0  0  0  0  0  0  0  1   0
+#> FLORA      0  0  0  0  0  0  0  0  1   0
+#>           E11 E12 E13 E14
+#> EVELYN      0   0   0   0
+#> LAURA       0   0   0   0
+#> THERESA     0   0   0   0
+#> BRENDA      0   0   0   0
+#> CHARLOTTE   0   0   0   0
+#> FRANCES     0   0   0   0
+#> ELEANOR     0   0   0   0
+#> PEARL       0   0   0   0
+#> RUTH        0   0   0   0
+#> VERNE       0   1   0   0
+#> MYRA        0   1   0   0
+#> KATHERINE   0   1   1   1
+#> SYLVIA      0   1   1   1
+#> NORA        1   1   1   1
+#> HELEN       1   1   1   1
+#> DOROTHY     0   1   0   0
+#> OLIVIA      1   0   0   0
+#> FLORA       1   0   0   0
 # this is an incidence matrix since it is a two-mode network
 # if it were a one-mode network, the function would return an adjacency matrix
 as_edgelist(ison_southern_women) # an edgelist data frame/tibble
+#> # A tibble: 93 × 2
+#>    from   to   
+#>    <chr>  <chr>
+#>  1 EVELYN E1   
+#>  2 EVELYN E2   
+#>  3 EVELYN E3   
+#>  4 EVELYN E4   
+#>  5 EVELYN E5   
+#>  6 EVELYN E6   
+#>  7 EVELYN E8   
+#>  8 EVELYN E9   
+#>  9 LAURA  E1   
+#> 10 LAURA  E2   
+#> # … with 83 more rows
 ```
   
 <!-- Note that for converting into edgelist, matrix, or igraph objects, you can specify if you want to keep it as a weighted network (if your original data included this property) using the argument `weight = TRUE` or `weight = FALSE`. -->
@@ -160,21 +254,143 @@ Then there are a few more special functions included here too:
 
 - `to_multilevel()` converts objects with two or more modes into a multimodal network structure with attribute 'lvl' (1, 2, etc) instead of 'type' (FALSE or TRUE)
 - `to_onemode()` converts multimodal networks into networks with only one type of node, retaining the same nodes and ties
-- `to_main_component()` identifies and returns only the main component of a network
+- `to_giant()` identifies and returns only the main component of a network
 - `to_named()` adds random names to an anonymous network, which can be useful for pedagogical purposes
 
-```{r combine}
+
+```r
 to_unnamed(ison_marvel_relationships)
+#> # A tbl_graph: 53 nodes and 558 edges
+#> #
+#> # An undirected multigraph with 4 components
+#> #
+#> # Node Data: 53 × 9 (active)
+#>   Gender Appear… Attrac…  Rich Intell…
+#>   <chr>    <int>   <int> <int>   <int>
+#> 1 Male       427       0     0       1
+#> 2 Male       589       1     0       1
+#> 3 Male      1207       0     0       1
+#> 4 Male      7609       1     0       1
+#> 5 Male      2189       1     1       1
+#> 6 Female    2907       1     0       1
+#> # … with 47 more rows, and 4 more
+#> #   variables: Omnilingual <int>,
+#> #   PowerOrigin <chr>,
+#> #   UnarmedCombat <int>,
+#> #   ArmedCombat <int>
+#> #
+#> # Edge Data: 558 × 3
+#>    from    to  sign
+#>   <int> <int> <dbl>
+#> 1     1     4    -1
+#> 2     1    11    -1
+#> 3     1    12    -1
+#> # … with 555 more rows
 to_named(ison_algebra)
+#> # A tbl_graph: 16 nodes and 144 edges
+#> #
+#> # A directed simple graph with 1 component
+#> #
+#> # Node Data: 16 × 1 (active)
+#>   name   
+#>   <chr>  
+#> 1 Dustin 
+#> 2 Roberto
+#> 3 Orville
+#> 4 Ashlee 
+#> 5 Debora 
+#> 6 Grant  
+#> # … with 10 more rows
+#> #
+#> # Edge Data: 144 × 5
+#>    from    to friends social tasks
+#>   <int> <int>   <dbl>  <dbl> <dbl>
+#> 1     1     5       0   1.2    0.3
+#> 2     1     8       0   0.15   0  
+#> 3     1     9       0   2.85   0.3
+#> # … with 141 more rows
 to_undirected(ison_algebra)
+#> # A tbl_graph: 16 nodes and 76 edges
+#> #
+#> # An undirected simple graph with 1 component
+#> #
+#> # Node Data: 16 × 1 (active)
+#>   name    
+#>   <chr>   
+#> 1 Melinda 
+#> 2 Abby    
+#> 3 Darryl  
+#> 4 Veronica
+#> 5 Rylan   
+#> 6 Lindsey 
+#> # … with 10 more rows
+#> #
+#> # Edge Data: 76 × 5
+#>    from    to friends social tasks
+#>   <int> <int>   <dbl>  <dbl> <dbl>
+#> 1     1     2       1   0      0  
+#> 2     2     3       0   0.15   0  
+#> 3     1     5       0   1.2    0.3
+#> # … with 73 more rows
 to_unsigned(ison_marvel_relationships, keep = "positive")
+#> # A tbl_graph: 53 nodes and 277 edges
+#> #
+#> # An undirected simple graph with 6 components
+#> #
+#> # Node Data: 53 × 10 (active)
+#>   name  Gender Appear… Attrac…  Rich
+#>   <chr> <chr>    <int>   <int> <int>
+#> 1 Abom… Male       427       0     0
+#> 2 Ant-… Male       589       1     0
+#> 3 Apoc… Male      1207       0     0
+#> 4 Beast Male      7609       1     0
+#> 5 Blac… Male      2189       1     1
+#> 6 Blac… Female    2907       1     0
+#> # … with 47 more rows, and 5 more
+#> #   variables: Intellect <int>,
+#> #   Omnilingual <int>, PowerOrigin <chr>,
+#> #   UnarmedCombat <int>,
+#> #   ArmedCombat <int>
+#> #
+#> # Edge Data: 277 × 2
+#>    from    to
+#>   <int> <int>
+#> 1     2    25
+#> 2     2    29
+#> 3     2    44
+#> # … with 274 more rows
 ```
 
 Note that for two-mode networks, there are also functions for converting or 'projecting' two-mode networks into one-mode networks.
 
-```{r project}
+
+```r
 to_mode1(ison_southern_women)
+#> IGRAPH 22634be UNW- 18 139 -- 
+#> + attr: name (v/c), weight (e/n)
+#> + edges from 22634be (vertex names):
+#>  [1] EVELYN--LAURA     EVELYN--BRENDA   
+#>  [3] EVELYN--THERESA   EVELYN--CHARLOTTE
+#>  [5] EVELYN--FRANCES   EVELYN--ELEANOR  
+#>  [7] EVELYN--RUTH      EVELYN--PEARL    
+#>  [9] EVELYN--NORA      EVELYN--VERNE    
+#> [11] EVELYN--MYRA      EVELYN--KATHERINE
+#> [13] EVELYN--SYLVIA    EVELYN--HELEN    
+#> [15] EVELYN--DOROTHY   EVELYN--OLIVIA   
+#> + ... omitted several edges
 to_mode2(ison_southern_women)
+#> IGRAPH 54edf77 UNW- 14 66 -- 
+#> + attr: name (v/c), weight (e/n)
+#> + edges from 54edf77 (vertex names):
+#>  [1] E1--E2  E1--E3  E1--E4  E1--E5 
+#>  [5] E1--E6  E1--E8  E1--E9  E1--E7 
+#>  [9] E2--E3  E2--E4  E2--E5  E2--E6 
+#> [13] E2--E8  E2--E9  E2--E7  E3--E4 
+#> [17] E3--E5  E3--E6  E3--E8  E3--E9 
+#> [21] E3--E7  E4--E5  E4--E6  E4--E8 
+#> [25] E4--E9  E4--E7  E5--E6  E5--E8 
+#> [29] E5--E9  E5--E7  E6--E8  E6--E9 
+#> + ... omitted several edges
 ```
 
 ## Adding data
@@ -190,11 +406,38 @@ make sure it is first coerced into a tidygraph object,
 and then add any additional nodal attributes (including measures from `{migraph}`)
 as follows:
 
-```{r mutate}
+
+```r
 as_tidygraph(mpn_elite_mex) %>% 
   mutate(order = 1:35,
          color = "red",
          degree = node_degree(mpn_elite_mex))
+#> # A tbl_graph: 35 nodes and 117 edges
+#> #
+#> # An undirected simple graph with 1 component
+#> #
+#> # Node Data: 35 × 11 (active)
+#>   name  full_n… entry_… milita… in_mpn
+#>   <chr> <chr>     <dbl>   <dbl>  <dbl>
+#> 1 Trev… Trevin…    1910       1      0
+#> 2 Made… Madero…    1911       0      0
+#> 3 Carr… Carran…    1913       1      0
+#> 4 Agui… Aguila…    1918       1      0
+#> 5 Obre… Obrego…    1920       1      0
+#> 6 Call… Calles…    1924       1      0
+#> # … with 29 more rows, and 6 more
+#> #   variables: PlaceOfBirth <chr>,
+#> #   state <chr>, region <dbl>,
+#> #   order <int>, color <chr>,
+#> #   degree <node_msr>
+#> #
+#> # Edge Data: 117 × 2
+#>    from    to
+#>   <int> <int>
+#> 1     2     3
+#> 2     2     5
+#> 3     2     6
+#> # … with 114 more rows
 ```
 
 Adding edge attributes or new edges is not quite so straightforward,
@@ -206,9 +449,24 @@ But if the result should be a multiplex network and the ties in the different
 component networks only partially overlap,
 then you will need to use `join_ties()`:
 
-```{r mutateedges}
+
+```r
 generate_random(10, .3) %>% 
   join_ties(generate_random(10, .3), "next")
+#> # A tbl_graph: 10 nodes and 22 edges
+#> #
+#> # An undirected simple graph with 1 component
+#> #
+#> # Node Data: 10 × 0 (active)
+#> # … with 4 more rows
+#> #
+#> # Edge Data: 22 × 4
+#>    from    to  orig `next`
+#>   <int> <int> <dbl>  <dbl>
+#> 1     1     2     0      1
+#> 2     1     5     1      0
+#> 3     1     6     1      1
+#> # … with 19 more rows
 ```
 
 ## Retrieving data
@@ -216,18 +474,126 @@ generate_random(10, .3) %>%
 Lastly, sometimes we want to extract certain information from a network or graph object.
 Here too `{migraph}` has you covered.
 
-```{r grab}
+
+```r
 node_names(mpn_elite_mex) # gets the names of the nodes
+#>  [1] "Trevino"           
+#>  [2] "Madero"            
+#>  [3] "Carranza"          
+#>  [4] "Aguilar"           
+#>  [5] "Obregon"           
+#>  [6] "Calles"            
+#>  [7] "Aleman Gonzalez"   
+#>  [8] "Portes Gil"        
+#>  [9] "L. Cardenas"       
+#> [10] "Avila Camacho"     
+#> [11] "I. Beteta"         
+#> [12] "Jara"              
+#> [13] "R. Beteta"         
+#> [14] "Aleman Valdes"     
+#> [15] "Sanchez Taboada"   
+#> [16] "Serra Rojas"       
+#> [17] "Ruiz Galindo"      
+#> [18] "Bustamante"        
+#> [19] "Loyo"              
+#> [20] "Carvajal"          
+#> [21] "Ruiz Cortines"     
+#> [22] "Carrillo Flores"   
+#> [23] "Ortiz Mena"        
+#> [24] "Gonzalez Blanco"   
+#> [25] "Salinas Lozano"    
+#> [26] "Lopez Mateos"      
+#> [27] "Margain"           
+#> [28] "Diaz Ordaz"        
+#> [29] "M.R. Beteta"       
+#> [30] "Echeverria Alvarez"
+#> [31] "Lopez Portillo"    
+#> [32] "C. Cardenas"       
+#> [33] "De la Madrid"      
+#> [34] "Salinas de Gortari"
+#> [35] "Aleman Velasco"
 node_attribute(ison_marvel_relationships, "Gender") # gets any named nodal attribute
+#>  [1] "Male"   "Male"   "Male"   "Male"  
+#>  [5] "Male"   "Female" "Male"   "Male"  
+#>  [9] "Male"   "Male"   "Male"   "Male"  
+#> [13] "Male"   "Male"   "Male"   "Male"  
+#> [17] "Male"   "Female" "Male"   "Male"  
+#> [21] "Male"   "Male"   "Male"   "Male"  
+#> [25] "Female" "Male"   "Male"   "Female"
+#> [29] "Female" "Male"   "Male"   "Female"
+#> [33] "Female" "Male"   "Male"   "Male"  
+#> [37] "Female" "Male"   "Male"   "Male"  
+#> [41] "Male"   "Male"   "Male"   "Female"
+#> [45] "Male"   "Male"   "Female" "Male"  
+#> [49] "Male"   "Male"   "Male"   "Male"  
+#> [53] "Male"
 tie_attribute(ison_marvel_relationships, "sign") # gets any named edge attribute
+#>   [1] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1
+#>  [13]  1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1
+#>  [25] -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1
+#>  [37]  1  1  1  1  1  1  1  1  1  1  1  1
+#>  [49]  1  1  1  1 -1 -1 -1 -1 -1 -1 -1 -1
+#>  [61] -1 -1  1  1  1  1  1  1  1  1  1  1
+#>  [73]  1  1  1  1  1  1  1  1  1  1  1 -1
+#>  [85] -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1
+#>  [97]  1  1  1  1  1  1  1  1  1 -1 -1 -1
+#> [109] -1 -1 -1  1  1  1  1  1  1  1  1 -1
+#> [121] -1 -1 -1  1  1  1  1  1  1  1  1  1
+#> [133]  1  1  1  1  1  1 -1 -1 -1 -1 -1 -1
+#> [145] -1 -1 -1 -1 -1  1  1  1  1  1  1  1
+#> [157]  1  1  1  1 -1 -1 -1 -1 -1 -1  1  1
+#> [169]  1  1  1  1  1  1  1  1  1  1  1  1
+#> [181] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+#> [193]  1  1  1  1  1  1  1  1  1 -1 -1 -1
+#> [205] -1 -1 -1  1  1  1  1  1  1  1  1  1
+#> [217] -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1
+#> [229]  1  1  1  1  1  1 -1 -1 -1 -1 -1 -1
+#> [241] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1
+#> [253] -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1
+#> [265]  1  1  1  1  1  1  1  1 -1 -1 -1 -1
+#> [277]  1  1 -1  1  1  1 -1 -1 -1 -1 -1 -1
+#> [289] -1 -1 -1 -1 -1 -1 -1 -1  1  1 -1 -1
+#> [301]  1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1
+#> [313]  1  1 -1  1  1  1  1  1  1  1  1  1
+#> [325] -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1
+#> [337]  1  1  1  1  1 -1 -1 -1 -1 -1 -1 -1
+#> [349] -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1  1
+#> [361]  1  1  1  1  1  1  1  1  1 -1 -1 -1
+#> [373] -1 -1 -1 -1 -1 -1  1  1  1  1  1  1
+#> [385]  1  1  1  1  1  1 -1 -1 -1 -1 -1 -1
+#> [397] -1 -1 -1  1  1  1  1  1  1  1  1  1
+#> [409]  1 -1 -1 -1 -1 -1 -1 -1  1  1 -1  1
+#> [421]  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+#> [433] -1  1  1 -1 -1  1  1  1  1  1  1 -1
+#> [445] -1 -1  1 -1 -1 -1 -1 -1 -1  1  1 -1
+#> [457] -1 -1 -1 -1  1  1  1  1  1  1  1 -1
+#> [469] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1
+#> [481]  1  1  1 -1 -1 -1 -1 -1  1  1  1  1
+#> [493]  1 -1 -1  1  1  1  1  1  1  1 -1  1
+#> [505]  1  1  1 -1  1  1  1 -1 -1 -1 -1 -1
+#> [517] -1 -1 -1 -1 -1 -1  1  1  1 -1 -1 -1
+#> [529] -1  1  1  1  1 -1 -1  1  1  1  1  1
+#> [541] -1 -1 -1  1  1  1 -1 -1 -1 -1  1  1
+#> [553] -1 -1  1 -1  1 -1
 tie_weights(mpn_elite_mex)
+#>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#>  [19] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#>  [37] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#>  [55] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#>  [73] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#>  [91] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#> [109] 1 1 1 1 1 1 1 1 1
 ```
 
 We can describe the network using similar functions.
 How many nodes in the network, or how many edges?
 
-```{r dims}
+
+```r
 graph_nodes(mpn_elite_mex)
+#> [1] 35
 graph_ties(mpn_elite_mex)
+#> [1] 117
 graph_dims(mpn_elite_mex)
+#> [1] 35
 ```

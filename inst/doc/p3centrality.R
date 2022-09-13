@@ -1,36 +1,37 @@
-## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
-## ----coercion-----------------------------------------------------------------
+## ----coercion---------------------------
 library(migraph)
+autographr(ison_brandes)
+autographr(ison_brandes2)
 (mat <- as_matrix(ison_brandes))
-autographr(ison_brandes)
 
-## ----addingnames--------------------------------------------------------------
+
+## ----addingnames------------------------
 ison_brandes <- to_named(ison_brandes)
+ison_brandes2 <- to_named(ison_brandes2)
 autographr(ison_brandes)
 
-## ----degreesum----------------------------------------------------------------
+
+## ----degreesum--------------------------
 (degrees <- rowSums(mat))
 rowSums(mat) == colSums(mat)
 # Are they all equal? Why?
 # You can also just use a built in command in migraph though:
 node_degree(ison_brandes, normalized = FALSE)
 
-## ----distrib------------------------------------------------------------------
+
+## ----distrib----------------------------
 plot(node_degree(ison_brandes), "h") +
   plot(node_degree(ison_brandes), "d")
 
-## ----micent-------------------------------------------------------------------
+
+## ----micent-----------------------------
 node_betweenness(ison_brandes)
 node_closeness(ison_brandes)
 node_eigenvector(ison_brandes)
 # TASK: Can you create degree distributions for each of these?
 
-## ----ggid---------------------------------------------------------------------
+
+## ----ggid-------------------------------
 ison_brandes %>%
   add_node_attribute("color", node_is_max(node_degree(ison_brandes))) %>%
   autographr(node_color = "color")
@@ -44,13 +45,15 @@ ison_brandes %>%
   add_node_attribute("color", node_is_min(node_eigenvector(ison_brandes))) %>%
   autographr(node_color = "color")
 
-## ----centzn-------------------------------------------------------------------
+
+## ----centzn-----------------------------
 graph_degree(ison_brandes)
 graph_betweenness(ison_brandes)
 graph_closeness(ison_brandes)
 graph_eigenvector(ison_brandes)
 
-## ----multiplot----------------------------------------------------------------
+
+## ----multiplot--------------------------
 ison_brandes <- ison_brandes %>%
   add_node_attribute("degree", node_is_max(node_degree(ison_brandes))) %>%
   add_node_attribute("betweenness", node_is_max(node_betweenness(ison_brandes))) %>%

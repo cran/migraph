@@ -2,18 +2,6 @@
 % Please edit documentation in R/migraph-defunct.R
 \name{defunct}
 \alias{defunct}
-\alias{ggtree}
-\alias{ggidentify_clusters}
-\alias{cluster_structural_equivalence}
-\alias{cluster_regular_equivalence}
-\alias{blockmodel_concor}
-\alias{summarise_statistics}
-\alias{blockmodel}
-\alias{print.block_model}
-\alias{reduce_graph}
-\alias{ggatyear}
-\alias{group_tie_census}
-\alias{group_triad_census}
 \alias{add_edge_attribute}
 \alias{edge_attribute}
 \alias{edge_signs}
@@ -31,38 +19,11 @@
 \alias{node_cuts}
 \alias{to_edges}
 \alias{join_edges}
+\alias{to_main_component}
+\alias{graph_blau_index}
+\alias{graph_ei_index}
 \title{Functions that have been renamed, superseded, or are no longer working}
 \usage{
-ggtree(hc, k = NULL)
-
-ggidentify_clusters(hc, census, method = c("elbow", "strict"))
-
-cluster_structural_equivalence(object)
-
-cluster_regular_equivalence(object)
-
-blockmodel_concor(
-  object,
-  p = 1,
-  cutoff = 0.999,
-  max.iter = 25,
-  block.content = "density"
-)
-
-summarise_statistics(node_measure, clusters = NULL, sumFUN = mean)
-
-blockmodel(object, clusters)
-
-\method{print}{block_model}(x, ...)
-
-reduce_graph(blockmodel, block_labels = NULL)
-
-ggatyear(edgelist, year, ...)
-
-group_tie_census(object, clusters, decimals = 2)
-
-group_triad_census(object, clusters, decimals = 2)
-
 add_edge_attribute(object, attr_name, vector)
 
 edge_attribute(object, attribute)
@@ -96,6 +57,12 @@ node_cuts(object)
 to_edges(object)
 
 join_edges(object, object2, attr_name)
+
+to_main_component(object)
+
+graph_blau_index(object, attribute, clusters = NULL)
+
+graph_ei_index(object, attribute)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
@@ -108,63 +75,45 @@ wherever possible and update your scripts accordingly.
 }
 \section{Functions}{
 \itemize{
-\item \code{ggtree}: Deprecated on 2022-05-27.
+\item \code{add_edge_attribute()}: Deprecated on 2022-06-28.
 
-\item \code{ggidentify_clusters}: Defunct on 2022-05-27.
+\item \code{edge_attribute()}: Deprecated on 2022-06-28.
 
-\item \code{cluster_structural_equivalence}: Deprecated on 2022-05-27.
+\item \code{edge_signs()}: Deprecated on 2022-06-28.
 
-\item \code{cluster_regular_equivalence}: Deprecated on 2022-05-27.
+\item \code{edge_weights()}: Deprecated on 2022-06-28.
 
-\item \code{blockmodel_concor}: Deprecated on 2022-05-30.
+\item \code{edge_betweenness()}: Deprecated on 2022-06-28.
 
-\item \code{summarise_statistics}: Deprecated on 2022-06-03.
+\item \code{edge_closeness()}: Deprecated on 2022-06-28.
 
-\item \code{blockmodel}: Deprecated on 2022-06-03.
+\item \code{edge_degree()}: Deprecated on 2022-06-28.
 
-\item \code{print.block_model}: Deprecated on 2022-06-03.
+\item \code{edge_eigenvector()}: Deprecated on 2022-06-28.
 
-\item \code{reduce_graph}: Deprecated on 2022-06-03.
+\item \code{edge_loop()}: Deprecated on 2022-06-28.
 
-\item \code{ggatyear}: Deprecated on 2022-06-08.
+\item \code{edge_multiple()}: Deprecated on 2022-06-28.
 
-\item \code{group_tie_census}: Deprecated on 2022-06-09.
+\item \code{edge_bridges()}: Deprecated on 2022-06-28.
 
-\item \code{group_triad_census}: Deprecated on 2022-06-09.
+\item \code{edge_reciprocal()}: Deprecated on 2022-06-28.
 
-\item \code{add_edge_attribute}: Deprecated on 2022-06-28.
+\item \code{graph_edge_attributes()}: Deprecated on 2022-06-28.
 
-\item \code{edge_attribute}: Deprecated on 2022-06-28.
+\item \code{graph_edges()}: Deprecated on 2022-06-28.
 
-\item \code{edge_signs}: Deprecated on 2022-06-28.
+\item \code{node_cuts()}: Deprecated on 2022-06-30.
 
-\item \code{edge_weights}: Deprecated on 2022-06-28.
+\item \code{to_edges()}: Deprecated on 2022-06-28.
 
-\item \code{edge_betweenness}: Deprecated on 2022-06-28.
+\item \code{join_edges()}: Deprecated on 2022-07-03.
 
-\item \code{edge_closeness}: Deprecated on 2022-06-28.
+\item \code{to_main_component()}: Deprecated on 2022-09-07.
 
-\item \code{edge_degree}: Deprecated on 2022-06-28.
+\item \code{graph_blau_index()}: Deprecated on 2022-09-10.
 
-\item \code{edge_eigenvector}: Deprecated on 2022-06-28.
+\item \code{graph_ei_index()}: Deprecated on 2022-09-10.
 
-\item \code{edge_loop}: Deprecated on 2022-06-28.
-
-\item \code{edge_multiple}: Deprecated on 2022-06-28.
-
-\item \code{edge_bridges}: Deprecated on 2022-06-28.
-
-\item \code{edge_reciprocal}: Deprecated on 2022-06-28.
-
-\item \code{graph_edge_attributes}: Deprecated on 2022-06-28.
-
-\item \code{graph_edges}: Deprecated on 2022-06-28.
-
-\item \code{node_cuts}: Deprecated on 2022-06-30.
-
-\item \code{to_edges}: Deprecated on 2022-06-28.
-
-\item \code{join_edges}: Deprecated on 2022-07-03.
 }}
-
 \keyword{internal}

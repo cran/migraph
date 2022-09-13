@@ -49,6 +49,15 @@
 #' for demonstration purposes as they do not describe a real world network.
 #' All examples contain named nodes.
 #'
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   (autographr(ison_bb) | autographr(ison_bm) | autographr(ison_mm) | autographr(ison_mb))/
+#'   (autographr(to_mode1(ison_mm)) | autographr(to_mode1(ison_mm)) | 
+#'     autographr(to_mode1(ison_mm)) | autographr(to_mode1(ison_mm)))
+#'   ggsave("man/figures/isonproj.png", width = 7, height = 3.5, dpi = "screen")
+#'   ggsave("man/figures/isonproj.pdf", width = 7, height = 3.5)
+#'   ```
+#' \if{html}{\figure{isonproj.png}{options: width="100\%" alt="Figure: ison_proj"}}
+#' \if{latex}{\figure{isonproj.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_projection
@@ -75,13 +84,21 @@
 
 #' Multiplex graph object of friends, social, and task ties (McFarland 2001)
 #' 
-#' @details Multiplex graph object of friends, social, and task ties between 16 #' anonymous students. 
+#' @details Multiplex graph object of friends, social, and task ties between 16 anonymous students. 
 #' M182 was an honors algebra class where researchers
 #' collected friendship, social, and task ties between 16 students.
 #' The edge attribute `friends` contains friendship ties,
 #' where `2` = best friends, `1` = friend, and `0` is not a friend.
 #' `social` consists of social interactions per hour,
 #' and `tasks` consists of task interactions per hour.
+#' 
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_algebra, labels = FALSE) + ggtitle("ison_algebra")
+#'   ggsave("man/figures/isonalgebra.png", width = 5, height = 5, dpi = "screen")
+#'   ggsave("man/figures/isonalgebra.pdf", width = 5, height = 5)
+#'   ```
+#' \if{html}{\figure{isonalgebra.png}{options: width="75\%" alt="Figure: ison_algebra"}}
+#' \if{latex}{\figure{isonalgebra.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_algebra
@@ -100,8 +117,15 @@
 
 # Adolescents ####
 
-#' One-mode subset of the adolescent society (Coleman 1961)
+#' One-mode subset (8 individuals) of the adolescent society (Coleman 1961).
 #'
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_adolescents, labels = FALSE) + ggtitle("ison_adolescents")
+#'   ggsave("man/figures/isonadolescents.png", width = 5, height = 5, dpi = "screen")
+#'   ggsave("man/figures/isonadolescents.pdf", width = 5, height = 5)
+#'   ```
+#' \if{html}{\figure{isonadolescents.png}{options: width="75\%" alt="Figure: ison_adolescents"}}
+#' \if{latex}{\figure{isonadolescents.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_adolescents
@@ -132,6 +156,14 @@
 #'   The allegiance of each node is listed in the `obc` argument 
 #'   which takes the value 1 if the individual sided with Mr. Hi after the fight 
 #'   and 2 if the individual sided with John A.
+#' 
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_karateka) + ggtitle("ison_karateka")
+#'   ggsave("man/figures/isonkarateka.png", width = 7, height = 3.5, dpi = "screen")
+#'   ggsave("man/figures/isonkarateka.pdf", width = 7, height = 3.5)
+#'   ```
+#' \if{html}{\figure{isonkarateka.png}{options: width="75\%" alt="Figure: ison_karateka"}}
+#' \if{latex}{\figure{isonkarateka.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_karateka
@@ -156,6 +188,13 @@
 #' include the number of citations (`Citations`) and the discipline of the
 #' researchers (`Discipline`). Edge weights illustrate the number of emails
 #' sent from one academic to another over the studied time period.
+#' 
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_networkers, labels = FALSE) + ggtitle("ison_networkers")
+#'   ggsave("man/figures/isonnetworkers.png", width = 5, height = 5, dpi = "screen")
+#'   ggsave("man/figures/isonnetworkers.pdf", width = 5, height = 5)
+#'   ```
+#' \if{latex}{\figure{isonnetworkers.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_networkers
@@ -182,6 +221,13 @@
 #' This network should solely be used
 #' for demonstration purposes as it does not describe a real network.
 #'
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_brandes) + ggtitle("ison_brandes") + autographr(ison_brandes2)
+#'   ggsave("man/figures/isonbrandes.png", width = 7, height = 3.5, dpi = "screen")
+#'   ggsave("man/figures/isonbrandes.pdf", width = 7, height = 3.5)
+#'   ```
+#' \if{html}{\figure{isonbrandes.png}{options: width="100\%" alt="Figure: ison_brandes"}}
+#' \if{latex}{\figure{isonbrandes.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_brandes
@@ -209,6 +255,13 @@
 #' about the attendance pattern of women at informal social events
 #' during a 9 month period. Events and women are named.
 #'
+#'   ```{r, eval = FALSE, echo = FALSE, include = FALSE}
+#'   autographr(ison_southern_women, "hierarchy", labels = FALSE) + ggtitle("ison_southern_women")
+#'   ggsave("man/figures/isonsouthernwomen.png", width = 7, height = 3.5, dpi = "screen")
+#'   ggsave("man/figures/isonsouthernwomen.pdf", width = 7, height = 3.5)
+#'   ```
+#' \if{html}{\figure{isonsouthernwomen.png}{options: width="75\%" alt="Figure: ison_southern_women"}}
+#' \if{latex}{\figure{isonsouthernwomen.pdf}{options: width=7cm}}
 #' @docType data
 #' @keywords datasets
 #' @name ison_southern_women

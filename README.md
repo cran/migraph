@@ -61,8 +61,7 @@ as well as with objects constructed from the following packages:
 `{migraph}`’s `as_*()` functions can be used to translate objects from
 one of the above classes into any other, and include:
 
--   `as_edgelist()`, `as_igraph()`, `as_matrix()`, `as_network()`,
-    `as_tidygraph()`
+<img src="man/figures/README-coercion-graph-1.png" width="100%" />
 
 These functions are designed to be as intuitive and lossless as
 possible, outperforming many other class-coercion packages.
@@ -81,13 +80,14 @@ properties, e.g.:
     `is_uniplex()`, `is_weighted()`
 
 `{migraph}`’s `to_*()` functions can be used on any class object to
-transform networks into networks with other properties, e.g.:
+reformat or transform networks into networks with other properties,
+e.g.:
 
--   `to_blocks()`, `to_edges()`, `to_main_component()`, `to_mode1()`,
-    `to_mode2()`, `to_multilevel()`, `to_named()`, `to_onemode()`,
-    `to_redirected()`, `to_simplex()`, `to_subgraph()`, `to_ties()`,
-    `to_undirected()`, `to_uniplex()`, `to_unnamed()`, `to_unsigned()`,
-    `to_unweighted()`
+-   `to_blocks()`, `to_edges()`, `to_giant()`, `to_main_component()`,
+    `to_matching()`, `to_mode1()`, `to_mode2()`, `to_multilevel()`,
+    `to_named()`, `to_onemode()`, `to_redirected()`, `to_simplex()`,
+    `to_subgraph()`, `to_ties()`, `to_twomode()`, `to_undirected()`,
+    `to_uniplex()`, `to_unnamed()`, `to_unsigned()`, `to_unweighted()`
 
 #### Making
 
@@ -148,7 +148,7 @@ function names wherever possible.
     `graph_congruency()`
 -   Connectedness: `graph_components()`, `graph_cohesion()`,
     `graph_adhesion()`, `graph_diameter()`, `graph_length()`
--   Diversity: `graph_blau_index()`, `graph_ei_index()`,
+-   Diversity: `graph_diversity()`, `graph_homophily()`,
     `graph_assortativity()`
 -   Structural holes: e.g. `node_redundancy()`, `node_effsize()`,
     `node_efficiency()`, `node_constraint()`, `node_hierarchy()`
@@ -174,9 +174,12 @@ function names wherever possible.
 
 -   `autographr()` for plotting graphs with sensible defaults based on
     their properties
--   New layouts: `layout_tbl_graph_frgrid()`,
-    `layout_tbl_graph_gogrid()`, `layout_tbl_graph_kkgrid()`,
-    `layout_tbl_graph_stressgrid()` for snapping a layout to a grid
+-   New layouts: `layout_tbl_graph_alluvial()`,
+    `layout_tbl_graph_concentric()`, `layout_tbl_graph_frgrid()`,
+    `layout_tbl_graph_gogrid()`, `layout_tbl_graph_hierarchy()`,
+    `layout_tbl_graph_kkgrid()`, `layout_tbl_graph_ladder()`,
+    `layout_tbl_graph_railway()`, `layout_tbl_graph_stressgrid()` for
+    snapping a layout to a grid
 -   Class-based plots: e.g. `plot.matrix()`, `plot.members()`,
     `plot.node_measure()`
 

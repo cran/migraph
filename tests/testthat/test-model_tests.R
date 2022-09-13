@@ -1,8 +1,8 @@
 # Making sure the tests family of functions works as intended.
-marvel_friends <- to_main_component(to_unsigned(ison_marvel_relationships)) %>%
+marvel_friends <- to_giant(to_unsigned(ison_marvel_relationships)) %>%
   to_subgraph(PowerOrigin == "Human")
 cugtest <- test_random(marvel_friends,
-                       graph_ei_index,
+                       graph_homophily,
                        attribute = "Attractive",
                        times = 200)
 cugtest2 <- test_random(marvel_friends,
@@ -35,10 +35,10 @@ test_that("test_random works", {
 
 # Set the qaptest up
 marvel_friends <- to_unsigned(ison_marvel_relationships)
-marvel_friends <- to_main_component(marvel_friends)
+marvel_friends <- to_giant(marvel_friends)
 marvel_friends <- to_subgraph(marvel_friends, PowerOrigin == "Human")
 qaptest <- test_permutation(marvel_friends,
-                            graph_ei_index,
+                            graph_homophily,
                             attribute = "Attractive",
                             times = 200)
 test_that("test_permutation works", {

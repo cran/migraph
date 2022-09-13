@@ -4,23 +4,26 @@
 \alias{transform}
 \alias{to_mode1}
 \alias{to_mode2}
-\alias{to_main_component}
+\alias{to_giant}
 \alias{to_subgraph}
 \alias{to_ties}
 \alias{to_blocks}
+\alias{to_matching}
 \title{Tools for transforming networks, graphs, and matrices}
 \usage{
-to_mode1(object)
+to_mode1(object, similarity = c("count", "jaccard", "rand", "pearson", "yule"))
 
-to_mode2(object)
+to_mode2(object, similarity = c("count", "jaccard", "rand", "pearson", "yule"))
 
-to_main_component(object)
+to_giant(object)
 
 to_subgraph(object, ...)
 
 to_ties(object)
 
 to_blocks(object, membership, FUN = mean)
+
+to_matching(object, mark = "type")
 }
 \arguments{
 \item{object}{An object of a migraph-consistent class:
@@ -32,14 +35,35 @@ to_blocks(object, membership, FUN = mean)
 \item tbl_graph, from the \code{{tidygraph}} package
 }}
 
+\item{similarity}{Method for establishing ties,
+currently "count" (default), "jaccard", or "rand".
+"count" calculates the number of coinciding ties,
+and can be interpreted as indicating the degree of opportunities
+between nodes.
+"jaccard" uses this count as the numerator in a proportion,
+where the denominator consists of any cell where either node has a tie.
+It can be interpreted as opportunity weighted by participation.
+"rand", or the Simple Matching Coefficient,
+is a proportion where the numerator consists of the count of cells where
+both nodes are present or both are absent,
+over all possible cells.
+It can be interpreted as the (weighted) degree of behavioral mirroring
+between two nodes.
+"pearson" (Pearson's coefficient) and "yule" (Yule's Q)
+produce correlations for valued and binary data, respectively.
+Note that Yule's Q has a straightforward interpretation related to the odds ratio.}
+
 \item{...}{Arguments passed on to dplyr::filter}
 
-\item{membership}{A vector of partition memberships}
+\item{membership}{A vector of partition memberships.}
 
 \item{FUN}{A function for summarising block content.
 By default \code{mean}.
 Other recommended options include \code{median}, \code{sum},
 \code{min} or \code{max}.}
+
+\item{mark}{A logical vector marking two types or modes.
+By default "type".}
 }
 \description{
 These functions offer tools for transforming migraph-consistent objects
@@ -51,43 +75,60 @@ than the original object.
 Since some modifications are easier to implement for some objects than others,
 here are the currently implemented modifications:\tabular{lccccc}{
    to_ \tab edgelists \tab matrices \tab igraph \tab tidygraph \tab network \cr
-   mode1 \tab  \tab X \tab X \tab X \tab  \cr
-   mode2 \tab  \tab X \tab X \tab X \tab  \cr
-   main_component \tab  \tab  \tab X \tab X \tab X \cr
+   mode1 \tab X \tab X \tab X \tab X \tab X \cr
+   mode2 \tab X \tab X \tab X \tab X \tab X \cr
+   giant \tab X \tab X \tab X \tab X \tab X \cr
    subgraph \tab X \tab X \tab X \tab X \tab X \cr
    ties \tab X \tab X \tab X \tab X \tab X \cr
    blocks \tab X \tab X \tab X \tab X \tab X \cr
+   matching \tab X \tab X \tab X \tab X \tab X \cr
 }
-
-
-Note that \code{to_subgraph()} returns a 'tidygraph' object,
-\code{to_ties()} returns an 'igraph' object,
-and \code{to_blocks()} returns a 'matrix' object.
 }
 \section{Functions}{
 \itemize{
-\item \code{to_mode1}: Results in a weighted one-mode object
+\item \code{to_mode1()}: Results in a weighted one-mode object
 that retains the row nodes from a two-mode object,
 and weights the ties between them on the basis of
 their joint ties to nodes in the second mode (columns)
 
-\item \code{to_mode2}: Results in a weighted one-mode object
+\item \code{to_mode2()}: Results in a weighted one-mode object
 that retains the column nodes from a two-mode object,
 and weights the ties between them on the basis of
 their joint ties to nodes in the first mode (rows).
 
-\item \code{to_main_component}: Returns an object that includes only the main component
+\item \code{to_giant()}: Returns an object that includes only the main component
 without any smaller components or isolates
 
-\item \code{to_subgraph}: Returns a network subgraph filtered
+\item \code{to_subgraph()}: Returns a network subgraph filtered
 on the basis of some node-related logical statement.
 
-\item \code{to_ties}: Returns a matrix (named if possible)
+\item \code{to_ties()}: Returns a matrix (named if possible)
 where the edges are the nodes
 
-\item \code{to_blocks}: Returns a reduced graph from a given
-partition membership vector
+\item \code{to_blocks()}: Returns a reduced graph from a given
+partition membership vector.
+Reduced graphs provide summary representations of network structures
+by collapsing groups of connected nodes into single nodes
+while preserving the topology of the original structures.
+
+\item \code{to_matching()}: Returns a network with only
+matching ties
+
 }}
+\section{to_matching}{
+
+\code{to_matching()} uses \code{{igraph}}'s \code{max_bipartite_match()}
+to return a network in which each node is only tied to
+one of its previous ties.
+The number of these ties left is its \emph{cardinality},
+and the algorithm seeks to maximise this such that,
+where possible, each node will be associated with just one
+node in the other mode or some other mark.
+The algorithm used is the push-relabel algorithm
+with greedy initialization and a global relabelling
+after every \eqn{\frac{n}{2}} steps,
+where \eqn{n} is the number of nodes in the network.
+}
 
 \examples{
 autographr(ison_southern_women) /
@@ -98,6 +139,14 @@ autographr(to_ties(ison_adolescents))
 (adolblock <- to_blocks(ison_adolescents, 
   node_regular_equivalence(ison_adolescents, k = 3)))
 autographr(adolblock)
+autographr(to_matching(mpn_elite_usa_advice), "bipartite")
+autographr(to_matching(ison_southern_women), "bipartite")
+}
+\references{
+Goldberg, A V; Tarjan, R E (1986).
+"A new approach to the maximum flow problem".
+\emph{Proceedings of the eighteenth annual ACM symposium on Theory of computing – STOC '86}. p. 136.
+\doi{10.1145/12130.12144}
 }
 \seealso{
 Other manipulations: 
