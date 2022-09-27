@@ -1,10 +1,10 @@
-## ----setup------------------------------
+## ----setup-----------------------------------------
 library(migraph)
 data("ison_algebra", package = "migraph")
 # ?migraph::ison_algebra
 
 
-## ----separatingnets---------------------
+## ----separatingnets--------------------------------
 (friends <- to_uniplex(ison_algebra, "friends"))
 gfriend <- autographr(friends) + ggtitle("Friendship")
 (social <- to_uniplex(ison_algebra, "social"))
@@ -14,64 +14,64 @@ gtask <- autographr(tasks) + ggtitle("Task")
 gfriend + gsocial + gtask
 
 
-## ----constraint-------------------------
+## ----constraint------------------------------------
 node_constraint(tasks)
 
 
-## ----constraintplot---------------------
+## ----constraintplot--------------------------------
 tasks <- tasks %>% mutate(low_constraint = node_is_min(node_constraint(tasks)))
 autographr(tasks, node_color = "low_constraint")
 
 
-## ----find-se----------------------------
+## ----find-se---------------------------------------
 node_structural_equivalence(ison_algebra)
 ison_algebra %>% 
   mutate(se = node_structural_equivalence(ison_algebra)) %>% 
   autographr(node_color = "se")
 
 
-## ----construct-cor----------------------
+## ----construct-cor---------------------------------
 node_tie_census(ison_algebra)
 dim(node_tie_census(ison_algebra))
 
 
-## ----vary-clust-------------------------
+## ----vary-clust------------------------------------
 plot(node_structural_equivalence(ison_algebra, cluster = "hier", distance = "euclidean"))
 plot(node_structural_equivalence(ison_algebra, cluster = "hier", distance = "manhattan"))
 plot(node_structural_equivalence(ison_algebra, cluster = "concor"))
 
 
-## ----k-discrete-------------------------
+## ----k-discrete------------------------------------
 plot(node_structural_equivalence(ison_algebra, k = 2))
 
 
-## ----elbowsil---------------------------
+## ----elbowsil--------------------------------------
 plot(node_structural_equivalence(ison_algebra, k = "elbow"))
 plot(node_structural_equivalence(ison_algebra, k = "silhouette"))
 
 
-## ----strict-----------------------------
+## ----strict----------------------------------------
 plot(node_structural_equivalence(ison_algebra, k = "strict"))
 
 
-## ----strplot----------------------------
+## ----strplot---------------------------------------
 str_clu <- node_structural_equivalence(ison_algebra)
 ison_algebra %>% 
   mutate(se = str_clu) %>% 
   autographr(node_color = "se")
 
 
-## ----summ-------------------------------
+## ----summ------------------------------------------
 summary(node_tie_census(ison_algebra),
         membership = str_clu)
 
 
-## ----block------------------------------
+## ----block-----------------------------------------
 plot(as_matrix(ison_algebra),
      membership = str_clu)
 
 
-## ----structblock------------------------
+## ----structblock-----------------------------------
 str_clu <- node_structural_equivalence(ison_algebra)
 (bm <- to_blocks(ison_algebra, str_clu))
 bm <- bm %>% as_tidygraph %>% mutate(name = c("Freaks", "Squares", "Nerds", "Geek"))
