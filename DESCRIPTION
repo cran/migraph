@@ -1,7 +1,7 @@
 Package: migraph
 Title: Tools for Multimodal Network Analysis
-Version: 0.12.0
-Date: 2022-09-23
+Version: 0.12.1
+Date: 2022-10-03
 Description: A set of tools for analysing multimodal networks.
    All functions operate with matrices, edge lists, 
    and 'igraph', 'network', and 'tidygraph' objects,
@@ -48,7 +48,7 @@ Authors@R:
     )
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-09-27 07:16:10 UTC; hollway
+Packaged: 2022-10-03 20:36:04 UTC; hollway
 Author: James Hollway [cre, aut, ctb] (IHEID,
     <https://orcid.org/0000-0002-8361-9647>),
   Jael Tan [ctb] (IHEID, <https://orcid.org/0000-0002-6234-9764>),
@@ -56,4 +56,4 @@ Author: James Hollway [cre, aut, ctb] (IHEID,
   Henrique Sposito [ctb] (IHEID, <https://orcid.org/0000-0003-3420-6085>)
 Maintainer: James Hollway <james.hollway@graduateinstitute.ch>
 Repository: CRAN
-Date/Publication: 2022-09-27 07:50:02 UTC
+Date/Publication: 2022-10-04 09:30:02 UTC
