@@ -32,12 +32,16 @@
 #' @param node_group Node variable in quotation marks to be used for
 #'   drawing convex but also concave hulls around clusters of nodes.
 #'   These groupings will be labelled with the categories of the variable passed.
-#' @param ... Extra arguments.
+#' @param ... Extra arguments to pass on to `autographr()`/`ggraph()`/`ggplot()`.
 #' @importFrom ggraph geom_edge_link geom_node_text
 #' @importFrom ggraph geom_conn_bundle get_con geom_node_point
 #' @importFrom ggraph scale_edge_width_continuous geom_node_label
 #' @importFrom ggplot2 aes arrow unit scale_color_brewer scale_fill_brewer
 #' @importFrom ggforce geom_mark_hull
+#' @name auto_graph
+NULL
+
+#' @describeIn auto_graph Graphs a network with sensible defaults
 #' @examples
 #' ison_adolescents %>% 
 #'   mutate(shape = rep(c("circle", "square"), times = 4)) %>%
@@ -51,18 +55,24 @@
 #'   autographr(node_color = "high_degree", edge_color = "high_betweenness")
 #' autographr(mpn_elite_usa_advice, "concentric")
 #' @export
-autographr <- auto_graph <- function(object,
-                                     layout = "stress",
-                                     labels = TRUE,
-                                     node_color = NULL,
-                                     node_group = NULL,
-                                     node_shape = NULL,
-                                     node_size = NULL,
-                                     edge_color = NULL,
-                                     ...) {
+autographr <- function(object,
+                       layout = "stress",
+                       labels = TRUE,
+                       node_color = NULL,
+                       node_group = NULL,
+                       node_shape = NULL,
+                       node_size = NULL,
+                       edge_color = NULL,
+                       ...) {
   
-  name <- weight <- NULL # initialize variables to avoid CMD check notes
+  name <- weight <- nodes <- NULL # initialize variables to avoid CMD check notes
   g <- as_tidygraph(object)
+  if(!is.null(node_group)) {
+    node_group <- as.factor(node_attribute(g, node_group))
+    g <- as_tidygraph(g) %>% 
+      tidygraph::activate(nodes) %>%
+      dplyr::mutate(node_group = node_group)
+  }
 
   # Add layout ----
   p <- .graph_layout(g, layout, labels, node_group)
@@ -74,6 +84,23 @@ autographr <- auto_graph <- function(object,
   p <- .graph_nodes(p, g, node_color, node_shape, node_size)
 
   p
+}
+
+#' @describeIn auto_graph Graphs a list of networks 
+#'   with sensible defaults
+#' @param netlist A list of migraph-compatible networks.
+#' @importFrom patchwork wrap_plots
+#' @examples 
+#' autographs(to_egos(ison_adolescents))
+#' @export
+autographs <- function(netlist, ...){
+  if(!is.null(names(netlist)))
+    gs <- lapply(1:length(netlist), function(x) 
+    autographr(netlist[[x]], ...) + 
+      ggtitle(names(netlist)[x])) else 
+        gs <- lapply(netlist, function(x) 
+          autographr(x, ...))
+  do.call(patchwork::wrap_plots, gs)
 }
 
 #' @importFrom ggraph create_layout ggraph
@@ -155,7 +182,7 @@ autographr <- auto_graph <- function(object,
   if (is_directed(g)) {
     if (is_weighted(g)) {
       if (!is.null(edge_color)) {
-        edge_color <- as.factor(igraph::get.edge.attribute(g, edge_color))
+        edge_color <- as.factor(tie_attribute(g, edge_color))
         p <- p + ggraph::geom_edge_link(ggplot2::aes(width = weight,
                                                      colour = edge_color),
                                         edge_alpha = 0.4,
@@ -196,7 +223,7 @@ autographr <- auto_graph <- function(object,
       }
     } else {
       if (!is.null(edge_color)) {
-        edge_color <- as.factor(igraph::get.edge.attribute(g, edge_color))
+        edge_color <- as.factor(tie_attribute(g, edge_color))
         p <- p + ggraph::geom_edge_link(ggplot2::aes(colour = edge_color),
                                         edge_alpha = 0.4,
                                         edge_linetype = "solid",
@@ -230,7 +257,7 @@ autographr <- auto_graph <- function(object,
   } else {
     if (is_weighted(g)) { # weighted and undirected
       if (!is.null(edge_color)) {
-        edge_color <- as.factor(igraph::get.edge.attribute(g, edge_color))
+        edge_color <- as.factor(tie_attribute(g, edge_color))
         p <- p + ggraph::geom_edge_link(ggplot2::aes(width = weight,
                                                      colour = edge_color),
                                         edge_alpha = 0.4,
@@ -259,7 +286,7 @@ autographr <- auto_graph <- function(object,
       }
     } else { # unweighted and undirected
       if (!is.null(edge_color)) {
-        edge_color <- as.factor(igraph::get.edge.attribute(g, edge_color))
+        edge_color <- as.factor(tie_attribute(g, edge_color))
         p <- p + ggraph::geom_edge_link0(ggplot2::aes(colour = edge_color),
                                          edge_linetype = "solid",
                                          edge_alpha = 0.4) +
@@ -295,7 +322,7 @@ autographr <- auto_graph <- function(object,
   }
 
   if (!is.null(node_shape)) {
-    node_shape <- as.factor(igraph::get.vertex.attribute(g, node_shape))
+    node_shape <- as.factor(node_attribute(g, node_shape))
     node_shape <- c("circle","square","triangle")[node_shape]
   } else if (is_twomode(g)) {
     node_shape <- ifelse(igraph::V(g)$type,
@@ -306,12 +333,13 @@ autographr <- auto_graph <- function(object,
   }
   if (is_twomode(g)) {
     if (!is.null(node_color)) {
-      color_factor_node <- as.factor(igraph::get.vertex.attribute(g, node_color))
+      color_factor_node <- as.factor(node_attribute(g, node_color))
       p <- p + ggraph::geom_node_point(ggplot2::aes(color = color_factor_node),
                                        size = nsize,
                                        shape = node_shape) +
         ggplot2::scale_colour_brewer(palette = "Set1",
-                                     # direction = -1,
+                                     direction = ifelse(length(unique(color_factor_node))==2,
+                                                        -1,1),
                                      guide = "none")
     } else {
       p <- p + ggraph::geom_node_point(size = nsize,
@@ -319,12 +347,13 @@ autographr <- auto_graph <- function(object,
     }
   } else {
     if (!is.null(node_color)) {
-      color_factor_node <- as.factor(igraph::get.vertex.attribute(g, node_color))
+      color_factor_node <- as.factor(node_attribute(g, node_color))
       p <- p + ggraph::geom_node_point(aes(color = color_factor_node),
                                        size = nsize,
                                        shape = node_shape) +
         ggplot2::scale_colour_brewer(palette = "Set1",
-                                     # direction = -1,
+                                     direction = ifelse(length(unique(color_factor_node))==2,
+                                                        -1,1),
                                      guide = "none")
     } else {
       p <- p + ggraph::geom_node_point(size = nsize,
@@ -339,8 +368,8 @@ autographr <- auto_graph <- function(object,
     message("Please install package `{concaveman}`.")
   } else {
     p <- p + ggforce::geom_mark_hull(ggplot2::aes(x = lo$x, y = lo$y,
-                                                  fill = as.factor(igraph::get.vertex.attribute(g, node_group)),
-                                                  label = as.factor(igraph::get.vertex.attribute(g, node_group))),
+                                                  fill = node_group,
+                                                  label = node_group),
                                      concavity = 2) +
       ggplot2::scale_fill_brewer(palette = "Set1", guide = "none")
   }
@@ -408,3 +437,4 @@ hypot <- function (x, y) {
   M <- pmax(x, y)
   ifelse(M == 0, 0, M * sqrt(1 + (m/M)^2))
 }
+

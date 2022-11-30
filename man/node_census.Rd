@@ -32,6 +32,25 @@ in a network. These include a triad census based on the triad profile
 of nodes, but also a tie census based on the particular tie partners
 of nodes. Included also are group census functions for summarising
 the profiles of clusters of nodes in a network.
+
+#' @export
+node_igraph_census <- function(object, normalized = FALSE){
+out <- igraph::motifs(as_igraph(object), 4)
+if(is_labelled(object))
+rownames(out) <- node_names(object)
+colnames(out) <- c("co-K4",
+"co-diamond",
+"co-C4",
+"co-paw",
+"co-claw",
+"P4",
+"claw",
+"paw",
+"C4",
+"diamond",
+"K4")
+make_node_motif(out, object)
+}
 }
 \details{
 The quad census uses the \code{{oaqc}} package to do
@@ -56,6 +75,9 @@ For now, we offer a rough translation:\tabular{ll}{
    Z42, Z43 \tab diamond \cr
    X4 \tab K4 \cr
 }
+
+
+See also \href{https://www.graphclasses.org/smallgraphs.html#nodes4}{this list of graph classes}.
 }
 \section{Functions}{
 \itemize{
@@ -76,6 +98,7 @@ of each node to every other node in the network.
 task_eg <- to_named(to_uniplex(ison_algebra, "task_tie"))
 (tie_cen <- node_tie_census(task_eg))
 (triad_cen <- node_triad_census(task_eg))
+node_quad_census(ison_southern_women)
 node_path_census(ison_adolescents)
 node_path_census(ison_southern_women)
 }
@@ -100,6 +123,7 @@ Opsahl, Tore, Filip Agneessens, and John Skvoretz. 2010.
 }
 \seealso{
 Other motifs: 
+\code{\link{brokerage_census}},
 \code{\link{network_census}}
 }
 \concept{motifs}

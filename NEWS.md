@@ -1,3 +1,184 @@
+# migraph 0.13.0
+
+## Package
+
+- Added hints and questions to community tutorial
+- Added diffusion tutorial
+
+## Marks
+
+- Added `is_aperiodic()` for testing whether a network is aperiodic 
+(the greatest common divisor for all cycles in the network is 1)
+  - Note that for computational efficiency, this will check only up to a specified
+  path length (by default 4)
+- `node_is_max()` and `node_is_min()` now take a "rank" argument for selecting more
+than the first ranked maxima or minima
+
+## Manipulations
+
+- Added several new functions for splitting networks into a list of networks
+  - Added `to_components()` to return the components of a network as a list of networks
+  - Added `to_egos()` to return the ego networks of a network as a list of networks
+  - Added `to_subgraphs()` to return attribute-based subgraphs as a list of networks
+  
+## Measures
+
+- Added `network_richness()` and `node_richness()` for calculating the richness 
+(a common diversity measure) of an attribute in a network
+
+## Models
+
+- Extended `play_diffusion()` to include more compartment and transition options
+  - The print method now tabulates the compartment sums per step
+  - The summary method now presents the diffusion event list
+  - The plot method now:
+    - plots lines for S and I compartments, as blue and red lines respectively, 
+    if available or informs the user if no diffusion could be simulated
+    - plots lines for E and R compartments, as orange and green lines respectively, if relevant
+    - plots a bar graph behind showing the number of new infections per step
+  - Added "transmissibility" parameter to allow for more probabilistic contagion,
+  by default 1 (all contacts over the threshold result in contagion)
+  - Added "latency" parameter to allow for an Exposed compartment to be included,
+  by default 0 (no incubation period)
+  - Added "recovery" rate parameter to allow for a Recovered compartment to be included,
+  by default 0 (no recovery)
+  - Added "waning" parameter to allow for returns to the Susceptible compartment,
+  by default 0 (any recovered have lifelong immunity)
+  - Added "immune" parameter to allow for issuing of targetted vaccinations or related
+  - "thresholds" can now be proportions, in which case they are interpreted as complex
+  - "seeds" is now 1 by default
+- Added `play_diffusions()` for running a diffusion model multiple times
+  - Note for accelerating documentation and tutorials, this is 5 by default,
+  but for publication quality results this should be increased
+  - A print method tabulates the compartment sums per step per simulation
+  - A summary method tabulates the steps until complete infection (or recovery)
+  for each simulation
+  - A plot method visualises the loess for each compartment across all simulations
+  - Note that this function uses `{furrr}` and so a multicore or multisession strategy
+  can be used for parallelisation (but this only makes sense for many simulations)
+- Added `play_learning()` for running a DeGroot learning model
+  - A print method tabulates nodes beliefs at each step
+  - A summary method informs how many steps it took until convergence or
+  whether there was no convergence after _t_ steps
+  - A plot method visualises the belief trajectories for each node
+- `network_reg()` now declares the reference category for nominal variables
+  
+## Mapping
+
+- Added `autographs()` for autoplotting lists of networks
+
+# migraph 0.12.6
+
+## Package
+
+- Changed tutorial naming structure to numeric
+- Made all existing tutorials solution oriented
+- Converted visualisation vignette into tutorial
+  - Added further instruction as to how to change e.g. node_color colors
+- Converted centrality vignette into tutorial
+- Converted regression vignette into tutorial
+  - Added a lot more interactivity to regression tutorial
+- Deleted vignette instructions off of the README
+- Added some core/coreness aspects to topology tutorial
+
+## Manipulations
+
+- `mutate()` now works with igraph objects
+
+## Marks
+
+- Added `node_is_random()` for selecting n nodes at random
+
+## Models
+
+- Added first draft of (SI) `play_diffusion()` model
+  - Added diff_model class, together with print, summary, and plot methods
+
+# migraph 0.12.5
+
+## Package
+
+- Added topology tutorial
+
+## Makes
+
+- Fixed integer recognition bug in `generate_random()`
+
+## Manipulating
+
+- Added more similarity options for projection (`to_mode1()` and `to_mode2()`)
+- Fixed bug in `to_redirected.igraph()` where routing through an edgelist caused problems
+
+## Measures
+
+- Elaborated documentation on modularity
+- Added `network_scalefree()` for returning power law alpha/exponent
+  - A message is given if the KS p-value is less than 0.05
+  
+## Data
+
+- Added `ison_lotr` dataset for examples using interactions among Lord of the Rings
+  characters in the books
+
+# migraph 0.12.4
+
+## Package
+
+- Converted 'visualisation' vignette to a learnr tutorial
+- Deleted troublesome URLs to correlatesofwar.org
+- Brokerage census gets their own documentation page
+
+# migraph 0.12.3
+
+## Package
+
+- Converted 'community' vignette to a learnr tutorial
+- Converted 'equivalence' vignette to a learnr tutorial
+
+## Motifs
+
+- Added node names to node_motif class where available
+- Added `node_brokerage_census()` and `network_brokerage_census()` for counting Gould-Fernandez brokerage roles
+
+# migraph 0.12.2
+
+## Package
+
+- Fixed several typos in the centrality vignette and reexported figures
+- Added community detection vignette
+
+## Make
+
+- `create_lattice()` now conforms to other `create_*()` functions in how it interprets `"n"`
+  - from an inferred `"n"` for a one-mode network, it will create a transitive lattice of as even dimensions as possible
+  - for a two-mode network, this depends on how balanced the two modes are, and is still a work in progress... (WIP)
+
+## Marks
+
+- Added `is_eulerian()` for a logical expression of whether the network has an Eulerian path
+
+## Measures
+
+- `network_smallworld()` now takes a method argument for different ways of calculating a small-world coefficient
+  - "omega" (the new default) offers a better range, 0 to 1, than the previous (now "sigma") metric.
+  - "SWI" is also included and offers a 0 to 1 range, but where 1 may not be realisable
+- Added `node_diversity()` for calculating heterogeneity among each nodes' ego network
+- Added `node_homophily()` for calculating homophilous ties among each nodes' ego network
+- Added `node_reciprocity()` for calculating each node's reciprocity
+- Added `node_transitivity()` for calculating each node's transitivity/clustering
+
+## Memberships
+
+- Added wrappers for several community detection algorithms from igraph,
+  unlike tidygraph these can operate on objects directly
+  - Added `node_walktrap()`
+  - Added `node_edge_betweenness()`
+  - Added `node_fast_greedy()`
+
+## Mapping
+
+- Reversed blue/red colour assignment for binary variables
+
 # migraph 0.12.1
 
 ## Manipulations
@@ -19,7 +200,7 @@
 
 ## Mapping
 
-- Fixed `autographr()` tests to work with new version of `{ggraph}`
+- Fixed `autographr()` tests to work with new version of `{ggraph}` (closed #247, thanks @henriquesposito)
 
 # migraph 0.12.0
 

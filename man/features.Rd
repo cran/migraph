@@ -6,6 +6,7 @@
 \alias{network_factions}
 \alias{network_modularity}
 \alias{network_smallworld}
+\alias{network_scalefree}
 \alias{network_balance}
 \title{Measures of network topological features}
 \source{
@@ -18,7 +19,9 @@ network_factions(object, membership = NULL)
 
 network_modularity(object, membership = NULL, resolution = 1)
 
-network_smallworld(object, times = 100)
+network_smallworld(object, method = c("omega", "sigma", "SWI"), times = 100)
+
+network_scalefree(object)
 
 network_balance(object)
 }
@@ -37,6 +40,30 @@ network_balance(object)
 \item{resolution}{A proportion indicating the resolution scale.
 By default 1.}
 
+\item{method}{There are three small-world measures implemented:
+\itemize{
+\item "sigma" is the original equation from Watts and Strogatz (1998),
+\deqn{\frac{\frac{C}{C_r}}{\frac{L}{L_r}}},
+where \eqn{C} and \eqn{L} are the observed
+clustering coefficient and path length, respectively,
+and \eqn{C_r} and \eqn{L_r} are the averages obtained from
+random networks of the same dimensions and density.
+A \eqn{\sigma > 1} is considered to be small-world,
+but this measure is highly sensitive to network size.
+\item "omega" (the default) is an update from Telesford et al. (2011),
+\deqn{\frac{L_r}{L} - \frac{C}{C_l}},
+where \eqn{C_l} is the clustering coefficient for a lattice graph
+with the same dimensions.
+\eqn{\omega} ranges between 0 and 1,
+where 1 is as close to a small-world as possible.
+\item "SWI" is an alternative proposed by Neal (2017),
+\deqn{\frac{L - L_l}{L_r - L_l} \times \frac{C - C_r}{C_l - C_r}},
+where \eqn{L_l} is the average path length for a lattice graph
+with the same dimensions.
+\eqn{SWI} also ranges between 0 and 1 with the same interpretation,
+but where there may not be a network for which \eqn{SWI = 1}.
+}}
+
 \item{times}{Integer of number of simulations.}
 }
 \description{
@@ -50,13 +77,18 @@ and a core-periphery model with the same dimensions.
 \item \code{network_factions()}: Returns correlation between a given network
 and a component model with the same dimensions.
 
-\item \code{network_modularity()}: Returns modularity of one- or two-mode networks
-based on nodes' membership in pre-defined clusters.
+\item \code{network_modularity()}: Returns modularity based on nodes' membership
+in pre-defined clusters.
 
 \item \code{network_smallworld()}: Returns small-world metrics for one- and
 two-mode networks.
 Small-world networks can be highly clustered and yet
 have short path lengths.
+
+\item \code{network_scalefree()}: Returns the exponent of the fitted
+power-law distribution.
+Usually an exponent between 2 and 3 indicates a power-law
+distribution.
 
 \item \code{network_balance()}: Returns the structural balance index on
 the proportion of balanced triangles,
@@ -64,6 +96,25 @@ ranging between \code{0} if all triangles are imbalanced and
 \code{1} if all triangles are balanced.
 
 }}
+\section{Modularity}{
+
+Modularity measures the difference between the number of ties within each community
+from the number of ties expected within each community in a random graph
+with the same degrees, and ranges between -1 and +1.
+Modularity scores of +1 mean that ties only appear within communities,
+while -1 would mean that ties only appear between communities.
+A score of 0 would mean that ties are half within and half between communities,
+as one would expect in a random graph.
+
+Modularity faces a difficult problem known as the resolution limit
+(Fortunato and Barthélemy 2007).
+This problem appears when optimising modularity,
+particularly with large networks or depending on the degree of interconnectedness,
+can miss small clusters that 'hide' inside larger clusters.
+In the extreme case, this can be where they are only connected
+to the rest of the network through a single tie.
+}
+
 \examples{
 network_core(ison_adolescents)
 network_core(ison_southern_women)
@@ -75,6 +126,9 @@ network_modularity(ison_southern_women,
   node_kernighanlin(ison_southern_women))
 network_smallworld(ison_brandes)
 network_smallworld(ison_southern_women)
+network_scalefree(ison_adolescents)
+network_scalefree(generate_scalefree(50, 1.5))
+network_scalefree(create_lattice(100))
 network_balance(ison_marvel_relationships)
 }
 \references{
@@ -85,7 +139,7 @@ Borgatti, Stephen P., and Martin G. Everett. 2000.
 
 Murata, Tsuyoshi. 2010. Modularity for Bipartite Networks.
 In: Memon, N., Xu, J., Hicks, D., Chen, H. (eds)
-\emph{Data Mining for Social Network Data. Annals of Information Systems}, V1ol 12.
+\emph{Data Mining for Social Network Data. Annals of Information Systems}, Vol 12.
 Springer, Boston, MA.
 \doi{10.1007/978-1-4419-6287-4_7}
 
@@ -93,6 +147,16 @@ Watts, Duncan J., and Steven H. Strogatz. 1998.
 “Collective Dynamics of ‘Small-World’ Networks.”
 \emph{Nature} 393(6684):440–42.
 \doi{10.1038/30918}.
+
+Telesford QK, Joyce KE, Hayasaka S, Burdette JH, Laurienti PJ. 2011.
+"The ubiquity of small-world networks".
+\emph{Brain Connectivity} 1(5): 367–75.
+\doi{10.1089/brain.2011.0038}.
+
+Neal Zachary P. 2017.
+"How small is it? Comparing indices of small worldliness".
+\emph{Network Science}. 5 (1): 30–44.
+\doi{10.1017/nws.2017.5}.
 }
 \seealso{
 \code{\link[=network_transitivity]{network_transitivity()}} and \code{\link[=network_equivalency]{network_equivalency()}}

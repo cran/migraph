@@ -5,7 +5,7 @@
 \alias{network_dyad_census}
 \alias{network_triad_census}
 \alias{network_mixed_census}
-\title{Censuses of graphs' motifs}
+\title{Censuses of motifs at the network level}
 \source{
 Alejandro Espinosa 'netmem'
 }
@@ -17,12 +17,19 @@ network_triad_census(object)
 network_mixed_census(object, object2)
 }
 \arguments{
-\item{object}{A migraph-consistent object.}
+\item{object}{An object of a migraph-consistent class:
+\itemize{
+\item matrix (adjacency or incidence) from \code{{base}} R
+\item edgelist, a data frame from \code{{base}} R or tibble from \code{{tibble}}
+\item igraph, from the \code{{igraph}} package
+\item network, from the \code{{network}} package
+\item tbl_graph, from the \code{{tidygraph}} package
+}}
 
 \item{object2}{A second, two-mode migraph-consistent object.}
 }
 \description{
-Censuses of graphs' motifs
+Censuses of motifs at the network level
 }
 \section{Functions}{
 \itemize{
@@ -35,7 +42,7 @@ a one-mode and a two-mode network
 
 }}
 \examples{
-network_dyad_census(ison_adolescents)
+network_dyad_census(ison_algebra)
 network_triad_census(ison_adolescents)
 marvel_friends <- to_unsigned(ison_marvel_relationships, "positive")
 (mixed_cen <- network_mixed_census(marvel_friends, ison_marvel_teams))
@@ -51,6 +58,7 @@ Hollway, James, Alessandro Lomi, Francesca Pallotti, and Christoph Stadtfeld. 20
 }
 \seealso{
 Other motifs: 
+\code{\link{brokerage_census}},
 \code{\link{node_census}}
 }
 \concept{motifs}

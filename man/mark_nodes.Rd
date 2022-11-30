@@ -5,6 +5,7 @@
 \alias{node_is_cutpoint}
 \alias{node_is_isolate}
 \alias{node_is_core}
+\alias{node_is_random}
 \alias{node_is_max}
 \alias{node_is_min}
 \title{Marking nodes based on their properties}
@@ -15,9 +16,11 @@ node_is_isolate(object)
 
 node_is_core(object)
 
-node_is_max(node_measure)
+node_is_random(object, size = 1)
 
-node_is_min(node_measure)
+node_is_max(node_measure, ranks = 1)
+
+node_is_min(node_measure, ranks = 1)
 }
 \arguments{
 \item{object}{An object of a migraph-consistent class:
@@ -29,7 +32,15 @@ node_is_min(node_measure)
 \item tbl_graph, from the \code{{tidygraph}} package
 }}
 
+\item{size}{The number of nodes to select (as TRUE).}
+
 \item{node_measure}{An object created by a \code{node_} measure.}
+
+\item{ranks}{The number of ranks of max or min to return.
+For example, \code{ranks = 3} will return TRUE for nodes with
+scores equal to any of the top (or, for \code{node_is_min()}, bottom)
+three scores.
+By default, \code{ranks = 1}.}
 }
 \description{
 These functions return logical vectors the length of the
@@ -56,6 +67,9 @@ with neither incoming nor outgoing ties.
 \item \code{node_is_core()}: Returns logical of which nodes are members
 of the core of the network.
 
+\item \code{node_is_random()}: Returns a logical vector
+indicating a random selection of nodes as TRUE.
+
 \item \code{node_is_max()}: Returns logical of which nodes
 hold the maximum of some measure
 
@@ -67,6 +81,7 @@ hold the minimum of some measure
 node_is_cutpoint(ison_brandes)
 node_is_isolate(ison_brandes)
 node_is_core(ison_brandes)
+node_is_random(ison_brandes, 2)
 node_is_max(node_degree(ison_brandes))
 node_is_min(node_degree(ison_brandes))
 }
