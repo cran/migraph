@@ -1,3 +1,37 @@
+# migraph 0.13.2
+
+## Package
+
+- Updated README with better structuring and explanation
+  - Also improved figure quality
+
+## Makes
+
+- Added `read_matrix()` for importing CSVs of adjacency/incidence matrices
+- Added `read_dynetml()` for importing DynetML .xml files (closed #261)
+
+## Manipulations
+
+- Added list method for `as_tidygraph()` for merging nodelists and edgelists
+  - Note that a named list is expected, with names "nodes" and "ties"
+- Added igraph method for `as_siena()`
+  - Note that this is a WIP proof of concept, and will currently only create the DV
+
+# migraph 0.13.1
+
+## Package
+
+- Added hints, solutions, comments, and questions to equivalence and centrality tutorials
+- Changed theme across all tutorials
+
+## Makes
+
+- Fixed bug in `read_pajek()` where multiple networks/ties were causing an issue for partition assignment
+
+## Models
+
+- Fixed bug in `play_diffusion()` relating to latency inversion
+
 # migraph 0.13.0
 
 ## Package
