@@ -1,7 +1,7 @@
-3ffaddd82dfe0bc4d6e94db1c6971527 *DESCRIPTION
+1af6fd89540b5c72508764d9909ff61a *DESCRIPTION
 eb44bd7fa3a1e48a29c542e669ffceab *LICENSE
-cfaf6ab366560633a79402fca4468ed1 *NAMESPACE
-cf4d76d131e70725029526db679c3560 *NEWS.md
+825c8590f1750ade94e1a7dcc8e6a8b3 *NAMESPACE
+f06571e38c3865904506da5f63237996 *NEWS.md
 f1620e1dbdd0032798889db9b71d9431 *R/class_marks.R
 49efc2f99ead196f2ae78265cd059a26 *R/class_measures.R
 0da712ad8b975a252f6eac9d21e7399a *R/class_members.R
@@ -11,7 +11,7 @@ c4a409c10a0aba966165aea1bb45dd84 *R/data_mpn.R
 855d4f85d653145063879d316d45edbb *R/mark_is.R
 7a29aef98b333a6c51293638d8990a7f *R/mark_nodes.R
 dce2fc2e1da62716f5fdb041b62a7988 *R/mark_ties.R
-19ad3ebcd62e855b8a0961743104d696 *R/measure_centrality.R
+9451ba7610498dd583f54a40c4ef18ae *R/measure_centrality.R
 f3b948f59d7285663c6115c33876bf03 *R/measure_closure.R
 d3eb429f00d48cf5e14f0b8a4202a7bd *R/measure_cohesion.R
 9457e2771d5e4034748e9f169ee2472d *R/measure_features.R
@@ -23,17 +23,18 @@ e36a81106b8c24d3db9fe41de9506889 *R/member_community.R
 293a254845e97074b937789a23c33c88 *R/member_core.R
 4a71a59a3c9a4de161eeec2257e49f63 *R/member_equivalence.R
 d845d99271be8679afabd14d51ddd2b1 *R/migraph-defunct.R
+bada02639f2a5c013905fc4a9f093d80 *R/migraph-package.R
 7b47a7f8d8f33620465f89c1ec0ba717 *R/model_cluster.R
 8ca66b897465bd52a90bc4ebcc31b5b8 *R/model_k.R
 aeb31de17edba1b74ef1e8e147dd5b9a *R/model_play.R
 af6c6e00fefe73babc4dc98f0a41ac13 *R/model_regression.R
-c414e31bc2507ed5707af37e679993b0 *R/model_tests.R
+638c788ff55c70fbfd51cfbce3eae3b6 *R/model_tests.R
 fcd6f9ee81b80cf31c47e32ac74317bc *R/motif_census.R
 c8a33e0fd29f2e9a61e04fa368cd883c *R/reexports_classes.R
 5b6bdf57abcbb9776d5b05ae9d0c1192 *R/reexports_ggplot2.R
 9102470d9c5ad81d6898f29c15c5d636 *R/sysdata.rda
 b5cb63b61c31bae010269a0428be600a *R/viz_palette.R
-2407018cfebbd05e22ff50156908b070 *README.md
+dc2c137a5868e15e6a184c19349a4443 *README.md
 439bf689fa27cf9affd0335332142165 *build/partial.rdb
 68e38ab547ac9898cfbda162b01fa987 *data/mpn_DE_1990.rda
 628e1ec7b0e3eb62285a5453675740f0 *data/mpn_DE_2008.rda
@@ -65,7 +66,7 @@ c174c8f9ae45f22b5ec5e57e8828cec4 *inst/tutorials/tutorial5/equivalence.html
 c3e6b5c4d90afed0a45688550da7989c *inst/tutorials/tutorial6/topology.html
 cd9eae38321e3bc98fbca9cddaf943e4 *inst/tutorials/tutorial7/diffusion.Rmd
 361727efcdd14f6905bb4c0a143d2fba *inst/tutorials/tutorial7/diffusion.html
-43bc13b895aeae0e179855262d950218 *inst/tutorials/tutorial8/regression.Rmd
+b8c37cd278d24a2a7bad18e9fc152aa8 *inst/tutorials/tutorial8/regression.Rmd
 72978a93031eab2052df37d79d251a4a *inst/tutorials/tutorial8/regression.html
 5903be639bc4be2a20b420e33feaae6a *man/between_centrality.Rd
 2230af51f94b57f80fc60bf4032810c9 *man/brokerage_census.Rd
@@ -107,6 +108,7 @@ c6d8b6f7bb96b46db3e725ef18463050 *man/heterogeneity.Rd
 b8e187ac255f3bfd75aed1a741ad29bf *man/kselect.Rd
 7670dd288d99c890fbfd5ef8a59b8aca *man/mark_nodes.Rd
 a973bcd6ab51641d11a41503132fd981 *man/mark_ties.Rd
+f8a5ed7a085195c63c2074f243d2a550 *man/migraph-package.Rd
 a416b2fb65fff1e4f367ef9e4860a392 *man/mpn_bristol.Rd
 4458e24fdb0d465e71aa6abfd05fd8c0 *man/mpn_cow.Rd
 6bbfeec20d48799b1497e20529bc0f4d *man/mpn_elite_mex.Rd
@@ -134,5 +136,5 @@ e86f4aea06c4ab9571429598a32893ae *tests/testthat/test-measure_closure.R
 2f5108bcabbe64bcca4ea78478c1962e *tests/testthat/test-member_community.R
 37ffea79617c06e73b45490fb7e838ad *tests/testthat/test-member_equivalence.R
 d98290a9a79152eaaaeebdc1de8fd5ec *tests/testthat/test-model_regression.R
-9a0cafbdd833af11d7d2634876fe7d3a *tests/testthat/test-model_tests.R
+bae7c9b9beac0f0ce1d83e2b72e718d7 *tests/testthat/test-model_tests.R
 985563816b3c87b89d2260345f997083 *tests/testthat/test-motif_census.R
