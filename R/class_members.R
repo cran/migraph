@@ -1,36 +1,53 @@
 make_node_member <- function(out, .data) {
+  if(manynet::is_labelled(.data)) names(out) <- manynet::node_names(.data)
   class(out) <- c("node_member", class(out))
   attr(out, "mode") <- manynet::node_mode(.data)
   out
 }
 
 #' @export
-print.node_member <- function(x, ...,
-                               max.length = 6,
-                               digits = 3) {
+print.node_member <- function(x, ..., n = NULL) {
   if (any(attr(x, "mode"))) {
-    for (i in names(table(x))) {
-      if (i == names(table(x))[1]) cat(i, "\n")
+    for(m in c(FALSE, TRUE)){
+      print_tblvec(y = as.numeric(x)[attr(x, "mode") == m], 
+                   names = list(names(x)[attr(x, "mode") == m]),
+                   n = n)
+      if(!m) cat("\n")
+    }
+  } else {
+    print_tblvec(y = as.numeric(x), 
+                 names = list(names(x)),
+                 n = n)
+  }
+}
+
+#' @export
+summary.node_member <- function(object, ...,
+                               n = 6,
+                               digits = 3) {
+  if (any(attr(object, "mode"))) {
+    for (i in names(table(object))) {
+      if (i == names(table(object))[1]) cat(i, "\n")
       else cat("\n", i, "\n")
-      if (!is.null(names(x))) {
-        y <- paste(names(x[x == i & attr(x, "mode")]), collapse = ", ")
-        z <- paste(names(x[x == i & !attr(x, "mode")]), collapse = ", ")
+      if (!is.null(names(object))) {
+        y <- paste(names(object[object == i & attr(object, "mode")]), collapse = ", ")
+        z <- paste(names(object[object == i & !attr(object, "mode")]), collapse = ", ")
       } else {
-        y <- paste(which(x == i & attr(x, "mode")), collapse = ", ")
-        z <- paste(which(x == i & !attr(x, "mode")), collapse = ", ")
+        y <- paste(which(object == i & attr(object, "mode")), collapse = ", ")
+        z <- paste(which(object == i & !attr(object, "mode")), collapse = ", ")
       }
       cat("  ", y, "\n")
       cat("  ", z)
     }
   } else {
-    for (i in names(table(x))) {
-      if (i == names(table(x))[1]) cat(i, "\n")
-      else cat("\n", i, "\n")
-      if (!is.null(names(x)))
-        y <- paste(names(x[x == i]), collapse = ", ")
+    for (i in names(table(object))) {
+      cat(pillar::style_subtle(paste0("Class ", i, ":")))
+      if (!is.null(names(object)))
+        y <- paste(names(object[object == i]), collapse = ", ")
       else
-        y <- paste(which(x == i), collapse = ", ")
-      cat("  ", y)
+        y <- paste(which(object == i), collapse = ", ")
+      cat(" ", y)
+      if (i != names(table(object))[length(table(object))]) cat("\n")
     }
   }
 }
