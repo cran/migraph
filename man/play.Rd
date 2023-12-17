@@ -4,8 +4,9 @@
 \alias{play}
 \alias{play_diffusion}
 \alias{play_diffusions}
-\alias{play_learning}
 \alias{play_segregation}
+\alias{as_diffusion}
+\alias{play_learning}
 \title{Functions to play games on networks}
 \usage{
 play_diffusion(
@@ -35,16 +36,18 @@ play_diffusions(
   verbose = FALSE
 )
 
-play_learning(.data, beliefs, steps, epsilon = 5e-04)
-
 play_segregation(
   .data,
   attribute,
   heterophily = 0,
   who_moves = c("ordered", "random", "most_dissatisfied"),
-  choice_function = c("satisficing", "optimising"),
+  choice_function = c("satisficing", "optimising", "minimising"),
   steps
 )
+
+as_diffusion(events, .data)
+
+play_learning(.data, beliefs, steps, epsilon = 5e-04)
 }
 \arguments{
 \item{.data}{An object of a \code{{manynet}}-consistent class:
@@ -69,29 +72,29 @@ of the number of contacts/exposures sufficient for infection.
 If less than 1, the threshold is interpreted as complex,
 where the threshold concerns the proportion of contacts.}
 
-\item{transmissibility}{A proportion indicating the transmission rate,
+\item{transmissibility}{The transmission rate probability,
 \eqn{\beta}.
 By default 1, which means any node for which the threshold is met
 or exceeded will become infected.
 Anything lower means a correspondingly lower probability of adoption,
 even when the threshold is met or exceeded.}
 
-\item{latency}{A proportion indicating the rate at which those exposed
-become infectious (infected), \eqn{\sigma}.
+\item{latency}{The inverse probability those who have been exposed
+become infectious (infected), \eqn{\sigma} or \eqn{\kappa}.
 For example, if exposed individuals take, on average,
-four days to become infectious, then \eqn{\sigma = 0.25}.
+four days to become infectious, then \eqn{\sigma = 0.75} (1/1-0.75 = 1/0.25 = 4).
 By default 0, which means those exposed become immediately infectious (i.e. an SI model).
 Anything higher results in e.g. a SEI model.}
 
-\item{recovery}{A proportion indicating the rate of recovery,
-\eqn{\gamma}.
+\item{recovery}{The probability those who are infected
+recover, \eqn{\gamma}.
 For example, if infected individuals take, on average,
 four days to recover, then \eqn{\gamma = 0.25}.
 By default 0, which means there is no recovery (i.e. an SI model).
 Anything higher results in an SIR model.}
 
-\item{waning}{A proportion indicating the rate at which those who are
-recovered become susceptible again, \eqn{\xi}.
+\item{waning}{The probability those who are recovered
+become susceptible again, \eqn{\xi}.
 For example, if recovered individuals take, on average,
 four days to lose their immunity, then \eqn{\xi = 0.25}.
 By default 0, which means any recovered individuals retain lifelong immunity (i.e. an SIR model).
@@ -129,12 +132,6 @@ See \href{https://furrr.futureverse.org}{\code{{furrr}}} for more.}
 By default FALSE.
 See \href{https://progressr.futureverse.org}{\code{{progressr}}} for more.}
 
-\item{beliefs}{A vector indicating the probabilities nodes
-put on some outcome being 'true'.}
-
-\item{epsilon}{The maximum difference in beliefs accepted
-for convergence to a consensus.}
-
 \item{attribute}{A string naming some nodal attribute in the network.
 Currently only tested for binary attributes.}
 
@@ -155,7 +152,30 @@ and "most_dissatisfied" will check (one of) the most dissatisfied nodes first.}
 \item{choice_function}{One of the following options:
 "satisficing" (the default) will move the node to any coordinates that satisfy
 their heterophily threshold,
-whereas "optimising" will move the node to coordinates that are most homophilous.}
+"optimising" will move the node to coordinates that are most homophilous,
+and "minimising" distance will move the node to the next nearest unoccupied coordinates.}
+
+\item{events}{A table (data frame or tibble) of diffusion events
+with columns \code{t} indicating the time (typically an integer) of the event,
+\code{nodes} indicating the number or name of the node involved in the event,
+and \code{event}, which can take on the values "I" for an infection event,
+"E" for an exposure event, or "R" for a recovery event.}
+
+\item{beliefs}{A vector indicating the probabilities nodes
+put on some outcome being 'true'.}
+
+\item{epsilon}{The maximum difference in beliefs accepted
+for convergence to a consensus.}
+}
+\value{
+\code{as_diffusion()} and \code{play_diffusion()} return a 'diff_model' object
+that contains two different tibbles (tables) --
+a table of diffusion events and
+a table of the number of nodes in each relevant component (S, E, I, or R) --
+as well as a copy of the network upon which the diffusion ran.
+By default, a compact version of the component table is printed
+(to print all the changes at each time point, use \code{print(..., verbose = T)}).
+To retrieve the diffusion events table, use \code{summary(...)}.
 }
 \description{
 Functions to play games on networks
@@ -166,9 +186,12 @@ Functions to play games on networks
 
 \item \code{play_diffusions()}: Playing multiple compartmental diffusions on networks.
 
-\item \code{play_learning()}: Playing DeGroot learning on networks.
-
 \item \code{play_segregation()}: Playing Schelling segregation on networks.
+
+\item \code{as_diffusion()}: Coerces a table of diffusion events into
+a \code{diff_model} object similar to the output of \code{play_diffusion()}
+
+\item \code{play_learning()}: Playing DeGroot learning on networks.
 
 }}
 \examples{
@@ -176,21 +199,29 @@ Functions to play games on networks
   plot(play_diffusion(smeg))
   plot(play_diffusion(smeg, recovery = 0.4))
   plot(play_diffusions(smeg, times = 20))
-  play_learning(ison_networkers, 
-      rbinom(manynet::network_nodes(ison_networkers),1,prob = 0.25))
   startValues <- rbinom(100,1,prob = 0.5)
   startValues[sample(seq_len(100), round(100*0.2))] <- NA
   latticeEg <- manynet::create_lattice(100)
   latticeEg <- manynet::add_node_attribute(latticeEg, "startValues", startValues)
   latticeEg
   play_segregation(latticeEg, "startValues", 0.5)
-  #manynet::autographr(latticeEg, node_color = "startValues", node_size = 5)
-  #manynet::autographr(play_segregation(latticeEg, "startValues", 0.5), 
-  #                    node_color = "startValues", node_size = 5)
+  # manynet::autographr(latticeEg, node_color = "startValues", node_size = 5) + 
+  # manynet::autographr(play_segregation(latticeEg, "startValues", 0.2), 
+  #                     node_color = "startValues", node_size = 5)
+  # How to create a diff_model object from (basic) observed data
+  events <- data.frame(t = c(0,1,1,2,3), nodes = c(1,2,3,2,4), event = c("I","I","I","R","I"))
+  as_diffusion(events, manynet::create_filled(4))
+  play_learning(ison_networkers, 
+      rbinom(manynet::network_nodes(ison_networkers),1,prob = 0.25))
 }
 \seealso{
 Other models: 
 \code{\link{regression}},
 \code{\link{tests}}
+
+Other diffusion: 
+\code{\link{net_diffusion}},
+\code{\link{node_diffusion}}
 }
+\concept{diffusion}
 \concept{models}

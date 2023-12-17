@@ -1,3 +1,139 @@
+# migraph 1.2.1
+
+2023-12-17
+
+## Measures
+
+- Fixed documentation issues in `node_adoption_time()`
+
+# migraph 1.2.0
+
+2023-12-17
+
+## Marks
+
+- Added `node_is_infected()` to identify infected nodes at given time
+- Added `node_is_latent()` to identify infected nodes at given time
+- Added `node_is_recovered()` to identify infected nodes at given time
+- Added `node_is_fold()` for identifying nodes that are occupying structural folds
+- Dropped last `is_*()` functions from migraph to avoid unnecessary conflicts with manynet at startup
+- Improved 'mark_nodes' documentation
+
+## Measures
+
+- Added `network_hazard()` for calculating the hazard rate for each time point of a diff_model object
+- `node_adoption_time()` now works with incomplete diffusions
+  - Fixed bug with named vectors
+- `node_exposure()` now uses `node_is_infected()` for more flexibility
+- `node_thresholds()` now works with incomplete diffusions
+  - Adds exposure data where not provided
+
+## Members
+
+- `node_adopter()` now correctly identifies non-adopters
+
+## Models
+
+- `play_diffusion()` 
+  - Now records only the first exposure event until susceptible again
+  - Now uses `node_is_exposed()` and `node_exposure()` internally
+  - Made play_diffusion() code easier to understand and debug
+  - Added some tests for `play_diffusion()`
+
+# migraph 1.1.9
+
+2023-12-13
+
+## Marks
+
+- Added `node_is_exposed()` function to mark nodes (logical) that are currently exposed to diffusion content in a network.
+
+## Measures
+
+- Fixed bugs for `network_reproduction()` function that calculates the R-nought value.
+- Added `network_immunity()` function to calculate the Herd Immunity Threshold for the network.
+- Added `node_exposure()` function to calculate the number of infected/adopting nodes to which each susceptible node is exposed.
+- Added documentation for diffusion measures, separating documentation for `node_*()` and `network_*()` measures.
+
+## Models
+
+- Added `as_diffusion()` function to convert a diffusion event table into a `diff_model` object.
+- Added `test_gof()` function for testing goodness-of-fit in diffusion models.
+
+## Tutorials
+
+- Updates to tutorial 7 (diffusion):
+  - Added section on R-nought and Herd Immunity.
+  - Fixed layouts for plots using `autographs()` and `autographd()` for `diff_model` objects.
+
+# migraph 1.1.8
+
+2023-12-06
+
+## Measures
+
+- Fixed bugs in diffusion measures.
+  - Fixed `node_thresholds()` so that it infers nodes' thresholds from the amount of exposure they had when they became infected or exposed.
+  - Updated `node_adoption_time()` and `node_adopter()` to return `node_member` and `node_measure` objects, which makes printing and summarising better.
+  - Updated node_infection_length() and network_infection_length() which measures the average length nodes remain infected.
+
+## Members
+
+- Added printing of membership class names if available in print method for `node_member` class.
+- Added distributional statistics of the vector if no membership vector is assigned in summary method for `node_member` class.
+
+## Models
+
+- Updated `diff_model` object to carry original network data for plotting.
+- Updated `play_diffusion()` to forward exposure/contact information to the events table.
+
+## Tutorials
+
+- Added plots for diffusion models in tutorial 7 using `autographs()` and `autographd()`.
+
+# migraph 1.1.7
+
+2023-11-15
+
+## Package
+
+- Added diffusion measures to website.
+
+## Measures
+
+- Fixed documentation issues for diffusion measures.
+
+## Marks
+
+- Added `node_is_mentor()` for indicating nodes with high indegree.
+
+## Models
+
+- Added 'minimising' distance option for segregation model choice.
+- Changed 'satisficing' option in `play_segregation()` to sample randomly from
+those unoccupied options less than the desired threshold.
+
+## Tutorials
+
+- Added multi-choice questions to tutorial 8.
+
+# migraph 1.1.6
+
+2023-11-08
+
+## Measures
+
+- Added first drafts of various diffusion measures: `network_transmissability()`, `node_infection_length()`, `network_infection_length()`, `network_reproduction()`, `node_adoption_time()`, `node_adopter()`, `node_thresholds()`.
+
+## Models
+
+- Fixed documentation for `play_diffusion()`.
+- Fixed bug in labelling in plot results for SIR models.
+
+## Tutorials
+
+- Added plots using `autographs()` and elaboration for tutorial 7.
+
 # migraph 1.1.5
 
 2023-11-02

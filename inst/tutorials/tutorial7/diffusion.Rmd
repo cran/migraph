@@ -12,7 +12,14 @@ library(learnr)
 library(manynet)
 library(migraph)
 library(patchwork)
+library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
+nw <- to_undirected(to_unnamed(manynet::ison_networkers))
+rg <- create_ring(nw, width = 2)
+la <- create_lattice(nw)
+rd <- generate_random(nw, with_attr = FALSE)
+sf <- generate_scalefree(nw, 0.025)
+sw <- generate_smallworld(nw, 0.025)
 ```
 
 ## Investigate diffusion through simulation
@@ -51,7 +58,7 @@ nw <- to_undirected(to_unnamed(ison_networkers))
 
 Now, using the "nw" network from the last section, let's create or generate ring, lattice, random, scale-free, and small-world versions with the same number of nodes using functions like:
 
-+ `create_ring()`: Creates a ring or chord graph of the given dimensions that loops around is of a certain width or thickness.
++ `create_ring()`: Creates a ring or chord graph of the given dimensions that loops around and is of a specified width or thickness.
 + `create_lattice()`: Creates a graph of the given dimensions with ties to all neighbouring nodes
 + `generate_random()`: Generates a random network with a particular probability.
 + `generate_scalefree()`: Generates a small-world structure following the lattice rewiring model.
@@ -157,15 +164,19 @@ ____(____)
 ```
 
 ```{r ring-solution}
-rg1 <- play_diffusion(rg, seeds = 1)
-plot(rg1)
+rg_d <- play_diffusion(rg, seeds = 1)
+plot(rg_d)
+
+# visualise the diffusion within the network
+autographs(play_diffusion(rg, seeds = 1), node_color = "Infected", layout = "circle") +
+  ggplot2::guides(colour = guide_legend(""))
 ```
 
 The result object, when printed, lists how many of the nodes in the network,
 `n`, are 'infected' (`I`) or not (`S`) at each step `t`.
 The plot visualises this, with the proportion of `S` in blue and `I` in red.
 The bar plot behind shows how many nodes are newly 'infected' at each
-time point.
+time point, or the so-called 'force of infection' ($F = \beta I$).
 
 We can see that there is a pretty constant diffusion across this network,
 with 2-3 nodes being newly infected at each time-point.
@@ -185,8 +196,8 @@ and see whether the result is any different.
 ```
 
 ```{r ring2-solution}
-rg2 <- play_diffusion(rg, seeds = 16)
-plot(rg2)
+rg_d2 <- play_diffusion(rg, seeds = 16)
+plot(rg_d2)
 ```
 
 ```{r ring2-interp, echo = FALSE, purl = FALSE}
@@ -211,7 +222,12 @@ plot(play_diffusion(rg, seeds = ____))
 ```
 
 ```{r ring3-solution}
-plot(play_diffusion(rg, seeds = 1:4))
+rg_d3 <- play_diffusion(rg, seeds = 1:4)
+plot(rg_d3)
+
+# visualise the diffusion within the network
+autographs(play_diffusion(rg, seeds = 1:4), node_color = "Infected", layout = "circle") +
+  ggplot2::guides(colour = guide_legend(""))
 ```
 
 But what if we seed the network at three different places?
@@ -258,6 +274,12 @@ one with the first node as seed and again one on the last.
 ```{r lattice-solution}
 plot(play_diffusion(la, seeds = 1))/
 plot(play_diffusion(la, seeds = 16))
+la %>%
+  add_node_attribute("color", c(1, rep(0, 14), 2, rep(0, 16))) %>%
+  autographr(node_color = "color")
+
+# visualise diffusion in lattice graph
+autographd(play_diffusion(la, seeds = 16), layout = "grid", keep_isolates = FALSE)
 ```
 
 ```{r lattice-interp, echo = FALSE, purl = FALSE}
@@ -282,10 +304,21 @@ Similar to the previous examples, we will be using the following functions withi
 ```
 
 ```{r scale-solution}
+sf %>%
+  as_tidygraph() %>%
+  mutate(degree = ifelse(node_is_max(node_degree(sf)), "max",
+                      ifelse(node_is_min(node_degree(sf)), "min", "others"))) %>%
+  autographr(node_color = "degree") + guides(color = "legend") + labs(color = "degree")
 plot(play_diffusion(sf, seeds = 10, steps = 10)) / 
 plot(play_diffusion(sf, seeds = node_is_random(sf), steps = 10)) /
 plot(play_diffusion(sf, seeds = node_is_max(node_degree(sf)), steps = 10)) /
 plot(play_diffusion(sf, seeds = node_is_min(node_degree(sf)), steps = 10))
+
+# visualise diffusion in scalefree network
+autographs(play_diffusion(sf, seeds = node_is_min(node_degree(sf)), steps = 10),
+           node_color = "Infected") +
+  ggplot2::guides(colour = guide_legend(""))
+autographd(play_diffusion(sf, seeds = 16, steps = 10))
 ```
 
 ```{r mindeg-interp, echo = FALSE, purl = FALSE}
@@ -401,6 +434,9 @@ plot(play_diffusion(sf, thresholds = c(rep(____,____), rep(____,____))))
 ```{r rand-solution}
 plot(play_diffusion(sf, thresholds = c(rep(0.1,10), rep(0.25,22))))/
 plot(play_diffusion(sf, thresholds = c(rep(0.25,10), rep(0.1,22))))
+
+# visualise the diffusion within the network
+autographd(play_diffusion(sf, thresholds = c(rep(0.1,10), rep(0.25,22))))
 ```
 
 Since the first ten nodes are the first to join the scale-free network
@@ -429,7 +465,7 @@ along with a couple of additional parameters
 to indicate how many simulations it should run, e.g. `times = 50`,
 whether it should use `strategy = "multisession"` 
 to run the simulations across multiple cores
-instead of the default `strategy = "sequential`,
+instead of the default `strategy = "sequential"`,
 and `verbose = TRUE` if it should inform you of computational progress.
 Try this out with our well-mixed random network, 10 steps, 5 times,
 and with a `transmissibility` parameter set to 0.5
@@ -450,8 +486,10 @@ plot(play_diffusions(____, transmissibility = ____, times = ____, steps = ____))
 plot(play_diffusions(rd, transmissibility = 0.5, times = 5, steps = 10))
 ```
 
-Note that in this plot the number of new infections is not plotted,
-and the loess line smooths over the varying trajectories.
+Note that in this plot the number of new infections is not plotted
+because this might vary a bit each time the simulation is run.
+Instead, the loess line smooths over the varying trajectories
+and a (hardly distinguishable for this call) grey border to the line represents the standard error.
 The blue line is the proportion of nodes in the Susceptible compartment,
 and the red line is the proportion of nodes in the Infected compartment.
 
@@ -484,12 +522,25 @@ plot(play_diffusions(rd, recovery = 0.2))
 What we see in these kinds of models is typically a spike in infections
 towards the start, but as these early infections recover and become immune,
 then they can provide some herd immunity to those who remain susceptible.
+If you get moderately different results each time,
+try increasing the number of `times` the simulation is run,
+which should average out these differences and make the results more reliable.
+
+```{r sirtimes, exercise = TRUE, purl = FALSE}
+
+```
+
+```{r sirtimes-solution}
+plot(play_diffusions(rd, recovery = 0.2, times = 100))
+```
 
 ### SIRS models
 
 That's great, but maybe the immunity conferred from having recovered
 from the contagion doesn't last forever.
-In this kind of model, add an additional waning parameter of 0.05.
+In this kind of model, add an additional `waning` parameter of 0.05.
+This means that after twenty steps (on average), 
+a recovered node may lose its recovered status and become susceptible again.
 Play a single diffusion so that you can see what's going on in a particular run.
 
 ```{r sirs, exercise = TRUE, purl = FALSE}
@@ -497,7 +548,10 @@ Play a single diffusion so that you can see what's going on in a particular run.
 ```
 
 ```{r sirs-solution}
-plot(play_diffusion(rd, recovery = 0.25, waning = 0.05))
+plot(play_diffusion(rd, recovery = 0.2, waning = 0.05))
+
+# visualise diffusion within random graph
+autographd(play_diffusion(rd, seeds = c(1,10), recovery = 0.2, waning = 0.05))
 ```
 
 ```{r sirs-interp, echo = FALSE, purl = FALSE}
@@ -507,13 +561,32 @@ question("Does the process reach a stable state?",
         allow_retry = TRUE)
 ```
 
+Depending on your particular simulation,
+there might be some variation,
+so let's run this same diffusion but multiple (100?) times.
+
+```{r sirstimes-solution, exercise = TRUE}
+plot(play_diffusions(rd, recovery = 0.2, waning = 0.05, times = 100))
+```
+
+```{r sirstimes-interp, echo = FALSE, purl = FALSE}
+question("Select the true statements",
+         answer("There are always some infected nodes.", correct = TRUE),
+         answer("We never get to the stage where everyone has recovered.", correct = TRUE),
+         answer("There are always some susceptible nodes.", correct = TRUE),
+         random_answer_order = TRUE,
+        allow_retry = TRUE)
+```
+
 ### SEIR models
 
 Lastly, we'll consider a compartment for nodes that have been Exposed
 but are not yet infectious.
-This kind of an incubation period is due to some `latency`.
-Again, this should be specified as a proportion 
-(try 0.25, approx four days).
+This kind of an incubation period is due to some `latency` ($\sigma$).
+This should also be specified as a proportion,
+but note that this is inverted internally.
+This means that a latency of 0 means that exposure immediately renders the node infectious.
+A latency of 0.75 means that it will take the node approximately 4 days (1/1-0.75 = 1/0.25 = 4) to become infectious.
 Play a single diffusion so that you can see what's going on in a particular run.
 
 ```{r seir, exercise = TRUE, exercise.setup = "create", purl = FALSE}
@@ -521,7 +594,44 @@ Play a single diffusion so that you can see what's going on in a particular run.
 ```
 
 ```{r seir-solution}
-plot(play_diffusion(rd, latency = 0.25, recovery = 0.25))
+plot(play_diffusion(rd, seeds = 10, latency = 0.25, recovery = 0.2))
+
+# visualise diffusion with latency and recovery
+autographd(play_diffusion(rd, seeds = 10, latency = 0.25, recovery = 0.2))
+```
+
+### R-nought and herd immunity
+
+So how can we establish the $R_0$ here?
+
+$R_0$, or the diffusion's reproductive number, is calculated as: $R_0 = \min\left(\frac{T}{1/IL}, \bar{k}\right)$
+It is measured as the network's transmissibility (proportion of susceptible nodes that are infected at each time period) over the network's average infection length (average length of time nodes remain infected).  
+- Where $R_0$ > 1, the 'disease' will 'infect' more and more nodes in the network.  
+- Where $R_0$ < 1, the 'disease' will not sustain itself and eventually die out.  
+- Where $R_0$ = 1, the 'disease' will continue as endemic, if conditions allow.  
+
+```{r r0, exercise = TRUE, exercise.setup = "create"}
+set.seed(123)
+rd_diff <- play_diffusion(rd, seeds = 10, recovery = 0.1)
+plot(rd_diff)
+# R-nought
+network_reproduction(rd_diff)
+# Herd Immunity Threshold
+network_immunity(rd_diff)
+ceiling(network_immunity(rd_diff) * manynet::network_nodes(rd))
+```
+
+The Herd Immunity Threshold or HIT indicates the threshold at which the reduction of susceptible members of the network means that infections will no longer keep increasing, allowing herd immunity to be achieved.
+In this model, the HIT score of 0.94 indicates that 94% of nodes in the network would need to be vaccinated or otherwise protected to achieve herd immunity.
+Multiplying the HIT score with the number of nodes in the network (32 in this example) gives the number of nodes that would need to be vaccinated: 31 nodes.
+
+```{r r0-interp, echo = FALSE, purl = FALSE}
+question("Select any true statements you can make about this R-nought result:",
+         answer("An epidemic is likely to occur.", correct = TRUE),
+         answer("There are not enough seed nodes to start an epidemic."),
+         answer("If the recovery rate was instead a mortality rate, it would make no difference.", correct = TRUE),
+        allow_retry = TRUE,
+        random_answer_order = TRUE)
 ```
 
 ## Investigate learning through simulation
@@ -537,7 +647,7 @@ Let's try this out on the `ison_networkers` dataset included in the package.
 First of all, check whether the network is _connected_ and _aperiodic_ via the following functions:
 
 + `is_connected()`: Tests whether network is weakly connected if the network is *undirected* or strongly connected if directed.
-+ `is_aperiodic()`: Tests whether network is aperiodic.
++ `is_aperiodic()`: Tests whether network is aperiodic, meaning there is no integer k > 1 that divides the length of every cycle of the graph.
 
 ```{r aperiod, exercise = TRUE, purl = FALSE}
 
@@ -553,10 +663,21 @@ is_connected(ison_networkers)
 is_aperiodic(ison_networkers)
 ```
 
-```{r aperiod-interp, echo = FALSE, purl = FALSE}
+```{r consens-interp, echo = FALSE, purl = FALSE}
 question("Based on these results, would you expect this network to converge to a consensus?",
   answer("No"),
-  answer("Yes", correct = TRUE),
+  answer("Yes", correct = TRUE, message = "Only with a strongly connected, aperiodic network will there be convergence to a single consensus."),
+  random_answer_order = TRUE,
+  allow_retry = TRUE
+)
+```
+
+```{r aperiod-interp, echo = FALSE, purl = FALSE}
+question("If there were aperiodicity but two or more strongly connected components, what would happen?",
+  answer("There would be no convergence"),
+  answer("There would be convergence to a single consensus"),
+  answer("There would be convergence", correct = TRUE),
+  answer("There would probably be as many separate values as there are components", correct = TRUE),
   random_answer_order = TRUE,
   allow_retry = TRUE
 )

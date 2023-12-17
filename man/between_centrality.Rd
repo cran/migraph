@@ -77,7 +77,9 @@ Other measures:
 \code{\link{features}},
 \code{\link{heterogeneity}},
 \code{\link{hierarchy}},
-\code{\link{holes}}
+\code{\link{holes}},
+\code{\link{net_diffusion}},
+\code{\link{node_diffusion}}
 
 Other centrality: 
 \code{\link{close_centrality}},

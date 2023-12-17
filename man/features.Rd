@@ -82,7 +82,7 @@ and a core-periphery model with the same dimensions.
 \item \code{network_factions()}: Returns correlation between a given network
 and a component model with the same dimensions.
 If no 'membership' vector is given for the data,
-\code{node_kernaghinlin()} is used to obtain a partition into two groups.
+\code{node_kernighanlin()} is used to obtain a partition into two groups.
 
 \item \code{network_modularity()}: Returns modularity based on nodes' membership
 in pre-defined clusters.
@@ -179,6 +179,8 @@ Other measures:
 \code{\link{eigenv_centrality}},
 \code{\link{heterogeneity}},
 \code{\link{hierarchy}},
-\code{\link{holes}}
+\code{\link{holes}},
+\code{\link{net_diffusion}},
+\code{\link{node_diffusion}}
 }
 \concept{measures}
