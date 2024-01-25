@@ -7,7 +7,7 @@
 \alias{node_thresholds}
 \alias{node_infection_length}
 \alias{node_exposure}
-\title{Diffusion metrics for nodes}
+\title{Measures of nodes in a diffusion}
 \usage{
 node_adoption_time(diff_model)
 
@@ -145,11 +145,11 @@ Other measures:
 \code{\link{heterogeneity}},
 \code{\link{hierarchy}},
 \code{\link{holes}},
-\code{\link{net_diffusion}}
+\code{\link{net_diffusion}},
+\code{\link{periods}}
 
 Other diffusion: 
-\code{\link{net_diffusion}},
-\code{\link{play}}
+\code{\link{net_diffusion}}
 }
 \concept{diffusion}
 \concept{measures}

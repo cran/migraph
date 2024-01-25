@@ -7,7 +7,7 @@
 \alias{network_reproduction}
 \alias{network_immunity}
 \alias{network_hazard}
-\title{Diffusion metrics for networks}
+\title{Measures of network diffusion}
 \source{
 \code{{netdiffuseR}}
 }
@@ -196,11 +196,11 @@ Other measures:
 \code{\link{heterogeneity}},
 \code{\link{hierarchy}},
 \code{\link{holes}},
-\code{\link{node_diffusion}}
+\code{\link{node_diffusion}},
+\code{\link{periods}}
 
 Other diffusion: 
-\code{\link{node_diffusion}},
-\code{\link{play}}
+\code{\link{node_diffusion}}
 }
 \concept{diffusion}
 \concept{measures}

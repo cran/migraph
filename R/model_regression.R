@@ -1,5 +1,6 @@
 #' Linear and logistic regression for network data
 #' 
+#' @description
 #' This function provides an implementation of
 #' the multiple regression quadratic assignment procedure (MRQAP)
 #' for both one-mode and two-mode network linear models.
@@ -166,7 +167,8 @@ network_reg <- function(formula, .data,
   # Null ####
   # qapy for univariate ####
   if (method == "qapy" | nx == 2){
-    future::plan(strategy)
+  oplan <- future::plan(strategy)
+  on.exit(future::plan(oplan), add = TRUE)
     if(valued){
       repdist <- furrr::future_map_dfr(1:times, function(j){
         nlmfit(c(list(manynet::generate_permutation(g[[1]], with_attr = FALSE)),
@@ -200,7 +202,8 @@ network_reg <- function(formula, .data,
       if (directed == "graph")
         xres[upper.tri(xres)] <- t(xres)[upper.tri(xres)]
       
-      future::plan(strategy)
+  oplan <- future::plan(strategy)
+  on.exit(future::plan(oplan), add = TRUE)
       if(valued){
         repdist[,i] <- furrr::future_map_dbl(1:times, function(j){
           nlmfit(c(g[-(1 + i)],
@@ -286,9 +289,11 @@ vectorise_list <- function(glist, simplex, directed){
 
 convertToMatrixList <- function(formula, data){
   data <- manynet::as_tidygraph(data)
-  DV <- manynet::as_matrix(manynet::to_uniplex(data, 
-                             edge = getDependentName(formula)))
+  if(manynet::is_weighted(data) & getDependentName(formula)=="weight"){
+    DV <- manynet::as_matrix(data) 
+  } else DV <- manynet::as_matrix(data)
   IVnames <- getRHSNames(formula)
+  specificationAdvice(IVnames)
   IVs <- lapply(IVnames, function(IV){
     out <- lapply(seq_along(IV), function(elem){
       # ego ####
@@ -368,7 +373,7 @@ convertToMatrixList <- function(formula, data){
         # sim ####
       } else if (IV[[elem]][1] == "sim"){
         if(is.character(manynet::node_attribute(data, IV[[elem]][2])))
-          stop("Similarity undefined for factors.")
+          stop("Similarity undefined for factors. Try `same()` instead.")
         rows <- matrix(manynet::node_attribute(data, IV[[elem]][2]),
                        nrow(DV), ncol(DV))
         cols <- matrix(manynet::node_attribute(data, IV[[elem]][2]),
@@ -437,5 +442,26 @@ getRHSNames <- function(formula) {
 
 getDependentName <- function(formula) {
   dep <- list(formula[[2]])
-  depName <- unlist(lapply(dep, deparse))
+  unlist(lapply(dep, deparse))
+}
+
+specificationAdvice <- function(formula){
+  formdf <- t(data.frame(formula))
+  if(any(formdf[,1] %in% c("sim","same"))){
+    vars <- formdf[formdf[,1] %in% c("sim","same"), 2]
+    suggests <- vapply(vars, function(x){
+      incl <- unname(formdf[formdf[,2]==x, 1])
+      excl <- setdiff(c("ego","alter"), incl)
+      if(length(excl)>0) paste0(excl, "(", x, ")", collapse = ", ") else NA_character_
+      # incl
+    }, FUN.VALUE = character(1))
+    suggests <- suggests[!is.na(suggests)]
+    if(length(suggests)>0){
+      if(length(suggests) > 1)
+        suggests <- paste0(suggests, collapse = ", ")
+      warning(paste("When testing for homophily,",
+                    "it is recommended to include also more fundamental effects such as `ego()` and `alter()`.",
+                    "Try adding", suggests, "to the model specification."))
+      }
+  }
 }

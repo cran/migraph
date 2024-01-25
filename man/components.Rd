@@ -5,6 +5,7 @@
 \alias{node_components}
 \alias{node_weak_components}
 \alias{node_strong_components}
+\alias{node_roulette}
 \title{Component partitioning algorithms}
 \usage{
 node_components(.data)
@@ -12,6 +13,8 @@ node_components(.data)
 node_weak_components(.data)
 
 node_strong_components(.data)
+
+node_roulette(.data, num_groups, group_size)
 }
 \arguments{
 \item{.data}{An object of a \code{{manynet}}-consistent class:
@@ -22,10 +25,23 @@ node_strong_components(.data)
 \item network, from the \code{{network}} package
 \item tbl_graph, from the \code{{tidygraph}} package
 }}
+
+\item{num_groups}{An integer indicating the number of groups desired}
+
+\item{group_size}{An integer indicating the desired size of most of the groups}
 }
 \description{
 These functions create a vector of nodes' memberships in
-components or degrees of coreness.
+components or degrees of coreness:
+\itemize{
+\item \code{node_components()} assigns nodes' component membership
+using edge direction where available.
+\item \code{node_weak_components()} assigns nodes' component membership
+ignoring edge direction.
+\item \code{node_strong_components()} assigns nodes' component membership
+based on edge direction.
+\item \code{node_roulette()}
+}
 
 In graph theory, components, sometimes called connected components,
 are induced subgraphs from partitioning the nodes into disjoint sets.
@@ -44,18 +60,6 @@ As described in \code{igraph::coreness},
 a node's coreness is \emph{k} if it belongs to the \emph{k}-core
 but not to the (\emph{k}+1)-core.
 }
-\section{Functions}{
-\itemize{
-\item \code{node_components()}: Returns nodes' component membership
-using edge direction where available.
-
-\item \code{node_weak_components()}: Returns nodes' component membership
-ignoring edge direction.
-
-\item \code{node_strong_components()}: Returns nodes' component membership
-based on edge direction.
-
-}}
 \examples{
 node_components(mpn_bristol)
 }

@@ -27,17 +27,15 @@ into a \emph{z}-score indicating how many standard deviations above
 or below the average the score lies.}
 }
 \description{
-Censuses of brokerage motifs
-}
-\section{Functions}{
+These functions include ways to take a census of the brokerage positions of nodes
+in a network:
 \itemize{
-\item \code{node_brokerage_census()}: Returns the Gould-Fernandez brokerage
+\item \code{node_brokerage_census()} returns the Gould-Fernandez brokerage
 roles played by nodes in a network.
-
-\item \code{network_brokerage_census()}: Returns the Gould-Fernandez brokerage
+\item \code{network_brokerage_census()} returns the Gould-Fernandez brokerage
 roles in a network.
-
-}}
+}
+}
 \examples{
 node_brokerage_census(manynet::ison_networkers, "Discipline")
 network_brokerage_census(manynet::ison_networkers, "Discipline")
@@ -46,6 +44,11 @@ network_brokerage_census(manynet::ison_networkers, "Discipline")
 Gould, R.V. and Fernandez, R.M. 1989.
 “Structures of Mediation: A Formal Approach to Brokerage in Transaction Networks.”
 \emph{Sociological Methodology}, 19: 89-126.
+
+Jasny, Lorien, and Mark Lubell. 2015.
+“Two-Mode Brokerage in Policy Networks.”
+\emph{Social Networks} 41:36–47.
+\doi{10.1016/j.socnet.2014.11.005}.
 }
 \seealso{
 Other motifs: 
