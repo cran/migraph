@@ -2,10 +2,10 @@
 % Please edit documentation in R/model_regression.R
 \name{regression}
 \alias{regression}
-\alias{network_reg}
+\alias{net_regression}
 \title{Linear and logistic regression for network data}
 \usage{
-network_reg(
+net_regression(
   formula,
   .data,
   method = c("qap", "qapy"),
@@ -39,14 +39,8 @@ See Haunss and Hollway (2023) for more on this effect.
 \item dyadic covariates (other networks) can just be named
 }}
 
-\item{.data}{An object of a \code{{manynet}}-consistent class:
-\itemize{
-\item matrix (adjacency or incidence) from \code{{base}} R
-\item edgelist, a data frame from \code{{base}} R or tibble from \code{{tibble}}
-\item igraph, from the \code{{igraph}} package
-\item network, from the \code{{network}} package
-\item tbl_graph, from the \code{{tidygraph}} package
-}}
+\item{.data}{A manynet-consistent network.
+See e.g. \code{manynet::as_tidygraph()} for more details.}
 
 \item{method}{A method for establishing the null hypothesis.
 Note that "qap" uses Dekker et al's (2007) double semi-partialling technique,
@@ -100,7 +94,7 @@ will always be respected in permutations and analysis.
 }
 \examples{
 networkers <- ison_networkers \%>\% to_subgraph(Discipline == "Sociology")
-model1 <- network_reg(weight ~ alter(Citations) + sim(Citations), 
+model1 <- net_regression(weight ~ ego(Citations) + alter(Citations) + sim(Citations), 
                       networkers, times = 20)
 # Should be run many more `times` for publication-ready results
 tidy(model1)
@@ -119,9 +113,8 @@ Dekker, David, David Krackhard, and Tom A. B. Snijders. 2007.
 \doi{10.1007/s11336-007-9016-1}.
 }
 \seealso{
-\code{vignette("p7linearmodel")}
-
 Other models: 
+\code{\link{test_distributions}},
 \code{\link{tests}}
 }
 \concept{models}
