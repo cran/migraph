@@ -1,12 +1,12 @@
-71cb35ea32f158cf1b3fa55ba53ee31f *DESCRIPTION
+a6d3e7024f5f6dfb251810c9a3681207 *DESCRIPTION
 eb44bd7fa3a1e48a29c542e669ffceab *LICENSE
-c0d578581730e3161a036e9f64536daf *NAMESPACE
-aa8af28a72b5d6d7183224b76431d74b *NEWS.md
-2eef70d481507b4be992f5e588dbca59 *R/class_models.R
-5233907d9decaf82e865638b140eb73f *R/data_mpn.R
+c4ebc75cab64720b3e63c8c626f6fa38 *NAMESPACE
+1dd959e80ca55ab17e1331e356515a97 *NEWS.md
+005cb2e07848926029373e9fd3c64c8c *R/class_models.R
+2d42c8b21d3916a3549803c3ae5473b4 *R/data_mpn.R
 7494d578ee524c6001560bda78d82f03 *R/migraph-defunct.R
 41e0862f390add3fc0c5adf0dfc84558 *R/migraph-package.R
-e1ee2c0c5a57701daf6903050140dc6d *R/model_regression.R
+21d03e6fc13d367efb23bcfdbffa2fdb *R/model_regression.R
 65bf94c8381e70f1e5cf1208b1ce66ab *R/model_tests.R
 fb3a083e93d9ad6e74cc46c97060a338 *R/reexports_classes.R
 7971feee33e9b948a6d731b06128fd69 *R/reexports_ggplot2.R
@@ -62,7 +62,7 @@ f0b8d4b2009502263a088a5cb008eab9 *man/figures/mpneliteusa.png
 9d5d7f7c99193303822ed709ae93582a *man/mpn_bristol.Rd
 f32b63c342a3ba78d4768cc6f73f2735 *man/mpn_cow.Rd
 2bb611843db37b9b2e65bbcf7f1fdabb *man/mpn_elite_mex.Rd
-298bd784a5838eda0faf0bd0534d585b *man/mpn_elite_usa.Rd
+aa3edc9c2885f8075a07960b7d073bb7 *man/mpn_elite_usa.Rd
 174029e9adb49d9da819dd697241dd07 *man/mpn_evs.Rd
 b3f819c254ce40c934f38d9460bfd815 *man/mpn_ryanair.Rd
 9a6fb6249e74ef79e5ed72960c47abe4 *man/mpn_senate112.Rd
