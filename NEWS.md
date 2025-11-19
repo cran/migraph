@@ -1,3 +1,33 @@
+# migraph 1.5.6
+
+2025-11-19
+
+## Tutorials
+
+- Updated diffusion tutorial moving from `grapht()` to `graphs()` in places
+- Added gifs to diffusion tutorial
+
+# migraph 1.5.5
+
+2025-11-12
+
+## Modelling
+
+- Added `tidy()` and `glance()` methods for `ergm` objects
+- Added `predict()` methods for `netlm` and `netlogit` objects
+
+## Tutorials
+
+- Added ergm tutorial
+
+# migraph 1.5.4
+
+2025-11-05
+
+## Testing
+
+- Added 'over_memb' class construction for `over_membership()` results
+
 # migraph 1.5.3
 
 2025-10-27
