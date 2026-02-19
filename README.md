@@ -106,20 +106,21 @@ a list of tutorials currently available in either package:
 ``` r
 library(migraph)
 run_tute()
-#> Checking tutorials in stocnet packages ■■■■■■■■■■■■■■■■ 50% | …
-#> # A tibble: 9 × 3
-#>   package name      title                   
-#>   <chr>   <chr>     <chr>                   
-#> 1 manynet tutorial0 Intro to R              
-#> 2 manynet tutorial1 Data                    
-#> 3 manynet tutorial2 Visualisation           
-#> 4 manynet tutorial3 Centrality              
-#> 5 manynet tutorial4 Cohesion and Community  
-#> 6 manynet tutorial5 Position and Equivalence
-#> 7 manynet tutorial6 Topology and Resilience 
-#> 8 manynet tutorial7 Diffusion and Learning  
-#> 9 migraph tutorial8 Diversity and Regression
-#> ℹ You can run one of these tutorials by typing e.g `run_tute('tutorial1')` or `run_tute('Data')` into the console.
+#> Checking tutorials in stocnet packages ■■■■■■■■■■■ 33% | …
+#> # A tibble: 10 × 3
+#>    package   name      title                   
+#>    <chr>     <chr>     <chr>                   
+#>  1 manynet   tutorial0 Intro to R              
+#>  2 manynet   tutorial1 Data                    
+#>  3 autograph tutorial2 Visualisation           
+#>  4 manynet   tutorial3 Centrality              
+#>  5 manynet   tutorial4 Cohesion and Community  
+#>  6 manynet   tutorial5 Position and Equivalence
+#>  7 manynet   tutorial6 Topology and Resilience 
+#>  8 migraph   tutorial7 Diffusion and Learning  
+#>  9 migraph   tutorial8 Diversity and Regression
+#> 10 migraph   tutorial9 Modelling with ERGMs
+#> ℹ You can run a tutorial by typing e.g `run_tute('tutorial1')` or `run_tute('Data')` into the console.
 # run_tute("tutorial5")
 ```
 

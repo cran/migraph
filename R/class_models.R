@@ -97,6 +97,18 @@ tidy.ergm <- function(
   dplyr::as_tibble(ret)
 }
 
+#' @method tidy sienaFit
+#' @importFrom dplyr tibble
+#' @export
+tidy.sienaFit <- function(x, ...){
+  dplyr::tibble(
+    dv = x$effects$name,
+    term = x$effects$effectName,
+    estimate = x$theta,
+    std.error = x$se,
+    statistic = x$theta/x$se
+  )
+}
 
 #' @importFrom generics glance
 #' @export
@@ -239,6 +251,15 @@ glance.ergm <- function(x, deviance = FALSE, mcmc = FALSE, ...) {
   ret
 }
 
+#' @method glance sienaFit
+#' @export
+glance.sienaFit <- function(x, ...){
+  dplyr::tibble(
+    tmax = x$tmax,
+    tconv.max = x$tconv.max[,1]
+  )
+}
+
 #' @export
 print.netlm <- function(x, ...){
   cat("# Fitted model results\n")
@@ -255,12 +276,21 @@ print.netlogit <- function(x, ...){
   print(glance(x))
 }
 
+# Unused because infinite recursion through summary.ergm() in tidy.ergm()
+# #' @export
+# summary.ergm <- function(x, ...){
+#   cat("# Fitted model results\n")
+#   print(tidy(x))
+#   cat("\n# Model summary statistics\n")
+#   print(glance(x))
+# }
+
 #' @export
-print.ergm <- function(x, ...){
+summary.sienaFit <- function(object, ...){
   cat("# Fitted model results\n")
-  print(tidy(x))
+  print(tidy(object))
   cat("\n# Model summary statistics\n")
-  print(glance(x))
+  print(glance(object))
 }
 
 
