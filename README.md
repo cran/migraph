@@ -82,7 +82,8 @@ conditional uniform graph (CUG) or quadratic assignment procedure (QAP)
 distributions using:
 
 - `test_configuration()`, `test_distribution()`, `test_fit()`,
-  `test_gof()`, `test_permutation()`, `test_random()`
+  `test_gof()`, `test_permutation()`, `test_random()`,
+  `test_tutorials()`
 
 <img src="https://www.jameshollway.com/post/migraph/tests-2.png" alt="Plot showing the results of a QAP test"/>
 
@@ -98,10 +99,12 @@ two-mode networks as well as one-mode networks.
 
 ## Tutorials
 
-Together with `{manynet}`, this package makes available interactive
-`{learnr}` tutorials. The easiest way to access the tutorials is via
-`run_tute()`. If no tutorial name is provided, the function will return
-a list of tutorials currently available in either package:
+This package makes available interactive `{learnr}` tutorials to help
+new and experienced users learn how they can conduct social network
+analysis using the stocnet packages. The easiest way to access the
+tutorials is via `run_tute()`. If no tutorial name is provided, the
+function will return a list of tutorials currently available in either
+package:
 
 ``` r
 library(migraph)
