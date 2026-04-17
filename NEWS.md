@@ -1,3 +1,41 @@
+# migraph 1.6.2
+
+2026-04-17
+
+## Testing
+
+- Fixed namespace issues
+
+## Tutorials
+
+- Added function testing for migraph tutorials
+- Added function testing for manynet tutorials (> v2.0.2)
+- Updated examples in solutions in migraph tutorials where errors could creep in
+- Skipped extracting some solutions in migraph where errors could creep in
+- Removed `test_tutorials()` from the public API; 
+  use `run_tute()` and `extract_tute()` for supported tutorial execution and extraction workflows
+
+# migraph 1.6.1
+
+2026-04-14
+
+## Package
+
+- Fixed logo sizing and location
+- Added tests for `predict()` methods
+- Added testing for `{netrics}` tutorials
+
+## Tutorials
+
+- Fixed `run_tute()` and `extract_tute()` to identify and use tutorials in `{netrics}`
+- Updated diversity tutorial with new netrics names
+- Updated diffusion tutorial with new netrics names
+- Updated ergm tutorial with new netrics names
+
+## Testing
+
+- Fixed how `test_fit()` handles diffusion models and non-equal length step results
+
 # migraph 1.6.0
 
 2026-04-04

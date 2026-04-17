@@ -1,7 +1,7 @@
 Package: migraph
 Title: Inferential Methods for Multimodal and Other Networks
-Version: 1.6.0
-Date: 2026-04-04
+Version: 1.6.2
+Date: 2026-04-17
 Description: A set of tools for testing networks.
    It includes functions for univariate and multivariate 
    conditional uniform graph and quadratic assignment procedure testing,
@@ -49,7 +49,7 @@ Config/testthat/parallel: true
 Config/testthat/edition: 3
 Config/testthat/start-first: tutorials_manynet
 NeedsCompilation: no
-Packaged: 2026-04-04 08:54:21 UTC; hollway
+Packaged: 2026-04-17 19:36:12 UTC; hollway
 Author: James Hollway [cre, aut, ctb] (IHEID, ORCID:
     <https://orcid.org/0000-0002-8361-9647>),
   Henrique Sposito [ctb] (IHEID, ORCID:
@@ -58,4 +58,4 @@ Author: James Hollway [cre, aut, ctb] (IHEID, ORCID:
   Bernhard Bieri [ctb] (ORCID: <https://orcid.org/0000-0001-5943-9059>)
 Maintainer: James Hollway <james.hollway@graduateinstitute.ch>
 Repository: CRAN
-Date/Publication: 2026-04-04 09:10:12 UTC
+Date/Publication: 2026-04-17 20:00:02 UTC
