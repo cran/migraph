@@ -1,3 +1,41 @@
+# migraph 1.6.6
+
+2026-06-23
+
+## Package
+
+- Updated netrics dependency to 0.3.1 to fix reverse dependency issue
+
+# migraph 1.6.5
+
+2026-06-22
+
+## Package
+
+- Updated netrics dependency to 0.3.1 to fix reverse dependency issue
+
+# migraph 1.6.4
+
+2026-06-22
+
+## Package
+
+- Updated manynet dependency to 1.2.1 to fix reverse dependency issue
+- Updated pull request template
+- Updated README to make reference to `{netrics}` too
+
+# migraph 1.6.3
+
+2026-06-19
+
+## Package
+
+- Removed `%>%` reexport plumbing and refreshed generated reexport docs accordingly
+
+## Testing
+
+- Updated diffusion goodness-of-fit logic (`test_fit()`) and its tests to use the newer diffusion representation (notably `t`)
+
 # migraph 1.6.2
 
 2026-04-17
