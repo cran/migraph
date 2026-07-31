@@ -1,6 +1,6 @@
 Package: migraph
 Title: Inferential Methods for Multimodal and Other Networks
-Version: 1.6.6
+Version: 1.6.8
 Description: A set of tools for testing networks.
    It includes functions for univariate and multivariate conditional uniform graph 
    and quadratic assignment procedure testing, and network regression.
@@ -16,11 +16,11 @@ License: MIT + file LICENSE
 Language: en-GB
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.1.0), manynet (>= 2.1.2), autograph (>= 1.0.0),
-        netrics (>= 0.3.1)
+Depends: R (>= 4.1.0), manynet (>= 2.2.1), autograph (>= 1.1.1),
+        netrics (>= 0.4.0)
 Imports: dplyr (>= 1.1.0), ergm, future, furrr, generics, knitr,
         learnr, purrr
-Suggests: covr, rmarkdown, roxygen2, shiny, testthat (>= 3.0.0)
+Suggests: rmarkdown, shiny, testthat (>= 3.0.0)
 Authors@R: 
     c(person(given = "James",
              family = "Hollway",
@@ -42,12 +42,15 @@ Authors@R:
            email = "bernhard.bieri@graduateinstitute.ch",
            comment = c(ORCID = "0000-0001-5943-9059"))
     )
+Config/Needs/build: roxygen2, devtools
+Config/Needs/check: covr, lintr, spelling
+Config/Needs/website: pkgdown, learnr
 Config/testthat/parallel: true
 Config/testthat/edition: 3
-Config/testthat/start-first: tutorials_manynet
+Config/testthat/start-first: tutorials_migraph
 Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-06-23 10:59:14 UTC; hollway
+Packaged: 2026-07-31 08:42:04 UTC; hollway
 Author: James Hollway [cre, aut, ctb] (IHEID, ORCID:
     <https://orcid.org/0000-0002-8361-9647>),
   Henrique Sposito [ctb] (IHEID, ORCID:
@@ -56,4 +59,4 @@ Author: James Hollway [cre, aut, ctb] (IHEID, ORCID:
   Bernhard Bieri [ctb] (ORCID: <https://orcid.org/0000-0001-5943-9059>)
 Maintainer: James Hollway <james.hollway@graduateinstitute.ch>
 Repository: CRAN
-Date/Publication: 2026-06-24 07:40:24 UTC
+Date/Publication: 2026-07-31 09:00:02 UTC
